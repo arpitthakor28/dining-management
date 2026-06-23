@@ -344,7 +344,7 @@ export default function Menu() {
                                   <div>
                                     <div className="flex justify-between items-start gap-2">
                                       <h4 className="font-extrabold text-sm leading-snug truncate" style={{ color: 'var(--text)' }}>{item.name}</h4>
-                                      <span className="guest-price-badge flex-shrink-0">₹{item.price}</span>
+                                      <span className="guest-price-badge flex-shrink-0">${item.price}</span>
                                     </div>
                                     <p className="text-[11px] mt-1 leading-relaxed line-clamp-2" style={{ color: 'var(--muted)' }}>Authentic traditional spice recipe prepared with fresh organic ingredients.</p>
                                   </div>
@@ -489,9 +489,9 @@ export default function Menu() {
                           {batch.items.map((item, idx) => (<div key={idx} className="flex justify-between items-start text-xs" style={{ color: 'var(--text)' }}>
                               <div className="w-3/4">
                                 <span className="font-semibold" style={{ color: 'var(--text)' }}>{item.name}</span>
-                                <div className="text-[10px]" style={{ color: 'var(--muted)' }}>{item.qty} x ₹{item.price}</div>
+                                <div className="text-[10px]" style={{ color: 'var(--muted)' }}>{item.qty} x ${item.price}</div>
                               </div>
-                              <div className="w-1/4 text-right font-bold" style={{ color: 'var(--text)' }}>₹{item.price * item.qty}</div>
+                              <div className="w-1/4 text-right font-bold" style={{ color: 'var(--text)' }}>${(item.price * item.qty).toFixed(2)}</div>
                             </div>))}
                         </div>)))}
                   </div>
@@ -499,20 +499,20 @@ export default function Menu() {
                   <div className="p-4 space-y-2" style={{ backgroundColor: 'var(--surface2)' }}>
                     <div className="flex justify-between font-semibold" style={{ color: 'var(--text)' }}>
                       <span>Subtotal</span>
-                      <span>₹{subtotal.toFixed(2)}</span>
+                      <span>${subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between" style={{ color: 'var(--muted)' }}>
                       <span>CGST (2.5%)</span>
-                      <span>₹{cgst.toFixed(2)}</span>
+                      <span>${cgst.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between" style={{ color: 'var(--muted)' }}>
                       <span>SGST (2.5%)</span>
-                      <span>₹{sgst.toFixed(2)}</span>
+                      <span>${sgst.toFixed(2)}</span>
                     </div>
                     
                     <div className="flex justify-between text-base font-black mt-4 pt-4" style={{ borderTop: '1px solid var(--border)', color: 'var(--text)' }}>
                       <span>Grand Total</span>
-                      <span style={{ color: 'var(--accent)' }}>₹{total.toFixed(2)}</span>
+                      <span style={{ color: 'var(--accent)' }}>${total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -547,7 +547,7 @@ export default function Menu() {
                         <div className="flex justify-between items-start gap-1">
                           <div className="min-w-0">
                             <h4 className="font-extrabold text-xs truncate" style={{ color: 'var(--text)' }}>{item.name}</h4>
-                            <p className="text-[10px] font-black mt-0.5" style={{ color: 'var(--accent)' }}>₹{item.price}</p>
+                            <p className="text-[10px] font-black mt-0.5" style={{ color: 'var(--accent)' }}>${item.price}</p>
                           </div>
                           
                           <div className="guest-stepper h-[24px]">
@@ -569,7 +569,7 @@ export default function Menu() {
 
                     <div className="flex justify-between items-center text-xs pt-3" style={{ borderTop: '1px solid var(--border)', color: 'var(--text)' }}>
                       <span className="font-semibold" style={{ color: 'var(--muted)' }}>Subtotal</span>
-                      <span className="text-base font-black">₹{cartTotal}</span>
+                      <span className="text-base font-black">${cartTotal}</span>
                     </div>
                     
                     <button onClick={handlePlaceOrder} className="w-full btn-primary font-bold py-3 text-xs rounded-xl transition-all active:scale-95">
@@ -625,7 +625,7 @@ export default function Menu() {
                   <div className="flex justify-between items-start gap-2">
                     <div>
                       <h4 className="font-extrabold text-xs" style={{ color: 'var(--text)' }}>{item.name}</h4>
-                      <p className="text-xs font-black mt-0.5" style={{ color: 'var(--accent)' }}>₹{item.price}</p>
+                      <p className="text-xs font-black mt-0.5" style={{ color: 'var(--accent)' }}>${item.price}</p>
                     </div>
                     
                     <div className="guest-stepper h-[30px] px-1">
@@ -647,7 +647,7 @@ export default function Menu() {
             <div className="pt-4 space-y-4" style={{ borderTop: '1px solid var(--border)' }}>
               <div className="flex justify-between items-center">
                 <span className="font-semibold text-sm" style={{ color: 'var(--muted)' }}>Subtotal</span>
-                <span className="text-xl font-black" style={{ color: 'var(--accent)' }}>₹{cartTotal}</span>
+                <span className="text-xl font-black" style={{ color: 'var(--accent)' }}>${cartTotal}</span>
               </div>
               
               <button onClick={handlePlaceOrder} className="w-full btn-primary font-bold py-4 text-sm rounded-xl transition-all active:scale-95">
