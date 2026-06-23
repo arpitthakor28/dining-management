@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ChefHat, Clock, Check, Play, CheckCircle2, LogOut, Bell, ChevronDown, Printer } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 export default function KitchenDashboard() {
