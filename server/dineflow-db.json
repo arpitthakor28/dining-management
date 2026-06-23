@@ -1,0 +1,1740 @@
+{
+  "tables": [
+    {
+      "id": "T-1",
+      "table_number": "1",
+      "qr_code_token": "token_t1",
+      "status": "active",
+      "current_session_id": "S-01FC4D36",
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "T-2",
+      "table_number": "2",
+      "qr_code_token": "token_t2",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "T-3",
+      "table_number": "3",
+      "qr_code_token": "token_t3",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "T-4",
+      "table_number": "4",
+      "qr_code_token": "token_t4",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "T-5",
+      "table_number": "5",
+      "qr_code_token": "token_t5",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "T-6",
+      "table_number": "6",
+      "qr_code_token": "7bb82c48-bc4",
+      "status": "empty",
+      "current_session_id": null,
+      "_id": "52HWQTO",
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "T-1",
+      "table_number": "1",
+      "qr_code_token": "token_t1",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "T-2",
+      "table_number": "2",
+      "qr_code_token": "token_t2",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "T-3",
+      "table_number": "3",
+      "qr_code_token": "token_t3",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "T-4",
+      "table_number": "4",
+      "qr_code_token": "token_t4",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "T-5",
+      "table_number": "5",
+      "qr_code_token": "token_t5",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_88750849"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "S-C596DE95",
+      "table_id": "T-1",
+      "status": "closed",
+      "comments": null,
+      "created_at": "2026-06-19T06:32:17.538Z",
+      "_id": "K8KTN7J"
+    },
+    {
+      "id": "S-2C93AB8A",
+      "table_id": "T-3",
+      "status": "closed",
+      "comments": null,
+      "created_at": "2026-06-19T06:55:14.287Z",
+      "_id": "UMOYWMW"
+    },
+    {
+      "id": "S-CE1FB806",
+      "table_id": "T-1",
+      "status": "closed",
+      "comments": null,
+      "created_at": "2026-06-19T06:56:27.005Z",
+      "_id": "VADG4AG"
+    },
+    {
+      "id": "S-9441EB26",
+      "table_id": "T-3",
+      "status": "closed",
+      "comments": null,
+      "created_at": "2026-06-19T07:09:49.231Z",
+      "_id": "PSQRF3M"
+    },
+    {
+      "id": "S-FDE1C711",
+      "table_id": "T-1",
+      "status": "closed",
+      "comments": null,
+      "created_at": "2026-06-22T02:56:07.458Z",
+      "_id": "8RVA5K4"
+    },
+    {
+      "id": "S-97EC8635",
+      "table_id": "T-1",
+      "status": "closed",
+      "comments": "wwww",
+      "created_at": "2026-06-22T03:04:40.676Z",
+      "_id": "1D8GH9E"
+    },
+    {
+      "id": "S-01FC4D36",
+      "table_id": "T-1",
+      "status": "open",
+      "comments": null,
+      "created_at": "2026-06-22T04:03:31.922Z",
+      "_id": "R8234RT"
+    }
+  ],
+  "menu_items": [
+    {
+      "id": "lasaniya_dhokla",
+      "name": "Lasaniya Dhokla",
+      "price": 320,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kathiyawadi_special",
+      "name": "Kathiyawadi Special",
+      "price": 300,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "sev_khamani",
+      "name": "Sev Khamani",
+      "price": 280,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "batata_vada",
+      "name": "Batata Vada",
+      "price": 280,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kothimbir_vadi",
+      "name": "Kothimbir Vadi",
+      "price": 280,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "farali_sev_khaman",
+      "name": "Farali Sev Khaman",
+      "price": 300,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "dahi",
+      "name": "Dahi",
+      "price": 150,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kadhi_bowl",
+      "name": "Kadhi Bowl",
+      "price": 150,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "masala_khaman_sev",
+      "name": "Masala Khaman (Sev)",
+      "price": 210,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "punjabi_khaman_sev",
+      "name": "Punjabi Khaman (Sev)",
+      "price": 150,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "vagharela_khaman",
+      "name": "Vagharela Khaman",
+      "price": 80,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "masala_khaman",
+      "name": "Masala Khaman",
+      "price": 75,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "pakoda_khaman",
+      "name": "Pakoda Khaman",
+      "price": 80,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "dahi_khaman",
+      "name": "Dahi Khaman",
+      "price": 90,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "dahi_tikhari",
+      "name": "Dahi Tikhari",
+      "price": 90,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "rotla_bhakhri",
+      "name": "Rotla (Bhakhri)",
+      "price": 28,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "lava_papad",
+      "name": "Lava Papad",
+      "price": 28,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "swami_roti",
+      "name": "Swami Roti",
+      "price": 15,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "math",
+      "name": "Math",
+      "price": 20,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kathiyawadi_roti_khaman",
+      "name": "Kathiyawadi Roti Khaman",
+      "price": 388,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kathiyawadi_special_combo",
+      "name": "Kathiyawadi Special Combo",
+      "price": 300,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "sev_chaas_dhokli_combo",
+      "name": "Sev Chaas Dhokli Combo",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "methi_gota_sev_combo",
+      "name": "Methi Gota Sev Combo",
+      "price": 380,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "dry_bhaji",
+      "name": "Dry Bhaji",
+      "price": 300,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "lilva_papad",
+      "name": "Lilva Papad",
+      "price": 340,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "masala_aloo",
+      "name": "Masala Aloo",
+      "price": 260,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "lilva_methi_vada",
+      "name": "Lilva Methi Vada",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "gunda_achar",
+      "name": "Gunda Achar",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "rasawala_gunda_bateta",
+      "name": "Rasawala Gunda Bateta",
+      "price": 323,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "lilva_sev_khaman",
+      "name": "Lilva Sev Khaman",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "bateta_sev_kathiyawadi",
+      "name": "Bateta Sev Kathiyawadi",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "lilva_gunda_bateta",
+      "name": "Lilva Gunda Bateta",
+      "price": 323,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "methi_masala",
+      "name": "Methi Masala",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "lilva_rasawala_moria",
+      "name": "Lilva Rasawala Moria",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kaju_kari",
+      "name": "Kaju Kari",
+      "price": 470,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kaju_paneer",
+      "name": "Kaju Paneer",
+      "price": 470,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kaju_masala",
+      "name": "Kaju Masala",
+      "price": 480,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kaju_curry",
+      "name": "Kaju Curry",
+      "price": 480,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kaju_mutter_masala",
+      "name": "Kaju Mutter Masala",
+      "price": 480,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kaju_butter_curry",
+      "name": "Kaju Butter Curry",
+      "price": 480,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kaju_butter_masala",
+      "name": "Kaju Butter Masala",
+      "price": 518,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kaju_kadhai",
+      "name": "Kaju Kadhai",
+      "price": 518,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "kaju_handi",
+      "name": "Kaju Handi",
+      "price": 530,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_handi",
+      "name": "Veg Handi",
+      "price": 320,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_kadhai",
+      "name": "Veg Kadhai",
+      "price": 360,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_kolhapuri",
+      "name": "Veg Kolhapuri",
+      "price": 350,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_hyderabadi",
+      "name": "Veg Hyderabadi",
+      "price": 370,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_jaipuri",
+      "name": "Veg Jaipuri",
+      "price": 350,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_tawa_masala",
+      "name": "Veg Tawa Masala",
+      "price": 370,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_chatpata",
+      "name": "Veg Chatpata",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_makhanwala",
+      "name": "Veg Makhanwala",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_kaju_masala",
+      "name": "Veg Kaju Masala",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_bhuna_masala",
+      "name": "Veg Bhuna Masala",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_paneer_mix",
+      "name": "Veg Paneer Mix",
+      "price": 410,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "mix_vegetable",
+      "name": "Mix Vegetable",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_do_pyaza",
+      "name": "Veg Do Pyaza",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_achari",
+      "name": "Veg Achari",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "veg_lahori",
+      "name": "Veg Lahori",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "aloo_gobi",
+      "name": "Aloo Gobi",
+      "price": 340,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "paneer_butter_masala",
+      "name": "Paneer Butter Masala",
+      "price": 390,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "shahi_paneer",
+      "name": "Shahi Paneer",
+      "price": 420,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "paneer_kadhai",
+      "name": "Paneer Kadhai",
+      "price": 390,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "paneer_handi",
+      "name": "Paneer Handi",
+      "price": 400,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "paneer_makhani",
+      "name": "Paneer Makhani",
+      "price": 400,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "paneer_tawa",
+      "name": "Paneer Tawa",
+      "price": 400,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "paneer_achari",
+      "name": "Paneer Achari",
+      "price": 420,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "paneer_bhuna",
+      "name": "Paneer Bhuna",
+      "price": 430,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "paneer_curry",
+      "name": "Paneer Curry",
+      "price": 450,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "paneer_do_pyaza",
+      "name": "Paneer Do Pyaza",
+      "price": 450,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "buttermilk",
+      "name": "Buttermilk",
+      "price": 20,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "salted_papad",
+      "name": "Salted Papad",
+      "price": 20,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "fried_papad",
+      "name": "Fried Papad",
+      "price": 30,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "fried_mirch",
+      "name": "Fried Mirch",
+      "price": 20,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "tomato_salad",
+      "name": "Tomato Salad",
+      "price": 50,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "water_bottle",
+      "name": "Water Bottle",
+      "price": 20,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_001"
+    },
+    {
+      "id": "lasaniya_dhokla",
+      "name": "Lasaniya Dhokla",
+      "price": 320,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kathiyawadi_special",
+      "name": "Kathiyawadi Special",
+      "price": 300,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "sev_khamani",
+      "name": "Sev Khamani",
+      "price": 280,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "batata_vada",
+      "name": "Batata Vada",
+      "price": 280,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kothimbir_vadi",
+      "name": "Kothimbir Vadi",
+      "price": 280,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "farali_sev_khaman",
+      "name": "Farali Sev Khaman",
+      "price": 300,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "dahi",
+      "name": "Dahi",
+      "price": 150,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kadhi_bowl",
+      "name": "Kadhi Bowl",
+      "price": 150,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "masala_khaman_sev",
+      "name": "Masala Khaman (Sev)",
+      "price": 210,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "punjabi_khaman_sev",
+      "name": "Punjabi Khaman (Sev)",
+      "price": 150,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "vagharela_khaman",
+      "name": "Vagharela Khaman",
+      "price": 80,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "masala_khaman",
+      "name": "Masala Khaman",
+      "price": 75,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "pakoda_khaman",
+      "name": "Pakoda Khaman",
+      "price": 80,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "dahi_khaman",
+      "name": "Dahi Khaman",
+      "price": 90,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "dahi_tikhari",
+      "name": "Dahi Tikhari",
+      "price": 90,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "rotla_bhakhri",
+      "name": "Rotla (Bhakhri)",
+      "price": 28,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "lava_papad",
+      "name": "Lava Papad",
+      "price": 28,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "swami_roti",
+      "name": "Swami Roti",
+      "price": 15,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "math",
+      "name": "Math",
+      "price": 20,
+      "category": "Kathiyawadi",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kathiyawadi_roti_khaman",
+      "name": "Kathiyawadi Roti Khaman",
+      "price": 388,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kathiyawadi_special_combo",
+      "name": "Kathiyawadi Special Combo",
+      "price": 300,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "sev_chaas_dhokli_combo",
+      "name": "Sev Chaas Dhokli Combo",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "methi_gota_sev_combo",
+      "name": "Methi Gota Sev Combo",
+      "price": 380,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "dry_bhaji",
+      "name": "Dry Bhaji",
+      "price": 300,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "lilva_papad",
+      "name": "Lilva Papad",
+      "price": 340,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "masala_aloo",
+      "name": "Masala Aloo",
+      "price": 260,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "lilva_methi_vada",
+      "name": "Lilva Methi Vada",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "gunda_achar",
+      "name": "Gunda Achar",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "rasawala_gunda_bateta",
+      "name": "Rasawala Gunda Bateta",
+      "price": 323,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "lilva_sev_khaman",
+      "name": "Lilva Sev Khaman",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "bateta_sev_kathiyawadi",
+      "name": "Bateta Sev Kathiyawadi",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "lilva_gunda_bateta",
+      "name": "Lilva Gunda Bateta",
+      "price": 323,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "methi_masala",
+      "name": "Methi Masala",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "lilva_rasawala_moria",
+      "name": "Lilva Rasawala Moria",
+      "price": 320,
+      "category": "Kathiyawadi Special",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kaju_kari",
+      "name": "Kaju Kari",
+      "price": 470,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kaju_paneer",
+      "name": "Kaju Paneer",
+      "price": 470,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kaju_masala",
+      "name": "Kaju Masala",
+      "price": 480,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kaju_curry",
+      "name": "Kaju Curry",
+      "price": 480,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kaju_mutter_masala",
+      "name": "Kaju Mutter Masala",
+      "price": 480,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kaju_butter_curry",
+      "name": "Kaju Butter Curry",
+      "price": 480,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kaju_butter_masala",
+      "name": "Kaju Butter Masala",
+      "price": 518,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kaju_kadhai",
+      "name": "Kaju Kadhai",
+      "price": 518,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "kaju_handi",
+      "name": "Kaju Handi",
+      "price": 530,
+      "category": "Kaju",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_handi",
+      "name": "Veg Handi",
+      "price": 320,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_kadhai",
+      "name": "Veg Kadhai",
+      "price": 360,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_kolhapuri",
+      "name": "Veg Kolhapuri",
+      "price": 350,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_hyderabadi",
+      "name": "Veg Hyderabadi",
+      "price": 370,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_jaipuri",
+      "name": "Veg Jaipuri",
+      "price": 350,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_tawa_masala",
+      "name": "Veg Tawa Masala",
+      "price": 370,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_chatpata",
+      "name": "Veg Chatpata",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_makhanwala",
+      "name": "Veg Makhanwala",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_kaju_masala",
+      "name": "Veg Kaju Masala",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_bhuna_masala",
+      "name": "Veg Bhuna Masala",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_paneer_mix",
+      "name": "Veg Paneer Mix",
+      "price": 410,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "mix_vegetable",
+      "name": "Mix Vegetable",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_do_pyaza",
+      "name": "Veg Do Pyaza",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_achari",
+      "name": "Veg Achari",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "veg_lahori",
+      "name": "Veg Lahori",
+      "price": 380,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "aloo_gobi",
+      "name": "Aloo Gobi",
+      "price": 340,
+      "category": "Vegetables",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "paneer_butter_masala",
+      "name": "Paneer Butter Masala",
+      "price": 390,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "shahi_paneer",
+      "name": "Shahi Paneer",
+      "price": 420,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "paneer_kadhai",
+      "name": "Paneer Kadhai",
+      "price": 390,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "paneer_handi",
+      "name": "Paneer Handi",
+      "price": 400,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "paneer_makhani",
+      "name": "Paneer Makhani",
+      "price": 400,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "paneer_tawa",
+      "name": "Paneer Tawa",
+      "price": 400,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "paneer_achari",
+      "name": "Paneer Achari",
+      "price": 420,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "paneer_bhuna",
+      "name": "Paneer Bhuna",
+      "price": 430,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "paneer_curry",
+      "name": "Paneer Curry",
+      "price": 450,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "paneer_do_pyaza",
+      "name": "Paneer Do Pyaza",
+      "price": 450,
+      "category": "Paneer",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "buttermilk",
+      "name": "Buttermilk",
+      "price": 20,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "salted_papad",
+      "name": "Salted Papad",
+      "price": 20,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "fried_papad",
+      "name": "Fried Papad",
+      "price": 30,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "fried_mirch",
+      "name": "Fried Mirch",
+      "price": 20,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "tomato_salad",
+      "name": "Tomato Salad",
+      "price": 50,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    },
+    {
+      "id": "water_bottle",
+      "name": "Water Bottle",
+      "price": 20,
+      "category": "Beverages",
+      "available": true,
+      "restaurant_id": "r_88750849"
+    }
+  ],
+  "orders": [
+    {
+      "id": "O-479BF087",
+      "session_id": "S-C596DE95",
+      "table_id": "T-1",
+      "status": "served",
+      "created_at": "2026-06-19T06:50:55.488Z",
+      "items": [
+        {
+          "itemId": 1781851855488,
+          "menuItemId": "paneer_bhuna",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        },
+        {
+          "itemId": 1781851855489,
+          "menuItemId": "paneer_curry",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        }
+      ],
+      "_id": "IO1B6OQ"
+    },
+    {
+      "id": "O-AE2F96C1",
+      "session_id": "S-C596DE95",
+      "table_id": "T-1",
+      "status": "served",
+      "created_at": "2026-06-19T06:53:31.778Z",
+      "items": [
+        {
+          "itemId": 1781852011778,
+          "menuItemId": "water_bottle",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        }
+      ],
+      "_id": "N2C6SH6"
+    },
+    {
+      "id": "O-AA838218",
+      "session_id": "S-2C93AB8A",
+      "table_id": "T-3",
+      "status": "served",
+      "created_at": "2026-06-19T06:55:33.251Z",
+      "items": [
+        {
+          "itemId": 1781852133251,
+          "menuItemId": "kothimbir_vadi",
+          "qty": 1,
+          "notes": "spicyyyy",
+          "status": "served"
+        },
+        {
+          "itemId": 1781852133252,
+          "menuItemId": "kaju_mutter_masala",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        },
+        {
+          "itemId": 1781852133253,
+          "menuItemId": "gulab_jamun",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        }
+      ],
+      "_id": "BJIH2ED"
+    },
+    {
+      "id": "O-3B944EF4",
+      "session_id": "S-CE1FB806",
+      "table_id": "T-1",
+      "status": "served",
+      "created_at": "2026-06-19T06:56:55.734Z",
+      "items": [
+        {
+          "itemId": 1781852215734,
+          "menuItemId": "kothimbir_vadi",
+          "qty": 5,
+          "notes": "xyz",
+          "status": "served"
+        },
+        {
+          "itemId": 1781852215735,
+          "menuItemId": "veg_makhanwala",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        },
+        {
+          "itemId": 1781852215736,
+          "menuItemId": "sweet_corn_soup",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        }
+      ],
+      "_id": "FZCZ0OF"
+    },
+    {
+      "id": "O-E9C8DB4A",
+      "session_id": "S-9441EB26",
+      "table_id": "T-3",
+      "status": "served",
+      "created_at": "2026-06-19T07:10:41.225Z",
+      "items": [
+        {
+          "itemId": 1781853041225,
+          "menuItemId": "tomato_salad",
+          "qty": 1,
+          "notes": "no onion",
+          "status": "served"
+        },
+        {
+          "itemId": 1781853041226,
+          "menuItemId": "jeera_rice",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        },
+        {
+          "itemId": 1781853041227,
+          "menuItemId": "shahi_paneer",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        }
+      ],
+      "_id": "73LAWM9"
+    },
+    {
+      "id": "O-792A6893",
+      "session_id": "S-FDE1C711",
+      "table_id": "T-1",
+      "status": "served",
+      "created_at": "2026-06-22T02:56:20.875Z",
+      "items": [
+        {
+          "itemId": 1782096980875,
+          "menuItemId": "dahi",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        }
+      ],
+      "_id": "8AQTBKZ"
+    },
+    {
+      "id": "O-865A8300",
+      "session_id": "S-97EC8635",
+      "table_id": "T-1",
+      "status": "served",
+      "created_at": "2026-06-22T03:05:29.087Z",
+      "items": [
+        {
+          "itemId": 1782097529087,
+          "menuItemId": "kathiyawadi_special",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        },
+        {
+          "itemId": 1782097529088,
+          "menuItemId": "tomato_salad",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        },
+        {
+          "itemId": 1782097529089,
+          "menuItemId": "jeera_rice",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        }
+      ],
+      "_id": "HPV9CBL"
+    },
+    {
+      "id": "O-47BC5750",
+      "session_id": "S-97EC8635",
+      "table_id": "T-1",
+      "status": "served",
+      "created_at": "2026-06-22T03:06:21.762Z",
+      "items": [
+        {
+          "itemId": 1782097581762,
+          "menuItemId": "buttermilk",
+          "qty": 1,
+          "notes": "asxdadad",
+          "status": "served"
+        }
+      ],
+      "_id": "RJKLJW9"
+    },
+    {
+      "id": "O-9944ECFF",
+      "session_id": "S-97EC8635",
+      "table_id": "T-1",
+      "status": "served",
+      "created_at": "2026-06-22T03:07:27.449Z",
+      "items": [
+        {
+          "itemId": 1782097647449,
+          "menuItemId": "kothimbir_vadi",
+          "qty": 1,
+          "notes": null,
+          "status": "served"
+        },
+        {
+          "itemId": 1782097647450,
+          "menuItemId": "batata_vada",
+          "qty": 1,
+          "notes": "adcads",
+          "status": "served"
+        }
+      ],
+      "_id": "H8CR55G"
+    },
+    {
+      "id": "O-94C680FF",
+      "session_id": "S-01FC4D36",
+      "table_id": "T-1",
+      "status": "pending",
+      "created_at": "2026-06-22T04:32:10.663Z",
+      "items": [
+        {
+          "itemId": 1782102730663,
+          "menuItemId": "sev_khamani",
+          "qty": 1,
+          "notes": null,
+          "status": "pending"
+        },
+        {
+          "itemId": 1782102730664,
+          "menuItemId": "methi_gota_sev_combo",
+          "qty": 1,
+          "notes": null,
+          "status": "pending"
+        }
+      ],
+      "_id": "NGR8CZQ"
+    }
+  ],
+  "help_requests": [
+    {
+      "table_id": "T-1",
+      "session_id": "S-C596DE95",
+      "type": "staff_call",
+      "status": "resolved",
+      "created_at": "2026-06-19T06:49:35.658Z",
+      "_id": "AEMJR8U"
+    },
+    {
+      "table_id": "T-1",
+      "session_id": "S-C596DE95",
+      "type": "staff_call",
+      "status": "resolved",
+      "created_at": "2026-06-19T06:53:07.294Z",
+      "_id": "L7PTE0S"
+    },
+    {
+      "table_id": "T-1",
+      "session_id": "S-C596DE95",
+      "type": "staff_call",
+      "status": "resolved",
+      "created_at": "2026-06-19T06:53:11.236Z",
+      "_id": "HG5K5HW"
+    },
+    {
+      "table_id": "T-1",
+      "session_id": "S-C596DE95",
+      "type": "bill_request",
+      "status": "resolved",
+      "created_at": "2026-06-19T06:54:01.824Z",
+      "_id": "H5TRTL8"
+    },
+    {
+      "table_id": "T-3",
+      "session_id": "S-9441EB26",
+      "type": "bill_request",
+      "status": "resolved",
+      "created_at": "2026-06-19T07:11:52.359Z",
+      "_id": "AW3G3DZ"
+    },
+    {
+      "table_id": "T-1",
+      "session_id": "S-FDE1C711",
+      "type": "staff_call",
+      "status": "resolved",
+      "created_at": "2026-06-22T02:57:13.308Z",
+      "_id": "70P60NY"
+    }
+  ],
+  "bills": [
+    {
+      "session_id": "S-C596DE95",
+      "table_id": "T-1",
+      "total": 945,
+      "status": "paid",
+      "created_at": "2026-06-19T06:54:50.528Z",
+      "_id": "YF9ZIQF",
+      "pdf_path": "/receipts/receipt_S-C596DE95.pdf"
+    },
+    {
+      "session_id": "S-CE1FB806",
+      "table_id": "T-1",
+      "total": 1869,
+      "status": "paid",
+      "pdf_path": "/receipts/receipt_S-CE1FB806.pdf",
+      "created_at": "2026-06-19T06:58:07.781Z",
+      "_id": "JRV0RXQ"
+    },
+    {
+      "session_id": "S-2C93AB8A",
+      "table_id": "T-3",
+      "total": 798,
+      "status": "paid",
+      "pdf_path": "/receipts/receipt_S-2C93AB8A.pdf",
+      "created_at": "2026-06-19T06:58:23.747Z",
+      "_id": "0RSCM0U"
+    },
+    {
+      "session_id": "S-9441EB26",
+      "table_id": "T-3",
+      "total": 493.5,
+      "status": "paid",
+      "created_at": "2026-06-19T07:12:03.738Z",
+      "_id": "TSGQZKE",
+      "pdf_path": "/receipts/receipt_S-9441EB26.pdf"
+    },
+    {
+      "session_id": "S-FDE1C711",
+      "table_id": "T-1",
+      "total": 157.5,
+      "status": "paid",
+      "pdf_path": "/receipts/receipt_S-FDE1C711.pdf",
+      "created_at": "2026-06-22T03:02:39.721Z",
+      "_id": "PPRFCXT"
+    },
+    {
+      "session_id": "S-97EC8635",
+      "table_id": "T-1",
+      "total": 976.5,
+      "status": "paid",
+      "pdf_path": "/receipts/receipt_S-97EC8635.pdf",
+      "created_at": "2026-06-22T04:01:17.283Z",
+      "_id": "OOGE4MD"
+    }
+  ],
+  "users": [
+    {
+      "_id": "U-001",
+      "email": "manager@test.com",
+      "password": "admin123",
+      "role": "manager",
+      "restaurant_id": "r_001"
+    },
+    {
+      "_id": "U-002",
+      "email": "kitchen@test.com",
+      "password": "kitchen123",
+      "role": "kitchen",
+      "restaurant_id": "r_001"
+    },
+    {
+      "_id": "U-4837D7FE",
+      "email": "thakorarpitsinh25@gmail.com",
+      "password": "123456",
+      "role": "manager",
+      "restaurant_id": "r_88750849",
+      "restaurant_name": "Arpitsinh"
+    },
+    {
+      "_id": "U-21DD97E5",
+      "email": "kitchen@r_88750849.com",
+      "password": "kitchen123",
+      "role": "kitchen",
+      "restaurant_id": "r_88750849",
+      "restaurant_name": "Arpitsinh"
+    }
+  ]
+}
