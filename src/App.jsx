@@ -17,7 +17,7 @@ function App() {
   return (
     <Router basename={import.meta.env.BASE_URL}>
       <CartProvider>
-        <div className="app-container" style={{ maxWidth: window.location.pathname.match(/kitchen|counter|admin|table|menu|status|orders|bill|help|restaurant/) || window.location.pathname === '/' ? '100%' : '480px' }}>
+        <div className="app-container" style={{ maxWidth: '100%', width: '100%' }}>
           <Routes>
             {/* Public Auth Route */}
             <Route path="/login" element={<Login />} />
