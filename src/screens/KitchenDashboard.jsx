@@ -41,7 +41,7 @@ export default function KitchenDashboard() {
       <div className="max-w-[1440px] mx-auto z-10 relative">
         
         {/* Header */}
-        <div className="flex justify-between items-center mb-8 bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-lg">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-lg">
           <div className="flex items-center gap-3">
             <div className="bg-primary/25 border border-primary/30 p-3 rounded-xl text-green-400">
               <ChefHat size={28}/>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CreditCard, Printer, Users, Bell, DollarSign, CheckCircle2, Download, LogOut, XCircle, Plus, Trash2, Copy, ExternalLink, ChefHat, Clock, Play, Check, Edit2, Save } from 'lucide-react';
+import { CreditCard, Printer, Users, Bell, DollarSign, CheckCircle2, Download, LogOut, XCircle, Plus, Trash2, Copy, ExternalLink, ChefHat, Clock, Play, Check, Edit2, Save, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { useCart } from '../context/CartContext';
@@ -490,7 +490,7 @@ export default function CounterBilling() {
         {/* Tab 1: Billing & Desk */}
         {activeTab === 'billing' && (<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in duration-200">
             {/* Left Panel: Help Requests & Sales Summary */}
-            <div className="space-y-6 flex flex-col">
+            <div className={`space-y-6 flex-col ${selectedTableId ? 'hidden lg:flex' : 'flex'}`}>
               {/* Real-time Inbox */}
               <div className="glass-card rounded-xl border border-white/10 overflow-hidden" onMouseMove={handleMouseMove}>
                 <div className="p-4 bg-white/5 border-b border-white/10 z-10">
@@ -591,10 +591,18 @@ export default function CounterBilling() {
             </div>
 
             {/* Right Panel: Invoice Detailed View */}
-            <div className="glass-card rounded-xl border border-white/10 lg:col-span-2 h-[80vh] flex flex-col overflow-hidden" onMouseMove={handleMouseMove}>
+            <div className={`glass-card rounded-xl border border-white/10 lg:col-span-2 h-[80vh] flex-col overflow-hidden ${selectedTableId ? 'flex' : 'hidden lg:flex'}`} onMouseMove={handleMouseMove}>
                {/* Selected Table Header */}
                <div className="flex justify-between items-start border-b border-white/10 p-6 bg-white/5 z-10">
                     <div>
+                      {selectedTableId && (
+                        <button
+                          onClick={() => setSelectedTableId('')}
+                          className="lg:hidden flex items-center gap-1.5 text-green-400 hover:text-green-300 hover:underline font-bold text-sm mb-3 bg-transparent p-0 border-0"
+                        >
+                          <ArrowLeft size={16}/> Back to Tables
+                        </button>
+                      )}
                       <h2 className="text-2xl font-black text-white flex items-center gap-3">
                         Table {selectedTable ? selectedTable.table_number : ''}
                         {isBillRequested && (<span className="bg-orange-500/20 text-orange-300 border border-orange-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm animate-pulse">
@@ -616,10 +624,10 @@ export default function CounterBilling() {
                     <table className="w-full text-left border-collapse">
                       <thead className="bg-transparent border-b border-white/10 z-10">
                         <tr>
-                          <th className="py-4 px-6 text-xs text-gray-400 uppercase tracking-widest">Ordered Dish</th>
-                          <th className="py-4 px-6 text-center text-xs text-gray-400 uppercase tracking-widest w-24">QTY</th>
-                          <th className="py-4 px-6 text-right text-xs text-gray-400 uppercase tracking-widest w-32">Price</th>
-                          <th className="py-4 px-6 text-right text-xs text-gray-400 uppercase tracking-widest w-32">Total</th>
+                          <th className="py-4 px-2 sm:px-6 text-xs text-gray-400 uppercase tracking-widest">Ordered Dish</th>
+                          <th className="py-4 px-2 sm:px-6 text-center text-xs text-gray-400 uppercase tracking-widest w-16 sm:w-24">QTY</th>
+                          <th className="py-4 px-2 sm:px-6 text-right text-xs text-gray-400 uppercase tracking-widest w-20 sm:w-32">Price</th>
+                          <th className="py-4 px-2 sm:px-6 text-right text-xs text-gray-400 uppercase tracking-widest w-20 sm:w-32">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -629,13 +637,13 @@ export default function CounterBilling() {
                                <p className="text-gray-500 text-sm">Table is empty or reset</p>
                             </td>
                           </tr>) : (allOrderedItems.map((item, idx) => (<tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                              <td className="py-4 px-6">
+                              <td className="py-4 px-2 sm:px-6">
                                 <span className="font-bold text-white">{item.name}</span>
                                 {item.notes.length > 0 && item.notes.filter(Boolean).map((note, nIdx) => (<span key={nIdx} className="block text-xs text-red-300 font-semibold mt-1">Note: {note}</span>))}
                               </td>
-                              <td className="py-4 px-6 text-center font-mono font-bold text-gray-300 bg-white/5">{item.qty}</td>
-                              <td className="py-4 px-6 text-right font-mono text-gray-400">₹{item.price}</td>
-                              <td className="py-4 px-6 text-right font-mono font-bold text-white">₹{item.price * item.qty}</td>
+                              <td className="py-4 px-2 sm:px-6 text-center font-mono font-bold text-gray-300 bg-white/5">{item.qty}</td>
+                              <td className="py-4 px-2 sm:px-6 text-right font-mono text-gray-400">₹{item.price}</td>
+                              <td className="py-4 px-2 sm:px-6 text-right font-mono font-bold text-white">₹{item.price * item.qty}</td>
                             </tr>)))}
                       </tbody>
                     </table>
@@ -917,10 +925,10 @@ export default function CounterBilling() {
                   <table className="w-full text-left border-collapse">
                     <thead className="bg-white/5 border-b border-white/10">
                       <tr>
-                        <th className="py-3.5 px-4 text-xs text-gray-400 uppercase tracking-wider">Dish Name</th>
-                        <th className="py-3.5 px-4 text-xs text-gray-400 uppercase tracking-wider">Category</th>
-                        <th className="py-3.5 px-4 text-xs text-gray-400 tracking-wider text-right w-36">Price</th>
-                        <th className="py-3.5 px-4 text-center text-xs text-gray-400 uppercase tracking-wider w-32">Actions</th>
+                        <th className="py-3.5 px-2 sm:px-4 text-xs text-gray-400 uppercase tracking-wider">Dish Name</th>
+                        <th className="py-3.5 px-2 sm:px-4 text-xs text-gray-400 uppercase tracking-wider">Category</th>
+                        <th className="py-3.5 px-2 sm:px-4 text-xs text-gray-400 tracking-wider text-right w-20 sm:w-36">Price</th>
+                        <th className="py-3.5 px-2 sm:px-4 text-center text-xs text-gray-400 uppercase tracking-wider w-20 sm:w-32">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
@@ -931,9 +939,9 @@ export default function CounterBilling() {
                         </tr>) : (menuItems.map((item) => {
                 const isEditing = editingItemId === item.id;
                 return (<tr key={item.id} className="hover:bg-white/5 transition-colors">
-                              <td className="py-4 px-4 font-bold text-white text-sm">{item.name}</td>
+                              <td className="py-4 px-2 sm:px-4 font-bold text-white text-sm">{item.name}</td>
                               
-                              <td className="py-4 px-4">
+                              <td className="py-4 px-2 sm:px-4">
                                 {isEditing ? (<select value={editCategory} onChange={(e) => setEditCategory(e.target.value)} className="input-dark rounded py-1 px-2 text-xs font-bold bg-[#0d120e]">
                                     {CATEGORIES.map(cat => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
                                   </select>) : (<span className="text-xs font-black bg-white/5 border border-white/10 text-gray-300 px-2.5 py-1 rounded-full uppercase tracking-wider">
@@ -941,14 +949,14 @@ export default function CounterBilling() {
                                   </span>)}
                               </td>
 
-                              <td className="py-4 px-4 text-right">
+                              <td className="py-4 px-2 sm:px-4 text-right">
                                 {isEditing ? (<div className="flex items-center gap-1 justify-end">
                                     <span className="text-xs font-bold text-green-400">₹</span>
                                     <input type="number" value={editPrice} onChange={(e) => setEditPrice(e.target.value)} className="input-dark w-20 rounded py-1 px-2 text-xs font-bold text-right"/>
                                   </div>) : (<span className="font-bold text-green-400 text-sm">₹{item.price}</span>)}
                               </td>
 
-                              <td className="py-4 px-4 text-center">
+                              <td className="py-4 px-2 sm:px-4 text-center">
                                 <div className="flex items-center justify-center gap-2">
                                   {isEditing ? (<>
                                       <button onClick={() => handleUpdateMenuItem(item.id)} className="p-1.5 btn-premium-green rounded transition" title="Save Changes">

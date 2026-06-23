@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
+  /* Design System Default Palette */
+  --color-bg: #0f0f11;
+  --color-surface: #1a1a1f;
+  --color-border: #2a2a35;
+  --color-text-primary: #f0f0f5;
+  --color-text-secondary: #8888a0;
+  --color-accent: #7c6aff;
+  --color-accent-hover: #9580ff;
+
   --primary: #16A34A; /* Fresh Green Theme */
   --primary-light: #22C55E;
   --primary-dark: #15803D;
@@ -610,6 +620,122 @@ button:active {
 .guest-input-search:focus {
   border-color: #16a34a;
   box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+/* ============================================================ */
+/* DESIGN SYSTEM & RESPONSIVE GRID UTILITIES                    */
+/* ============================================================ */
+
+/* Accessibility Focus States */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-accent, #7c6aff) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(124, 106, 255, 0.4) !important;
+}
+
+/* Scrollbar Hide Utility */
+.scrollbar-hide {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Grid display and standard columns */
+.grid {
+  display: grid !important;
+}
+.grid-cols-1 { grid-template-cols: repeat(1, minmax(0, 1fr)) !important; }
+.grid-cols-2 { grid-template-cols: repeat(2, minmax(0, 1fr)) !important; }
+.grid-cols-3 { grid-template-cols: repeat(3, minmax(0, 1fr)) !important; }
+.grid-cols-4 { grid-template-cols: repeat(4, minmax(0, 1fr)) !important; }
+.grid-cols-5 { grid-template-cols: repeat(5, minmax(0, 1fr)) !important; }
+
+/* Column spans */
+.col-span-1 { grid-column: span 1 / span 1 !important; }
+.col-span-2 { grid-column: span 2 / span 2 !important; }
+.col-span-3 { grid-column: span 3 / span 3 !important; }
+.col-span-4 { grid-column: span 4 / span 4 !important; }
+.col-span-5 { grid-column: span 5 / span 5 !important; }
+
+/* Spacing and Gaps (multiples of 8px where possible) */
+.gap-0 { gap: 0px !important; }
+.gap-1 { gap: 4px !important; }
+.gap-1\.5 { gap: 6px !important; }
+.gap-2 { gap: 8px !important; }
+.gap-2\.5 { gap: 10px !important; }
+.gap-3 { gap: 12px !important; }
+.gap-4 { gap: 16px !important; }
+.gap-6 { gap: 24px !important; }
+.gap-8 { gap: 32px !important; }
+
+.space-y-1 > * + * { margin-top: 4px !important; }
+.space-y-2 > * + * { margin-top: 8px !important; }
+.space-y-3 > * + * { margin-top: 12px !important; }
+.space-y-4 > * + * { margin-top: 16px !important; }
+.space-y-5 > * + * { margin-top: 20px !important; }
+.space-y-6 > * + * { margin-top: 24px !important; }
+.space-y-8 > * + * { margin-top: 32px !important; }
+
+.divide-y > * + * { border-top-width: 1px !important; border-top-style: solid !important; }
+.divide-x > * + * { border-left-width: 1px !important; border-left-style: solid !important; }
+.divide-gray-100 > * + * { border-color: #f3f4f6 !important; }
+.divide-white\/5 > * + * { border-color: rgba(255, 255, 255, 0.05) !important; }
+.divide-white\/10 > * + * { border-color: rgba(255, 255, 255, 0.1) !important; }
+
+/* Max Width Constraints */
+.max-w-\[1440px\] { max-width: 1440px !important; }
+.max-w-\[1200px\] { max-width: 1200px !important; }
+.max-w-\[960px\] { max-width: 960px !important; }
+.max-w-\[900px\] { max-width: 900px !important; }
+.max-w-\[600px\] { max-width: 600px !important; }
+.max-w-\[480px\] { max-width: 480px !important; }
+.max-w-\[440px\] { max-width: 440px !important; }
+.max-w-\[400px\] { max-width: 400px !important; }
+.max-w-\[350px\] { max-width: 350px !important; }
+.mx-auto { margin-left: auto !important; margin-right: auto !important; }
+
+.px-4 { padding-left: 16px !important; padding-right: 16px !important; }
+.px-6 { padding-left: 24px !important; padding-right: 24px !important; }
+
+/* Hide helper */
+.hidden { display: none !important; }
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .md\:grid-cols-2 { grid-template-cols: repeat(2, minmax(0, 1fr)) !important; }
+  .md\:grid-cols-4 { grid-template-cols: repeat(4, minmax(0, 1fr)) !important; }
+  .md\:col-span-1 { grid-column: span 1 / span 1 !important; }
+  .md\:col-span-3 { grid-column: span 3 / span 3 !important; }
+  .md\:col-span-4 { grid-column: span 4 / span 4 !important; }
+  .md\:block { display: block !important; }
+  .md\:flex { display: flex !important; }
+  .md\:hidden { display: none !important; }
+}
+
+/* Large devices (desktops, 1024px and up) */
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 { grid-template-cols: repeat(3, minmax(0, 1fr)) !important; }
+  .lg\:grid-cols-5 { grid-template-cols: repeat(5, minmax(0, 1fr)) !important; }
+  .lg\:col-span-1 { grid-column: span 1 / span 1 !important; }
+  .lg\:col-span-2 { grid-column: span 2 / span 2 !important; }
+  .lg\:col-span-3 { grid-column: span 3 / span 3 !important; }
+  .lg\:col-span-5 { grid-column: span 5 / span 5 !important; }
+  .lg\:block { display: block !important; }
+  .lg\:flex { display: flex !important; }
+  .lg\:hidden { display: none !important; }
+}
+
+/* Extra large devices (large desktops, 1280px and up) */
+@media (min-width: 1280px) {
+  .xl\:grid-cols-4 { grid-template-cols: repeat(4, minmax(0, 1fr)) !important; }
+  .xl\:block { display: block !important; }
+  .xl\:flex { display: flex !important; }
+  .xl\:hidden { display: none !important; }
 }
 
 

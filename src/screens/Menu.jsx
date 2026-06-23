@@ -230,31 +230,33 @@ export default function Menu() {
     return (<div className="light-green-wrapper pb-28 pt-16 relative bg-[#f4f7f5] text-slate-800 min-h-screen">
       
       {/* 1. PERSISTENT HEADER TOP BAR (Light Theme) */}
-      <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-200/80 py-3.5 px-6 flex justify-between items-center z-40 shadow-sm">
-        <div className="flex items-center gap-3">
-          <span className="text-xl">🍽️</span>
-          <div>
-            <h1 className="guest-brand-logo text-lg tracking-tight font-black">DineFlow</h1>
-            <p className="text-[10px] text-gray-550 font-bold uppercase">The Spice Route</p>
+      <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-200/80 py-3.5 px-4 md:px-6 z-40 shadow-sm">
+        <div className="max-w-[1440px] mx-auto w-full flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <span className="text-xl">🍽️</span>
+            <div>
+              <h1 className="guest-brand-logo text-lg tracking-tight font-black">DineFlow</h1>
+              <p className="text-[10px] text-gray-550 font-bold uppercase">The Spice Route</p>
+            </div>
           </div>
-        </div>
-        
-        {/* Desktop Header Navigation Tabs */}
-        <div className="hidden md:flex items-center gap-6">
-          <button onClick={() => handleTabChange('menu')} className={`guest-tab-btn text-sm uppercase tracking-wider font-extrabold transition-all ${activeTab === 'menu' ? 'active' : ''}`}>
-            Menu
-          </button>
-          <button onClick={() => handleTabChange('orders')} className={`guest-tab-btn text-sm uppercase tracking-wider font-extrabold transition-all ${activeTab === 'orders' ? 'active' : ''}`}>
-            Track Order
-          </button>
-          <button onClick={() => handleTabChange('bill')} className={`guest-tab-btn text-sm uppercase tracking-wider font-extrabold transition-all ${activeTab === 'bill' ? 'active' : ''}`}>
-            Summary Bill
-          </button>
-        </div>
+          
+          {/* Desktop Header Navigation Tabs */}
+          <div className="hidden md:flex items-center gap-6">
+            <button onClick={() => handleTabChange('menu')} className={`guest-tab-btn text-sm uppercase tracking-wider font-extrabold transition-all ${activeTab === 'menu' ? 'active' : ''}`}>
+              Menu
+            </button>
+            <button onClick={() => handleTabChange('orders')} className={`guest-tab-btn text-sm uppercase tracking-wider font-extrabold transition-all ${activeTab === 'orders' ? 'active' : ''}`}>
+              Track Order
+            </button>
+            <button onClick={() => handleTabChange('bill')} className={`guest-tab-btn text-sm uppercase tracking-wider font-extrabold transition-all ${activeTab === 'bill' ? 'active' : ''}`}>
+              Summary Bill
+            </button>
+          </div>
 
-        <span className="bg-[#16a34a] text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
-          Table {tableNumber}
-        </span>
+          <span className="bg-[#16a34a] text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+            Table {tableNumber}
+          </span>
+        </div>
       </header>
 
       {/* Main Responsive Grid Container */}
