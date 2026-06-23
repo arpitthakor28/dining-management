@@ -448,49 +448,73 @@ export default function CounterBilling() {
         card.style.setProperty('--mouse-x', `${x}px`);
         card.style.setProperty('--mouse-y', `${y}px`);
     };
-    return (<div className="dark-theme-wrapper p-6">
-      <div className="ambient-glow-bubble-1"></div>
-      <div className="ambient-glow-bubble-2"></div>
-      
-      <div className="max-w-[1440px] mx-auto z-10 relative">
+    return (<div className="min-h-screen bg-[#0d1117] text-[#e6edf3]" style={{ overflowX: 'hidden' }}>
+      <style>{`
+        .billing-grid-container {
+          display: grid;
+          grid-template-cols: 280px 1fr;
+          gap: 16px;
+          height: calc(100vh - 104px);
+          width: 100%;
+        }
+        @media (max-width: 768px) {
+          .billing-grid-container {
+            grid-template-cols: minmax(0, 1fr);
+            height: auto;
+          }
+        }
+        .billing-sidebar {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          height: 100%;
+          overflow-y: auto;
+        }
+        @media (max-width: 768px) {
+          .billing-sidebar {
+            height: auto;
+          }
+        }
+      `}</style>
+
+      {/* Fixed 56px Topbar */}
+      <header className="topbar">
+        <div className="flex items-center gap-2">
+          <Radio size={18} className="text-[#3fb950]"/>
+          <span className="font-semibold text-[13px] tracking-wide" style={{ color: 'var(--text)' }}>DineFlow Console</span>
+        </div>
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-lg">
-          <div>
-            <h1 className="text-3xl font-black text-white tracking-tight">Counter & Billing</h1>
-            <p className="text-gray-400 font-semibold mt-1">Live synchronized management console</p>
-          </div>
-          <div className="flex flex-wrap gap-2 mt-4 md:mt-0">
-             <button onClick={() => setActiveTab('billing')} className={`px-5 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'billing'
-            ? 'btn-premium-green'
-            : 'btn-premium-outline border border-white/10 text-white hover:bg-white/5'}`}>
-               Billing & Desk
-             </button>
-             <button onClick={() => setActiveTab('kitchen')} className={`px-5 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'kitchen'
-            ? 'btn-premium-green'
-            : 'btn-premium-outline border border-white/10 text-white hover:bg-white/5'}`}>
-               Kitchen Monitor
-             </button>
-             <button onClick={() => setActiveTab('tables')} className={`px-5 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'tables'
-            ? 'btn-premium-green'
-            : 'btn-premium-outline border border-white/10 text-white hover:bg-white/5'}`}>
-               Tables & QRs
-             </button>
-             <button onClick={() => setActiveTab('menu')} className={`px-5 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'menu'
-            ? 'btn-premium-green'
-            : 'btn-premium-outline border border-white/10 text-white hover:bg-white/5'}`}>
-               Menu Catalog
-             </button>
-             <button onClick={handleLogout} className="px-4 py-2.5 btn-premium-danger rounded-lg transition text-sm flex items-center gap-1.5 ml-2">
-               <LogOut size={16}/> Logout
-             </button>
-          </div>
+        {/* Navigation tabs */}
+        <div className="flex items-center gap-2">
+          <button onClick={() => { setActiveTab('billing'); setSelectedTableId(''); }} className={`nav-tab ${activeTab === 'billing' ? 'active' : ''}`}>
+            Billing & Desk
+          </button>
+          <button onClick={() => setActiveTab('kitchen')} className={`nav-tab ${activeTab === 'kitchen' ? 'active' : ''}`}>
+            Kitchen Monitor
+          </button>
+          <button onClick={() => setActiveTab('tables')} className={`nav-tab ${activeTab === 'tables' ? 'active' : ''}`}>
+            Tables & QRs
+          </button>
+          <button onClick={() => setActiveTab('menu')} className={`nav-tab ${activeTab === 'menu' ? 'active' : ''}`}>
+            Menu Catalog
+          </button>
         </div>
 
+        <div className="flex items-center gap-4">
+          <span className="status-badge preparing">Live Sync Active</span>
+          <button onClick={handleLogout} className="btn-ghost" style={{ padding: '5px 10px', fontSize: '11px' }}>
+            Logout
+          </button>
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <main className="content-area page-wrapper">
+
         {/* Tab 1: Billing & Desk */}
-        {activeTab === 'billing' && (<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in duration-200">
-            {/* Left Panel: Help Requests & Sales Summary */}
-            <div className={`space-y-6 flex-col ${selectedTableId ? 'hidden lg:flex' : 'flex'}`}>
+        {activeTab === 'billing' && (<div className="billing-grid-container">
+            {/* Left Sidebar Panel (280px) */}
+            <div className={`billing-sidebar ${selectedTableId ? 'hidden lg:flex' : 'flex'}`}>
               {/* Real-time Inbox */}
               <div className="glass-card rounded-xl border border-white/10 overflow-hidden" onMouseMove={handleMouseMove}>
                 <div className="p-4 bg-white/5 border-b border-white/10 z-10">
@@ -548,11 +572,11 @@ export default function CounterBilling() {
                 const tGrandTotal = tSubtotal * 1.05;
                 const tBillReq = table.status === 'bill_requested';
                 const isSelected = table.id === selectedTableId;
-                return (<div key={table.id} onClick={() => {
+                 return (<div key={table.id} onClick={() => {
                         setSelectedTableId(table.id);
                         setPdfDownloadUrl(null);
                     }} className={`p-3.5 border rounded-xl flex justify-between items-center transition-all cursor-pointer ${isSelected
-                        ? 'border-primary bg-green-500/10 shadow-md ring-2 ring-primary/20'
+                        ? 'billing-active-row'
                         : tBillReq
                             ? 'border-orange-400 bg-orange-500/10 animate-pulse'
                             : table.status === 'active'
@@ -577,14 +601,14 @@ export default function CounterBilling() {
               {/* Today's Sales */}
               <div className="glass-card rounded-xl border border-white/10 p-5" onMouseMove={handleMouseMove}>
                 <h2 className="font-bold text-white text-base mb-4 flex items-center gap-1.5"><DollarSign className="text-green-400" size={20}/> Today's Sales Summary</h2>
-                <div className="grid grid-cols-2 gap-4 z-10 relative">
-                  <div className="bg-green-500/10 p-4 rounded-xl border border-green-500/20">
-                    <span className="text-xs font-bold text-green-300 uppercase tracking-wider block">Total Revenue</span>
-                    <span className="text-2xl font-black text-green-400 block mt-1">₹{todaySales.totalRevenue ? todaySales.totalRevenue.toFixed(2) : '0.00'}</span>
+                <div className="grid grid-cols-2 gap-3 z-10 relative">
+                  <div className="metric-tile">
+                    <span className="metric-label">Total Revenue</span>
+                    <span className="metric-value">₹{todaySales.totalRevenue ? todaySales.totalRevenue.toFixed(0) : '0'}</span>
                   </div>
-                  <div className="bg-blue-500/10 p-4 rounded-xl border border-blue-500/20">
-                    <span className="text-xs font-bold text-blue-300 uppercase tracking-wider block">Bills Paid</span>
-                    <span className="text-2xl font-black text-blue-400 block mt-1">{todaySales.billsCount}</span>
+                  <div className="metric-tile">
+                    <span className="metric-label">Bills Paid</span>
+                    <span className="metric-value">{todaySales.billsCount}</span>
                   </div>
                 </div>
               </div>
@@ -988,6 +1012,6 @@ export default function CounterBilling() {
             </div>
           </div>)}
 
-      </div>
+      </main>
     </div>);
 }

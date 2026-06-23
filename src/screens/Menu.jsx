@@ -174,21 +174,21 @@ export default function Menu() {
     };
     // If validating table session
     if (isValidating) {
-        return (<div className="light-green-wrapper flex flex-col items-center justify-center p-6 min-h-screen text-slate-800">
-        <RefreshCw className="animate-spin text-[#16a34a] mb-4" size={32}/>
-        <p className="text-gray-550 font-bold text-sm">Verifying table session...</p>
+        return (<div className="min-h-screen bg-[#0d1117] text-[#e6edf3] flex flex-col items-center justify-center p-6 text-center">
+        <RefreshCw className="animate-spin text-[#3fb950] mb-4" size={32}/>
+        <p className="font-bold text-sm text-[var(--muted)]">Verifying table session...</p>
       </div>);
     }
     // If table access is invalid
     if (!isValid) {
-        return (<div className="light-green-wrapper flex flex-col items-center justify-center p-6 text-center min-h-screen text-slate-800">
-        <div className="bg-white rounded-3xl border border-gray-200 p-8 max-w-sm shadow-lg flex flex-col items-center">
+        return (<div className="min-h-screen bg-[#0d1117] text-[#e6edf3] flex flex-col items-center justify-center p-6 text-center">
+        <div className="card max-w-sm flex flex-col items-center">
           <AlertTriangle className="text-orange-500 mb-4" size={48}/>
-          <h2 className="text-xl font-extrabold text-slate-800 mb-2">Access Denied</h2>
-          <p className="text-gray-550 text-sm mb-6 leading-relaxed font-semibold">
+          <h2 className="text-xl font-bold mb-2">Access Denied</h2>
+          <p className="text-sm mb-6 leading-relaxed text-[var(--muted)]">
             Please scan the QR code located on your table to access the digital menu.
           </p>
-          <div className="text-xs text-gray-400 font-bold bg-slate-50 border border-gray-100 p-3 rounded-xl w-full">
+          <div className="text-xs font-bold bg-[var(--surface2)] border border-[var(--border)] p-3 rounded-xl w-full text-[var(--muted)]">
             DineFlow Digital Dining System
           </div>
         </div>
@@ -196,26 +196,26 @@ export default function Menu() {
     }
     // If session is settled and closed
     if (sessionClosed) {
-        return (<div className="light-green-wrapper flex flex-col items-center justify-center p-6 text-center min-h-screen text-slate-800">
-        <div className="bg-white rounded-3xl border border-gray-200 p-8 max-w-sm shadow-lg flex flex-col items-center">
-          <div className="rounded-full flex items-center justify-center mb-6 text-[#16a34a]" style={{
+        return (<div className="min-h-screen bg-[#0d1117] text-[#e6edf3] flex flex-col items-center justify-center p-6 text-center">
+        <div className="card max-w-sm flex flex-col items-center">
+          <div className="rounded-full flex items-center justify-center mb-6 text-[#3fb950]" style={{
                 width: '80px',
                 height: '80px',
-                background: 'rgba(22, 163, 94, 0.1)',
-                border: '1px solid rgba(22, 163, 94, 0.25)',
-                boxShadow: '0 0 20px rgba(22, 163, 94, 0.1)'
+                background: 'rgba(63, 185, 80, 0.1)',
+                border: '1px solid rgba(63, 185, 80, 0.25)',
+                boxShadow: '0 0 20px rgba(63, 185, 80, 0.1)'
             }}>
             <CheckCircle2 size={48}/>
           </div>
-          <h2 className="text-2xl font-black text-slate-800 mb-2">Thank You!</h2>
-          <p className="text-sm text-[#16a34a] font-bold mb-4">Payment Confirmed</p>
-          <p className="text-gray-550 text-sm mb-6 leading-relaxed font-semibold">
+          <h2 className="text-2xl font-bold mb-2">Thank You!</h2>
+          <p className="text-sm text-[#3fb950] font-bold mb-4">Payment Confirmed</p>
+          <p className="text-sm mb-6 leading-relaxed text-[var(--muted)]">
             Your bill has been paid and your table session is now closed. We hope you enjoyed your dining experience!
           </p>
           <button onClick={() => {
                 clearTableSession();
                 window.location.href = '/';
-            }} className="w-full guest-btn-add text-white font-bold py-3.5 rounded-xl text-sm shadow-md active:scale-95 transition-all">
+            }} className="w-full btn-primary rounded-xl text-sm shadow-md transition-all">
             Exit Dining System
           </button>
         </div>
@@ -227,40 +227,35 @@ export default function Menu() {
     const cgst = subtotal * 0.025;
     const sgst = subtotal * 0.025;
     const total = subtotal + cgst + sgst;
-    return (<div className="light-green-wrapper pb-28 pt-16 relative bg-[#f4f7f5] text-slate-800 min-h-screen">
+    return (<div className="min-h-screen bg-[#0d1117] text-[#e6edf3] relative">
       
-      {/* 1. PERSISTENT HEADER TOP BAR (Light Theme) */}
-      <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-200/80 py-3.5 px-4 md:px-6 z-40 shadow-sm">
-        <div className="max-w-[1440px] mx-auto w-full flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <span className="text-xl">🍽️</span>
-            <div>
-              <h1 className="guest-brand-logo text-lg tracking-tight font-black">DineFlow</h1>
-              <p className="text-[10px] text-gray-550 font-bold uppercase">The Spice Route</p>
-            </div>
-          </div>
-          
-          {/* Desktop Header Navigation Tabs */}
-          <div className="hidden md:flex items-center gap-6">
-            <button onClick={() => handleTabChange('menu')} className={`guest-tab-btn text-sm uppercase tracking-wider font-extrabold transition-all ${activeTab === 'menu' ? 'active' : ''}`}>
-              Menu
-            </button>
-            <button onClick={() => handleTabChange('orders')} className={`guest-tab-btn text-sm uppercase tracking-wider font-extrabold transition-all ${activeTab === 'orders' ? 'active' : ''}`}>
-              Track Order
-            </button>
-            <button onClick={() => handleTabChange('bill')} className={`guest-tab-btn text-sm uppercase tracking-wider font-extrabold transition-all ${activeTab === 'bill' ? 'active' : ''}`}>
-              Summary Bill
-            </button>
-          </div>
+      {/* Fixed 56px Topbar */}
+      <header className="topbar">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">🍽️</span>
+          <span className="font-semibold text-[13px] tracking-wide" style={{ color: 'var(--text)' }}>DineFlow</span>
+        </div>
+        
+        {/* Navigation tabs */}
+        <div className="flex items-center gap-2">
+          <button onClick={() => handleTabChange('menu')} className={`nav-tab ${activeTab === 'menu' ? 'active' : ''}`}>
+            Menu
+          </button>
+          <button onClick={() => handleTabChange('orders')} className={`nav-tab ${activeTab === 'orders' ? 'active' : ''}`}>
+            Track Order
+          </button>
+          <button onClick={() => handleTabChange('bill')} className={`nav-tab ${activeTab === 'bill' ? 'active' : ''}`}>
+            Summary Bill
+          </button>
+        </div>
 
-          <span className="bg-[#16a34a] text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
-            Table {tableNumber}
-          </span>
+        <div className="flex items-center gap-4">
+          <span className="status-badge ready">Table {tableNumber}</span>
         </div>
       </header>
 
       {/* Main Responsive Grid Container */}
-      <div className="max-w-[1440px] mx-auto px-4 md:px-6 mt-4">
+      <main className="content-area page-wrapper">
         
         {/* Lock Banner if Bill is Requested */}
         {isOrderLocked && (<div className="mb-6 bg-orange-50 border border-orange-200 text-orange-800 p-4 rounded-xl flex items-center gap-3 shadow-sm text-xs font-bold z-10 relative">
@@ -275,8 +270,8 @@ export default function Menu() {
           {/* COLUMN 1: CATEGORIES SIDEBAR (Desktop) */}
           {/* ===================================== */}
           {activeTab === 'menu' && (<div className="hidden md:block md:col-span-1 space-y-6 sticky top-24">
-              <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
-                <span className="block text-[10px] font-black uppercase text-gray-400 tracking-wider mb-4 px-2">Categories</span>
+              <div className="card p-4">
+                <span className="block text-[10px] font-black uppercase tracking-wider mb-4 px-2" style={{ color: 'var(--muted)' }}>Categories</span>
                 <nav className="space-y-1">
                   {menuData.categories.map(cat => (<button key={cat.id} onClick={() => scrollToCategory(cat.id)} className="guest-sidebar-item font-bold text-sm">
                       <span className="text-lg">{cat.emoji}</span>
@@ -286,11 +281,11 @@ export default function Menu() {
               </div>
 
               {/* Chef's Special Promotion Card */}
-              <div className="bg-gradient-to-br from-green-50 to-emerald-100/50 border border-green-200/50 p-5 rounded-2xl shadow-sm text-center">
-                <span className="inline-block bg-green-200/60 text-green-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase mb-2">Chef's Special</span>
-                <h4 className="font-extrabold text-sm text-slate-800">Truffle Pappardelle</h4>
-                <p className="text-[11px] text-gray-500 mt-1">Sautéed wild mushrooms, black truffle paste, parmesan cream.</p>
-                <div className="text-[#16a34a] font-extrabold text-xs mt-3 flex items-center justify-center gap-1 cursor-pointer">
+              <div className="text-center" style={{ background: 'linear-gradient(135deg, rgba(63, 185, 80, 0.12), rgba(88, 166, 255, 0.06))', border: '1px solid rgba(63, 185, 80, 0.25)', borderRadius: 'var(--radius-lg)', padding: '20px' }}>
+                <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full uppercase mb-2" style={{ backgroundColor: 'rgba(63, 185, 80, 0.2)', color: 'var(--accent)' }}>Chef's Special</span>
+                <h4 className="font-extrabold text-sm" style={{ color: 'var(--text)' }}>Truffle Pappardelle</h4>
+                <p className="text-[11px] mt-1" style={{ color: 'var(--muted)' }}>Sautéed wild mushrooms, black truffle paste, parmesan cream.</p>
+                <div className="font-extrabold text-xs mt-3 flex items-center justify-center gap-1 cursor-pointer" style={{ color: 'var(--accent)' }}>
                   Order Now <ArrowRight size={12}/>
                 </div>
               </div>
@@ -307,8 +302,8 @@ export default function Menu() {
             {/* Tab A: MENU CATALOG VIEW */}
             {activeTab === 'menu' && (<div className="animate-in fade-in duration-200 space-y-6">
                          {/* Mobile Category Scrollbar (Hidden on Desktop) */}
-                {!searchQuery && (<div className="flex md:hidden overflow-x-auto gap-2 pb-2 mb-4 scrollbar-hide -mx-4 px-4 sticky top-[68px] z-30 bg-[#f4f7f5]/90 backdrop-blur-sm py-2">
-                    {menuData.categories.map(cat => (<button key={cat.id} onClick={() => scrollToCategory(cat.id)} className="whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold bg-white border border-gray-200 text-gray-700 active:bg-green-50 active:text-[#16a34a] active:border-green-300 flex items-center gap-1 shadow-sm transition-all">
+                {!searchQuery && (<div className="flex md:hidden overflow-x-auto gap-2 pb-2 mb-4 scrollbar-hide -mx-4 px-4 sticky top-[68px] z-30 backdrop-blur-sm py-2" style={{ backgroundColor: 'rgba(13, 17, 23, 0.9)', borderBottom: '1px solid var(--border)' }}>
+                    {menuData.categories.map(cat => (<button key={cat.id} onClick={() => scrollToCategory(cat.id)} className="whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm transition-all active:scale-95" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' }}>
                         <span>{cat.emoji}</span> {cat.name}
                       </button>))}
                   </div>)}
@@ -321,44 +316,44 @@ export default function Menu() {
 
                 {/* Category Sections */}
                 <div className="space-y-8">
-                  {groupedMenu.length > 0 ? (groupedMenu.map((category) => (<div id={`category-${category.id}`} key={category.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                  {groupedMenu.length > 0 ? (groupedMenu.map((category) => (<div id={`category-${category.id}`} key={category.id} className="shadow-sm overflow-hidden" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)' }}>
                         
                         {/* Category Title Header */}
-                        <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between bg-slate-50/50">
+                        <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border)', backgroundColor: 'var(--surface2)' }}>
                           <div>
-                            <h3 className="font-extrabold text-base text-slate-800 flex items-center gap-2">
+                            <h3 className="font-extrabold text-base flex items-center gap-2" style={{ color: 'var(--text)' }}>
                               <span className="text-xl">{category.emoji}</span> {category.name}
                             </h3>
-                            <p className="text-[11px] text-gray-500 font-semibold mt-0.5">Carefully prepared premium selections</p>
+                            <p className="text-[11px] font-semibold mt-0.5" style={{ color: 'var(--muted)' }}>Carefully prepared premium selections</p>
                           </div>
                         </div>
 
                         {/* Dish List Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-0" style={{ backgroundColor: 'var(--border)' }}>
                           {category.items.map((item) => {
                     const cleanId = item.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
                     const cartItem = cartItems.find(i => i.id === cleanId);
                     const isAdded = !!cartItem;
-                    return (<div key={item.name} className="p-5 flex gap-4 bg-white transition-colors hover:bg-slate-50/30">
+                    return (<div key={item.name} className="p-5 flex gap-4 transition-colors" style={{ backgroundColor: 'var(--surface)', borderBottom: '1px solid var(--border)', borderRight: '1px solid var(--border)' }}>
                                 {/* circular emoji graphic avatar */}
-                                <div className="w-14 h-14 rounded-2xl bg-green-50 border border-green-100 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 shadow-inner" style={{ backgroundColor: 'rgba(63, 185, 80, 0.1)', border: '1px solid rgba(63, 185, 80, 0.25)' }}>
                                   {category.emoji}
                                 </div>
 
                                 <div className="flex-1 min-w-0 flex flex-col justify-between">
                                   <div>
                                     <div className="flex justify-between items-start gap-2">
-                                      <h4 className="font-extrabold text-slate-800 text-sm leading-snug truncate">{item.name}</h4>
+                                      <h4 className="font-extrabold text-sm leading-snug truncate" style={{ color: 'var(--text)' }}>{item.name}</h4>
                                       <span className="guest-price-badge flex-shrink-0">₹{item.price}</span>
                                     </div>
-                                    <p className="text-[11px] text-gray-550 mt-1 leading-relaxed line-clamp-2">Authentic traditional spice recipe prepared with fresh organic ingredients.</p>
+                                    <p className="text-[11px] mt-1 leading-relaxed line-clamp-2" style={{ color: 'var(--muted)' }}>Authentic traditional spice recipe prepared with fresh organic ingredients.</p>
                                   </div>
 
                                   <div className="flex justify-between items-center mt-4">
                                     {/* Dietary indicators */}
                                     <div className="flex gap-1.5">
-                                      <span className="text-[9px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded uppercase">Fresh</span>
-                                      <span className="text-[9px] font-bold bg-green-50 text-green-700 border border-green-100 px-2 py-0.5 rounded uppercase">Vegetarian</span>
+                                      <span className="text-[9px] font-bold px-2 py-0.5 rounded uppercase" style={{ backgroundColor: 'var(--surface2)', color: 'var(--muted)' }}>Fresh</span>
+                                      <span className="text-[9px] font-bold border px-2 py-0.5 rounded uppercase" style={{ backgroundColor: 'rgba(63, 185, 80, 0.12)', color: 'var(--accent)', borderColor: 'rgba(63, 185, 80, 0.3)' }}>Vegetarian</span>
                                     </div>
 
                                     {/* Stepper / Add button */}
@@ -377,9 +372,8 @@ export default function Menu() {
                               </div>);
                 })}
                         </div>
-
-                      </div>))) : (<div className="text-center py-12 text-gray-500 bg-white rounded-2xl border border-gray-200 shadow-sm">
-                      <p className="font-bold text-sm text-slate-800">No dishes found matching your search.</p>
+                      </div>))) : (<div className="text-center py-12 shadow-sm" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)' }}>
+                      <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>No dishes found matching your search.</p>
                     </div>)}
                 </div>
 
@@ -387,41 +381,44 @@ export default function Menu() {
 
             {/* Tab B: MY ORDERS VIEW (TRACKING) */}
             {activeTab === 'orders' && (<div className="animate-in fade-in duration-200 space-y-6">
-                <h2 className="font-extrabold text-slate-800 text-lg mb-4">Placed Order Tracking ({batches.length})</h2>
+                <h2 className="font-extrabold text-lg mb-4" style={{ color: 'var(--text)' }}>Placed Order Tracking ({batches.length})</h2>
                 
-                {batches.length === 0 ? (<div className="text-center py-20 bg-white border border-gray-200 rounded-2xl shadow-sm">
-                    <ClipboardList size={48} className="mx-auto mb-4 text-[#16a34a] opacity-20"/>
-                    <p className="font-bold text-slate-800">No orders placed in this session yet</p>
-                    <p className="text-xs mt-1.5 px-6 text-gray-500 leading-relaxed font-semibold">
+                {batches.length === 0 ? (<div className="text-center py-20 shadow-sm" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)' }}>
+                    <ClipboardList size={48} className="mx-auto mb-4 opacity-20" style={{ color: 'var(--accent)' }}/>
+                    <p className="font-bold" style={{ color: 'var(--text)' }}>No orders placed in this session yet</p>
+                    <p className="text-xs mt-1.5 px-6 leading-relaxed font-semibold" style={{ color: 'var(--muted)' }}>
                       Dishes in your cart must be sent to the kitchen to begin cooking.
                     </p>
                     <button onClick={() => handleTabChange('menu')} className="mt-6 guest-btn-add px-5 py-2.5 rounded-xl text-xs font-bold">
                       Browse Menu
                     </button>
                   </div>) : (<div className="space-y-6">
-                    {batches.map((batch) => (<div key={batch.id} className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm relative overflow-hidden">
+                    {batches.map((batch) => (<div key={batch.id} className="p-5 shadow-sm relative overflow-hidden" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)' }}>
                         
-                        <div className={`absolute top-0 right-0 ${batch.status === 'served' ? 'bg-gray-400' :
-                        batch.status === 'ready' ? 'bg-[#16a34a]' :
+                        <div className={`absolute top-0 right-0 ${batch.status === 'served' ? 'bg-gray-500' :
+                        batch.status === 'ready' ? 'bg-[#3fb950]' :
                             batch.status === 'preparing' ? 'bg-orange-500' : 'bg-blue-500'} text-white font-black text-[9px] px-3 py-1 rounded-bl-xl uppercase tracking-wide`}>
                           {batch.status}
                         </div>
                         
                         <div className="mb-4">
-                          <p className="text-[10px] text-gray-400 font-mono">KOT #{batch.id}</p>
-                          <h3 className="font-extrabold text-sm text-slate-800">Round {batch.batchNumber}</h3>
-                          <p className="text-[10px] text-gray-500 mt-0.5">
+                          <p className="text-[10px] font-mono" style={{ color: 'var(--muted)' }}>KOT #{batch.id}</p>
+                          <h3 className="font-extrabold text-sm" style={{ color: 'var(--text)' }}>Round {batch.batchNumber}</h3>
+                          <p className="text-[10px] mt-0.5" style={{ color: 'var(--muted)' }}>
                             Placed at {new Date(batch.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </p>
                         </div>
                         
-                        <ul className="text-xs space-y-3 mb-2 text-slate-700 font-semibold border-t border-gray-100 pt-3">
+                        <ul className="text-xs space-y-3 mb-2 font-semibold pt-3" style={{ color: 'var(--text)', borderTop: '1px solid var(--border)' }}>
                           {batch.items.map((item, idx) => (<li key={idx}>
                               <div className="flex justify-between items-start">
                                 <span className="w-2/3 leading-tight">{item.qty}x {item.name}</span>
-                                <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase ${item.status === 'served' ? 'bg-gray-100 text-gray-500 border border-gray-200' :
-                            item.status === 'ready' ? 'bg-green-50 text-green-700 border border-green-200' :
-                                item.status === 'preparing' ? 'bg-orange-50 text-orange-700 border border-orange-200' : 'bg-blue-50 text-blue-700 border border-blue-200'}`}>
+                                <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase border" style={
+                                  item.status === 'served' ? { backgroundColor: 'rgba(139, 148, 158, 0.12)', color: 'var(--muted)', borderColor: 'rgba(139, 148, 158, 0.3)' } :
+                                  item.status === 'ready' ? { backgroundColor: 'rgba(63, 185, 80, 0.12)', color: 'var(--accent)', borderColor: 'rgba(63, 185, 80, 0.3)' } :
+                                  item.status === 'preparing' ? { backgroundColor: 'rgba(210, 153, 34, 0.12)', color: 'var(--warn)', borderColor: 'rgba(210, 153, 34, 0.3)' } :
+                                  { backgroundColor: 'rgba(88, 166, 255, 0.12)', color: 'var(--accent2)', borderColor: 'rgba(88, 166, 255, 0.3)' }
+                                }>
                                   {item.status}
                                 </span>
                               </div>
@@ -430,9 +427,9 @@ export default function Menu() {
                                 marginTop: '6px',
                                 padding: '6px 8px',
                                 borderRadius: '6px',
-                                backgroundColor: '#fef2f2',
-                                border: '1px solid #fecaca',
-                                color: '#b91c1c',
+                                backgroundColor: 'rgba(248, 81, 73, 0.12)',
+                                border: '1px solid rgba(248, 81, 73, 0.3)',
+                                color: 'var(--danger)',
                                 fontSize: '11px',
                                 fontWeight: 'bold'
                             }}>
@@ -445,9 +442,9 @@ export default function Menu() {
                             marginTop: '12px',
                             padding: '8px 10px',
                             borderRadius: '8px',
-                            backgroundColor: '#fffbeb',
-                            border: '1px solid #fef3c7',
-                            color: '#d97706',
+                            backgroundColor: 'rgba(210, 153, 34, 0.12)',
+                            border: '1px solid rgba(210, 153, 34, 0.3)',
+                            color: 'var(--warn)',
                             fontSize: '11px',
                             fontWeight: 'bold',
                             lineHeight: '1.4'
@@ -456,74 +453,73 @@ export default function Menu() {
                           </div>)}
                         
                         {/* Progress bar */}
-                        {batch.status === 'preparing' && (<div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mt-4">
+                        {batch.status === 'preparing' && (<div className="w-full h-1.5 rounded-full overflow-hidden mt-4" style={{ backgroundColor: 'var(--border)' }}>
                             <div className="bg-orange-500 h-full w-2/3 rounded-full animate-pulse"></div>
                           </div>)}
                       </div>))}
                   </div>)}
               </div>)}
-
+ 
             {/* Tab C: BILL VIEW */}
             {activeTab === 'bill' && (<div className="animate-in fade-in duration-200 space-y-6">
                 <div className="text-center mb-6">
-                  <Receipt className="mx-auto text-[#16a34a] mb-2" size={32}/>
-                  <h2 className="text-xl font-bold text-slate-800">Summary Invoice</h2>
-                  <p className="text-xs text-gray-500 font-semibold">Final check-out settlement totals</p>
+                  <Receipt className="mx-auto mb-2" size={32} style={{ color: 'var(--accent)' }}/>
+                  <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>Summary Invoice</h2>
+                  <p className="text-xs font-semibold" style={{ color: 'var(--muted)' }}>Final check-out settlement totals</p>
                 </div>
-
-                {isBillRequested && (<div className="mb-6 bg-green-50 border border-green-200 text-green-800 p-4 rounded-xl flex items-center gap-3 shadow-sm animate-in fade-in zoom-in">
-                    <CheckCircle2 size={24} className="text-[#16a34a] flex-shrink-0"/>
+ 
+                {isBillRequested && (<div className="mb-6 rounded-xl flex items-center gap-3 shadow-sm animate-in fade-in zoom-in p-4" style={{ backgroundColor: 'rgba(63, 185, 80, 0.12)', border: '1px solid rgba(63, 185, 80, 0.3)', color: 'var(--accent)' }}>
+                    <CheckCircle2 size={24} className="flex-shrink-0" style={{ color: 'var(--accent)' }}/>
                     <div>
                       <p className="font-bold text-xs">Bill requested successfully!</p>
-                      <p className="text-[10px] text-green-700/80 mt-0.5 font-semibold">Please wait at your table. A waiter will arrive shortly for payment processing.</p>
+                      <p className="text-[10px] mt-0.5 font-semibold" style={{ color: 'var(--accent)' }}>Please wait at your table. A waiter will arrive shortly for payment processing.</p>
                     </div>
                   </div>)}
-
+ 
                 {/* Aggregate Items grouped by round */}
-                <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm font-mono text-xs mb-6">
-                  <div className="p-4 border-b border-gray-100 bg-slate-50/50 font-bold flex justify-between uppercase text-[10px] tracking-wider text-gray-500">
+                <div className="overflow-hidden shadow-sm font-mono text-xs mb-6" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)' }}>
+                  <div className="p-4 font-bold flex justify-between uppercase text-[10px] tracking-wider" style={{ borderBottom: '1px solid var(--border)', backgroundColor: 'var(--surface2)', color: 'var(--muted)' }}>
                     <span>Rounds summary</span>
                     <span className="w-16 text-right">Price</span>
                   </div>
                   
-                  <div className="p-4 space-y-4 pb-6 border-b border-gray-200 border-dashed min-h-[100px] text-slate-700">
-                    {batches.length === 0 ? (<p className="text-gray-400 text-center font-sans py-8">No orders placed in this session.</p>) : (batches.map((batch) => (<div key={batch.id} className="space-y-1.5">
-                          <div className="font-sans font-bold text-slate-500 text-[10px] uppercase border-b border-slate-100 pb-1">Round {batch.batchNumber}</div>
-                          {batch.items.map((item, idx) => (<div key={idx} className="flex justify-between items-start text-xs text-slate-650">
+                  <div className="p-4 space-y-4 pb-6 min-h-[100px]" style={{ borderBottom: '1px dashed var(--border)' }}>
+                    {batches.length === 0 ? (<p className="text-center font-sans py-8" style={{ color: 'var(--muted)' }}>No orders placed in this session.</p>) : (batches.map((batch) => (<div key={batch.id} className="space-y-1.5">
+                          <div className="font-sans font-bold text-[10px] uppercase pb-1" style={{ borderBottom: '1px solid var(--border)', color: 'var(--muted)' }}>Round {batch.batchNumber}</div>
+                          {batch.items.map((item, idx) => (<div key={idx} className="flex justify-between items-start text-xs" style={{ color: 'var(--text)' }}>
                               <div className="w-3/4">
-                                <span className="font-semibold text-slate-800">{item.name}</span>
-                                <div className="text-gray-400 text-[10px]">{item.qty} x ₹{item.price}</div>
+                                <span className="font-semibold" style={{ color: 'var(--text)' }}>{item.name}</span>
+                                <div className="text-[10px]" style={{ color: 'var(--muted)' }}>{item.qty} x ₹{item.price}</div>
                               </div>
-                              <div className="w-1/4 text-right font-bold text-slate-800">₹{item.price * item.qty}</div>
+                              <div className="w-1/4 text-right font-bold" style={{ color: 'var(--text)' }}>₹{item.price * item.qty}</div>
                             </div>))}
                         </div>)))}
                   </div>
-                  
-                  {/* Totals */}
-                  <div className="p-4 bg-slate-50/30 space-y-2 text-slate-650">
-                    <div className="flex justify-between font-semibold">
+                   {/* Totals */}
+                  <div className="p-4 space-y-2" style={{ backgroundColor: 'var(--surface2)' }}>
+                    <div className="flex justify-between font-semibold" style={{ color: 'var(--text)' }}>
                       <span>Subtotal</span>
                       <span>₹{subtotal.toFixed(2)}</span>
                     </div>
-                    <div className="flex justify-between text-gray-500">
+                    <div className="flex justify-between" style={{ color: 'var(--muted)' }}>
                       <span>CGST (2.5%)</span>
                       <span>₹{cgst.toFixed(2)}</span>
                     </div>
-                    <div className="flex justify-between text-gray-500">
+                    <div className="flex justify-between" style={{ color: 'var(--muted)' }}>
                       <span>SGST (2.5%)</span>
                       <span>₹{sgst.toFixed(2)}</span>
                     </div>
                     
-                    <div className="flex justify-between text-base font-black text-slate-800 mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex justify-between text-base font-black mt-4 pt-4" style={{ borderTop: '1px solid var(--border)', color: 'var(--text)' }}>
                       <span>Grand Total</span>
-                      <span className="text-[#16a34a]">₹{total.toFixed(2)}</span>
+                      <span style={{ color: 'var(--accent)' }}>₹{total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
 
                 <button className={`w-full font-black py-4 text-base rounded-xl transition-all ${isBillRequested || subtotal === 0
-                ? 'bg-slate-100 text-gray-400 border border-slate-200 cursor-not-allowed'
-                : 'guest-btn-add text-white active:scale-95'}`} onClick={() => setShowConfirm(true)} disabled={isBillRequested || subtotal === 0}>
+                ? 'btn-ghost'
+                : 'btn-primary'}`} style={{ cursor: isBillRequested || subtotal === 0 ? 'not-allowed' : 'pointer' }} onClick={() => setShowConfirm(true)} disabled={isBillRequested || subtotal === 0}>
                   {isBillRequested ? 'Bill Requested' : 'Request Final Bill'}
                 </button>
               </div>)}
@@ -535,23 +531,23 @@ export default function Menu() {
           {/* ===================================== */}
           {activeTab === 'menu' && (<div className="hidden lg:block lg:col-span-1 sticky top-24">
               <div className="guest-cart-panel p-5 space-y-4">
-                <div className="flex items-center justify-between border-b border-gray-150 pb-3 mb-2">
-                  <h3 className="font-extrabold text-slate-800 text-sm flex items-center gap-2">
-                    <ShoppingBag size={18} className="text-[#16a34a]"/> Your Order
+                <div className="flex items-center justify-between pb-3 mb-2" style={{ borderBottom: '1px solid var(--border)' }}>
+                  <h3 className="font-extrabold text-sm flex items-center gap-2" style={{ color: 'var(--text)' }}>
+                    <ShoppingBag size={18} style={{ color: 'var(--accent)' }}/> Your Order
                   </h3>
-                  <span className="bg-[#16a34a] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{cartCount}</span>
+                  <span className="badge-green text-[10px] font-bold px-2 py-0.5 rounded-full">{cartCount}</span>
                 </div>
 
-                {cartItems.length === 0 ? (<div className="text-center py-10 text-gray-400 text-xs">
+                {cartItems.length === 0 ? (<div className="text-center py-10 text-xs" style={{ color: 'var(--muted)' }}>
                     <ShoppingBag size={32} className="mx-auto mb-2 opacity-20"/>
                     <p className="font-bold">Your cart is empty</p>
                     <p className="text-[10px] mt-1 font-semibold">Select items from the catalog.</p>
                   </div>) : (<div className="space-y-4 max-h-[40vh] overflow-y-auto pr-1 scrollbar-glass">
-                    {cartItems.map((item) => (<div key={item.id} className="p-3 border border-gray-100 rounded-xl bg-slate-50/50">
+                    {cartItems.map((item) => (<div key={item.id} className="p-3 rounded-xl" style={{ border: '1px solid var(--border)', backgroundColor: 'var(--surface2)' }}>
                         <div className="flex justify-between items-start gap-1">
                           <div className="min-w-0">
-                            <h4 className="font-extrabold text-xs text-slate-800 truncate">{item.name}</h4>
-                            <p className="text-[10px] font-black text-green-600 mt-0.5">₹{item.price}</p>
+                            <h4 className="font-extrabold text-xs truncate" style={{ color: 'var(--text)' }}>{item.name}</h4>
+                            <p className="text-[10px] font-black mt-0.5" style={{ color: 'var(--accent)' }}>₹{item.price}</p>
                           </div>
                           
                           <div className="guest-stepper h-[24px]">
@@ -565,40 +561,40 @@ export default function Menu() {
                       </div>))}
                   </div>)}
 
-                {cartItems.length > 0 && (<div className="border-t border-gray-200/80 pt-4 space-y-4">
+                {cartItems.length > 0 && (<div className="pt-4 space-y-4" style={{ borderTop: '1px solid var(--border)' }}>
                     <div>
-                      <label className="block text-[9px] font-black uppercase text-gray-400 tracking-wider mb-2">Order-level comment</label>
+                      <label className="block text-[9px] font-black uppercase tracking-wider mb-2" style={{ color: 'var(--muted)' }}>Order-level comment</label>
                       <textarea placeholder="Instructions for the kitchen..." value={generalComment} onChange={(e) => setGeneralComment(e.target.value)} rows={2} className="guest-input-search w-full rounded-lg p-2 text-[10px] font-semibold resize-none"/>
                     </div>
 
-                    <div className="flex justify-between items-center text-xs border-t border-slate-100 pt-3">
-                      <span className="font-semibold text-gray-505">Subtotal</span>
-                      <span className="text-base font-black text-slate-800">₹{cartTotal}</span>
+                    <div className="flex justify-between items-center text-xs pt-3" style={{ borderTop: '1px solid var(--border)', color: 'var(--text)' }}>
+                      <span className="font-semibold" style={{ color: 'var(--muted)' }}>Subtotal</span>
+                      <span className="text-base font-black">₹{cartTotal}</span>
                     </div>
                     
-                    <button onClick={handlePlaceOrder} className="w-full guest-btn-add text-white font-bold py-3 text-xs rounded-xl transition-all active:scale-95">
+                    <button onClick={handlePlaceOrder} className="w-full btn-primary font-bold py-3 text-xs rounded-xl transition-all active:scale-95">
                       Place Order
                     </button>
                   </div>)}
               </div>
             </div>)}
 
-        </div>
+          </div>
 
-      </div>
+      </main>
 
       {/* ===================================== */}
       {/* 3. PERSISTENT MOBILE FLOATING ACTIONS */}
       {/* ===================================== */}
       <div className="fixed bottom-[96px] md:bottom-6 right-6 md:right-8 flex flex-col-reverse gap-4 pointer-events-none z-40">
         {/* Cart Action FAB (Persistent on all screens) */}
-        {activeTab === 'menu' && (<button onClick={() => setIsCartOpen(true)} className="pointer-events-auto w-16 h-16 btn-premium-green rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-all border-4 border-[#f4f7f5] cart-fab-glow relative" title="View Cart">
+        {activeTab === 'menu' && (<button onClick={() => setIsCartOpen(true)} className="pointer-events-auto w-16 h-16 btn-premium-green rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-all border-4 cart-fab-glow relative" style={{ borderColor: '#0d1117' }} title="View Cart">
             <ShoppingCart size={28}/>
-            {cartCount > 0 && <span className="badge-pulsing" style={{ borderColor: '#f4f7f5' }}>{cartCount}</span>}
+            {cartCount > 0 && <span className="badge-pulsing" style={{ borderColor: '#0d1117' }}>{cartCount}</span>}
           </button>)}
 
         {/* Call Staff Action (Stacked above Cart FAB dynamically via flex-col-reverse) */}
-        <button onClick={handleCallStaff} className="pointer-events-auto w-16 h-16 btn-premium-amber rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-all border-4 border-[#f4f7f5] animate-pulse" title="Call Staff">
+        <button onClick={handleCallStaff} className="pointer-events-auto w-16 h-16 btn-premium-amber rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-all border-4 animate-pulse" style={{ borderColor: '#0d1117' }} title="Call Staff">
           <BellRing size={28}/>
         </button>
       </div>
@@ -610,26 +606,26 @@ export default function Menu() {
           
           <div className="absolute inset-0" onClick={() => setIsCartOpen(false)}></div>
           
-          <div className="bg-white border-t border-gray-200 rounded-t-3xl w-full max-w-[480px] p-6 max-h-[85vh] overflow-y-auto z-10 shadow-[0_-8px_32px_rgba(0,0,0,0.15)] flex flex-col relative animate-in slide-in-from-bottom-24 duration-300">
+          <div className="border-t rounded-t-3xl w-full max-w-[480px] p-6 max-h-[85vh] overflow-y-auto z-10 flex flex-col relative animate-in slide-in-from-bottom-24 duration-300" style={{ backgroundColor: 'var(--surface)', borderTop: '1px solid var(--border)', boxShadow: '0 -8px 32px rgba(0,0,0,0.5)' }}>
             
-            <div className="flex justify-between items-center mb-6 pb-3 border-b border-gray-150">
+            <div className="flex justify-between items-center mb-6 pb-3" style={{ borderBottom: '1px solid var(--border)' }}>
               <div>
-                <h3 className="font-extrabold text-base text-slate-800 flex items-center gap-2">
-                  <ShoppingBag size={18} className="text-[#16a34a]"/> Review Selected Items
+                <h3 className="font-extrabold text-base flex items-center gap-2" style={{ color: 'var(--text)' }}>
+                  <ShoppingBag size={18} style={{ color: 'var(--accent)' }}/> Review Selected Items
                 </h3>
-                <p className="text-[10px] text-gray-500 font-semibold">Table {tableNumber} • Local unsubmitted cart</p>
+                <p className="text-[10px] font-semibold" style={{ color: 'var(--muted)' }}>Table {tableNumber} • Local unsubmitted cart</p>
               </div>
-              <button onClick={() => setIsCartOpen(false)} className="p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-gray-500">
+              <button onClick={() => setIsCartOpen(false)} className="p-2 rounded-full" style={{ backgroundColor: 'var(--surface2)', color: 'var(--muted)' }}>
                 <X size={20}/>
               </button>
             </div>
 
             <div className="flex-1 space-y-4 overflow-y-auto scrollbar-glass mb-6">
-              {cartItems.map((item) => (<div key={item.id} className="p-4 border border-gray-100 rounded-xl bg-slate-50/50">
+              {cartItems.map((item) => (<div key={item.id} className="p-4 rounded-xl" style={{ border: '1px solid var(--border)', backgroundColor: 'var(--surface2)' }}>
                   <div className="flex justify-between items-start gap-2">
                     <div>
-                      <h4 className="font-extrabold text-xs text-slate-800">{item.name}</h4>
-                      <p className="text-xs font-black text-green-600 mt-0.5">₹{item.price}</p>
+                      <h4 className="font-extrabold text-xs" style={{ color: 'var(--text)' }}>{item.name}</h4>
+                      <p className="text-xs font-black mt-0.5" style={{ color: 'var(--accent)' }}>₹{item.price}</p>
                     </div>
                     
                     <div className="guest-stepper h-[30px] px-1">
@@ -643,18 +639,18 @@ export default function Menu() {
                 </div>))}
             </div>
 
-            <div className="bg-slate-50 border border-gray-100 rounded-xl p-4 mb-6">
-              <label className="block text-[10px] font-black uppercase text-gray-550 tracking-wider mb-2">Order-level comment (optional)</label>
+            <div className="rounded-xl p-4 mb-6" style={{ backgroundColor: 'var(--surface2)', border: '1px solid var(--border)' }}>
+              <label className="block text-[10px] font-black uppercase tracking-wider mb-2" style={{ color: 'var(--muted)' }}>Order-level comment (optional)</label>
               <textarea placeholder="e.g. Bring extra plates, serve desserts at the end..." value={generalComment} onChange={(e) => setGeneralComment(e.target.value)} rows={2} className="guest-input-search w-full rounded-lg p-2.5 text-xs font-semibold resize-none"/>
             </div>
 
-            <div className="border-t border-gray-200/80 pt-4 space-y-4">
+            <div className="pt-4 space-y-4" style={{ borderTop: '1px solid var(--border)' }}>
               <div className="flex justify-between items-center">
-                <span className="font-semibold text-gray-500 text-sm">Subtotal</span>
-                <span className="text-xl font-black text-[#16a34a]">₹{cartTotal}</span>
+                <span className="font-semibold text-sm" style={{ color: 'var(--muted)' }}>Subtotal</span>
+                <span className="text-xl font-black" style={{ color: 'var(--accent)' }}>₹{cartTotal}</span>
               </div>
               
-              <button onClick={handlePlaceOrder} className="w-full guest-btn-add text-white font-bold py-4 text-sm rounded-xl transition-all active:scale-95">
+              <button onClick={handlePlaceOrder} className="w-full btn-primary font-bold py-4 text-sm rounded-xl transition-all active:scale-95">
                 Place Order (Send to Kitchen)
               </button>
             </div>
@@ -666,18 +662,18 @@ export default function Menu() {
       {/* 6. CONFIRM BILL MODAL POPUP           */}
       {/* ===================================== */}
       {showConfirm && (<div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-sm border border-gray-250 shadow-2xl z-10 relative text-slate-800">
-            <h3 className="font-black text-lg mb-2 flex items-center gap-1.5 text-slate-850">
+          <div className="card p-6 w-full max-w-sm relative" style={{ boxShadow: 'var(--shadow-md)' }}>
+            <h3 className="font-black text-lg mb-2 flex items-center gap-1.5" style={{ color: 'var(--text)' }}>
               <AlertTriangle className="text-orange-500" size={24}/> Request Bill?
             </h3>
-            <p className="text-gray-550 mb-6 text-xs leading-relaxed font-semibold">
+            <p className="mb-6 text-xs leading-relaxed font-semibold" style={{ color: 'var(--muted)' }}>
               Once you submit this request, your session ordering will be locked. Waiters will print your invoice receipts for final checkout payment.
             </p>
             <div className="flex gap-3">
-              <button className="flex-1 py-2.5 border border-gray-300 rounded-xl font-bold text-gray-650 hover:bg-slate-50 transition-colors text-xs" onClick={() => setShowConfirm(false)}>
+              <button className="flex-1 py-2.5 btn-ghost rounded-xl font-bold text-xs" onClick={() => setShowConfirm(false)}>
                 Cancel
               </button>
-              <button className="flex-1 py-2.5 guest-btn-add text-white rounded-xl font-bold transition-all text-xs" onClick={confirmBill}>
+              <button className="flex-1 py-2.5 btn-primary rounded-xl font-bold transition-all text-xs" onClick={confirmBill}>
                 Confirm Request
               </button>
             </div>
@@ -687,21 +683,21 @@ export default function Menu() {
       {/* ===================================== */}
       {/* 7. BOTTOM NAVIGATION BAR (Mobile Only) */}
       {/* ===================================== */}
-      <nav className="fixed md:hidden bottom-0 left-0 w-full bg-white border-t border-gray-200/80 px-6 py-3 flex justify-between items-center z-40 shadow-md">
+      <nav className="fixed md:hidden bottom-0 left-0 w-full px-6 py-3 flex justify-between items-center z-40 shadow-md" style={{ backgroundColor: 'var(--surface)', borderTop: '1px solid var(--border)' }}>
         
-        <button onClick={() => handleTabChange('menu')} className={`flex flex-col items-center gap-1 bg-transparent p-1.5 transition-all ${activeTab === 'menu' ? 'text-[#16a34a] scale-105 font-bold' : 'text-gray-400 hover:text-gray-550'}`}>
+        <button onClick={() => handleTabChange('menu')} className="flex flex-col items-center gap-1 bg-transparent p-1.5 transition-all" style={{ color: activeTab === 'menu' ? 'var(--accent)' : 'var(--muted)', fontWeight: activeTab === 'menu' ? '700' : '500' }}>
           <Utensils size={20} className={activeTab === 'menu' ? 'stroke-[2.5px]' : 'stroke-[1.8px]'}/>
-          <span className="text-[10px] tracking-wider uppercase font-extrabold">Menu</span>
+          <span className="text-[10px] tracking-wider uppercase">Menu</span>
         </button>
 
-        <button onClick={() => handleTabChange('orders')} className={`flex flex-col items-center gap-1 bg-transparent p-1.5 transition-all ${activeTab === 'orders' ? 'text-[#16a34a] scale-105 font-bold' : 'text-gray-400 hover:text-gray-550'}`}>
+        <button onClick={() => handleTabChange('orders')} className="flex flex-col items-center gap-1 bg-transparent p-1.5 transition-all" style={{ color: activeTab === 'orders' ? 'var(--accent)' : 'var(--muted)', fontWeight: activeTab === 'orders' ? '700' : '500' }}>
           <ClipboardList size={20} className={activeTab === 'orders' ? 'stroke-[2.5px]' : 'stroke-[1.8px]'}/>
-          <span className="text-[10px] tracking-wider uppercase font-extrabold">My Order</span>
+          <span className="text-[10px] tracking-wider uppercase">My Order</span>
         </button>
 
-        <button onClick={() => handleTabChange('bill')} className={`flex flex-col items-center gap-1 bg-transparent p-1.5 transition-all ${activeTab === 'bill' ? 'text-[#16a34a] scale-105 font-bold' : 'text-gray-400 hover:text-gray-550'}`}>
+        <button onClick={() => handleTabChange('bill')} className="flex flex-col items-center gap-1 bg-transparent p-1.5 transition-all" style={{ color: activeTab === 'bill' ? 'var(--accent)' : 'var(--muted)', fontWeight: activeTab === 'bill' ? '700' : '500' }}>
           <Receipt size={20} className={activeTab === 'bill' ? 'stroke-[2.5px]' : 'stroke-[1.8px]'}/>
-          <span className="text-[10px] tracking-wider uppercase font-extrabold">Bill</span>
+          <span className="text-[10px] tracking-wider uppercase">Bill</span>
         </button>
       </nav>
 
