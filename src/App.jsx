@@ -15,7 +15,7 @@ import { CartProvider } from './context/CartContext';
 
 function App() {
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <CartProvider>
         <div className="app-container" style={{ maxWidth: window.location.pathname.match(/kitchen|counter|admin|table|menu|status|orders|bill|help|restaurant/) || window.location.pathname === '/' ? '100%' : '480px' }}>
           <Routes>
