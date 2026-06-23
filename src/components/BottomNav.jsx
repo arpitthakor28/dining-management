@@ -6,7 +6,7 @@ export default function BottomNav() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const getTableIdFromUrl = (): string => {
+  const getTableIdFromUrl = () => {
     const match = window.location.pathname.match(/\/table\/([^\/]+)/);
     return match ? match[1] : 'T-12';
   };

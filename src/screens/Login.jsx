@@ -1,73 +1,61 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Lock, ShieldAlert } from 'lucide-react';
-
 export default function Login() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
-  const [restaurantName, setRestaurantName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const rawRedirect = searchParams.get('redirect') || '/counter';
-  const redirect = rawRedirect.includes('/login') ? '/counter' : decodeURIComponent(rawRedirect);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-
-    if (!email.trim() || !password) {
-      setError('Please fill in all fields.');
-      return;
-    }
-
-    try {
-      const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/signup';
-      const body = mode === 'login'
-        ? { email: email.trim(), password }
-        : { restaurantName: restaurantName.trim(), email: email.trim(), password };
-
-      const response = await fetch(`http://localhost:8080${endpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error || 'Authentication failed. Please check details.');
-        return;
-      }
-
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('restaurant_id', data.restaurantId);
-      localStorage.setItem('staff_role', data.role);
-      localStorage.setItem('staff_auth', 'true');
-      
-      const targetRedirect = data.role === 'kitchen' ? '/kitchen' : redirect;
-      navigate(targetRedirect);
-    } catch (err) {
-      console.error(err);
-      setError('Connection error. Is the backend server running?');
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-  };
-
-  return (
-    <div className="login-portal-wrapper">
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const [mode, setMode] = useState('login');
+    const [restaurantName, setRestaurantName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const rawRedirect = searchParams.get('redirect') || '/counter';
+    const redirect = rawRedirect.includes('/login') ? '/counter' : decodeURIComponent(rawRedirect);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        if (!email.trim() || !password) {
+            setError('Please fill in all fields.');
+            return;
+        }
+        try {
+            const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/signup';
+            const body = mode === 'login'
+                ? { email: email.trim(), password }
+                : { restaurantName: restaurantName.trim(), email: email.trim(), password };
+            const response = await fetch(`http://localhost:8080${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                setError(data.error || 'Authentication failed. Please check details.');
+                return;
+            }
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('restaurant_id', data.restaurantId);
+            localStorage.setItem('staff_role', data.role);
+            localStorage.setItem('staff_auth', 'true');
+            const targetRedirect = data.role === 'kitchen' ? '/kitchen' : redirect;
+            navigate(targetRedirect);
+        }
+        catch (err) {
+            console.error(err);
+            setError('Connection error. Is the backend server running?');
+        }
+    };
+    const handleMouseMove = (e) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+    };
+    return (<div className="login-portal-wrapper">
       <style>{`
         .login-portal-wrapper {
           min-height: 100vh;
@@ -173,13 +161,10 @@ export default function Login() {
 
       <div className="ambient-glow-1"></div>
 
-      <div 
-        className="reflective-login-card"
-        onMouseMove={handleMouseMove}
-      >
+      <div className="reflective-login-card" onMouseMove={handleMouseMove}>
         <div className="card-content">
           <div className="w-14 h-14 bg-green-500/10 border border-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 text-green-400">
-            <Lock size={26} />
+            <Lock size={26}/>
           </div>
           
           <h2 className="text-2xl font-black mb-1">DineFlow Portal</h2>
@@ -188,72 +173,36 @@ export default function Login() {
           </p>
 
           <div className="grid grid-cols-2 gap-2.5 mb-6">
-            <button
-              type="button"
-              onClick={() => { setMode('login'); setError(''); }}
-              className={`role-btn py-2.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider ${mode === 'login' ? 'active' : 'text-gray-300'}`}
-            >
+            <button type="button" onClick={() => { setMode('login'); setError(''); }} className={`role-btn py-2.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider ${mode === 'login' ? 'active' : 'text-gray-300'}`}>
               Sign In
             </button>
-            <button
-              type="button"
-              onClick={() => { setMode('signup'); setError(''); }}
-              className={`role-btn py-2.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider ${mode === 'signup' ? 'active' : 'text-gray-300'}`}
-            >
+            <button type="button" onClick={() => { setMode('signup'); setError(''); }} className={`role-btn py-2.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider ${mode === 'signup' ? 'active' : 'text-gray-300'}`}>
               Register
             </button>
           </div>
 
-          {error && (
-            <div className="mb-4 bg-red-500/10 border border-red-500/25 text-red-300 text-xs font-semibold p-3.5 rounded-xl flex items-center gap-2">
-              <ShieldAlert size={16} className="text-red-400 flex-shrink-0" />
+          {error && (<div className="mb-4 bg-red-500/10 border border-red-500/25 text-red-300 text-xs font-semibold p-3.5 rounded-xl flex items-center gap-2">
+              <ShieldAlert size={16} className="text-red-400 flex-shrink-0"/>
               <span>{error}</span>
-            </div>
-          )}
+            </div>)}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {mode === 'signup' && (
-              <div>
+            {mode === 'signup' && (<div>
                 <label className="block text-left text-[10px] font-black uppercase text-gray-400 tracking-wider mb-2">Restaurant Name</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Ocean Grill"
-                  value={restaurantName}
-                  onChange={(e) => setRestaurantName(e.target.value)}
-                  className="input-glow w-full rounded-xl py-3 px-4 outline-none font-sans text-sm font-semibold"
-                  required
-                />
-              </div>
-            )}
+                <input type="text" placeholder="e.g. Ocean Grill" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} className="input-glow w-full rounded-xl py-3 px-4 outline-none font-sans text-sm font-semibold" required/>
+              </div>)}
 
             <div>
               <label className="block text-left text-[10px] font-black uppercase text-gray-400 tracking-wider mb-2">Email Address</label>
-              <input
-                type="email"
-                placeholder="e.g. manager@test.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="input-glow w-full rounded-xl py-3 px-4 outline-none font-sans text-sm font-semibold"
-                required
-              />
+              <input type="email" placeholder="e.g. manager@test.com" value={email} onChange={(e) => setEmail(e.target.value)} className="input-glow w-full rounded-xl py-3 px-4 outline-none font-sans text-sm font-semibold" required/>
             </div>
 
             <div>
               <label className="block text-left text-[10px] font-black uppercase text-gray-400 tracking-wider mb-2">Password</label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="input-glow w-full rounded-xl py-3 px-4 outline-none font-mono text-sm"
-                required
-              />
+              <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="input-glow w-full rounded-xl py-3 px-4 outline-none font-mono text-sm" required/>
             </div>
 
-            <button
-              type="submit"
-              className="w-full btn-premium-green font-black py-3.5 rounded-xl transition-all mt-6 uppercase text-xs tracking-wider"
-            >
+            <button type="submit" className="w-full btn-premium-green font-black py-3.5 rounded-xl transition-all mt-6 uppercase text-xs tracking-wider">
               {mode === 'login' ? 'Access Dashboard' : 'Create Restaurant'}
             </button>
           </form>
@@ -261,6 +210,5 @@ export default function Login() {
       </div>
       
       <p className="text-[10px] text-gray-500 mt-8 font-semibold uppercase tracking-wider">Powered by DineFlow</p>
-    </div>
-  );
+    </div>);
 }

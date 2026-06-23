@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
+import App from './App'
 
 // Intercept fetch requests to append x-restaurant-id and Authorization headers automatically
 const originalFetch = window.fetch;
@@ -37,10 +37,10 @@ window.fetch = function (input, init) {
       }
     }
   }
-  return originalFetch.apply(this, arguments as any);
+  return originalFetch.apply(this, arguments);
 };
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
   </StrictMode>,

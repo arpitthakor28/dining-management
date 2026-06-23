@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 
-interface DishCardProps {
-  name: string;
-  price: number;
-  image: string;
-  hasHalfFull?: boolean;
-}
-
-export default function DishCard({ name, price, image, hasHalfFull }: DishCardProps) {
+export default function DishCard({ name, price, image, hasHalfFull }) {
   const [quantity, setQuantity] = useState(0);
-  const [size, setSize] = useState<'half' | 'full'>('full');
+  const [size, setSize] = useState('full');
   
   const displayPrice = size === 'half' ? price * 0.6 : price;
 

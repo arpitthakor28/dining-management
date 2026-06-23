@@ -1,40 +1,32 @@
 import React from 'react';
 import { Users } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 export default function QRJoin() {
-  const navigate = useNavigate();
-  const { restaurantId, tableId } = useParams<{ restaurantId: string; tableId: string }>();
-  
-  const activeRestaurantId = restaurantId || 'r_001';
-  const activeTableId = tableId || 'T-12';
-  const tableNumber = activeTableId.replace('T-', '');
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-  };
-  
-  return (
-    <div className="dark-theme-wrapper flex flex-col items-center justify-center p-6 text-center">
+    const navigate = useNavigate();
+    const { restaurantId, tableId } = useParams();
+    const activeRestaurantId = restaurantId || 'r_001';
+    const activeTableId = tableId || 'T-12';
+    const tableNumber = activeTableId.replace('T-', '');
+    const handleMouseMove = (e) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+    };
+    return (<div className="dark-theme-wrapper flex flex-col items-center justify-center p-6 text-center">
       <div className="ambient-glow-bubble-1"></div>
       <div className="ambient-glow-bubble-2"></div>
       
       <div className="mb-12 mt-12 z-10">
-        <div 
-          className="rounded-full flex items-center justify-center mx-auto mb-4"
-          style={{
+        <div className="rounded-full flex items-center justify-center mx-auto mb-4" style={{
             width: '80px',
             height: '80px',
             background: 'rgba(34, 197, 94, 0.1)',
             border: '1px solid rgba(34, 197, 94, 0.25)',
             boxShadow: '0 0 20px rgba(34, 197, 94, 0.2)'
-          }}
-        >
+        }}>
           <span className="text-3xl">🍽️</span>
         </div>
         <h1 className="text-3xl font-black mb-2 text-glow" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
@@ -43,12 +35,9 @@ export default function QRJoin() {
         <h2 className="text-xl font-bold text-gray-400">Table {tableNumber}</h2>
       </div>
       
-      <div 
-        className="glass-card w-full max-w-[400px] mb-8 flex flex-col items-center p-8 border border-white/10"
-        onMouseMove={handleMouseMove}
-      >
+      <div className="glass-card w-full max-w-[400px] mb-8 flex flex-col items-center p-8 border border-white/10" onMouseMove={handleMouseMove}>
         <div className="flex items-center gap-2 mb-4 text-green-400 z-10 font-bold">
-          <Users size={24} className="animate-pulse" />
+          <Users size={24} className="animate-pulse"/>
           <span className="text-lg">Group Session Connected</span>
         </div>
         
@@ -56,10 +45,7 @@ export default function QRJoin() {
           Join the shared table session to browse the menu, build your cart, and place orders together.
         </p>
         
-        <button 
-          className="btn-premium-green w-full font-black py-4 rounded-xl transition-all uppercase text-xs tracking-wider z-10"
-          onClick={() => navigate(`/restaurant/${activeRestaurantId}/table/${activeTableId}/menu`)}
-        >
+        <button className="btn-premium-green w-full font-black py-4 rounded-xl transition-all uppercase text-xs tracking-wider z-10" onClick={() => navigate(`/restaurant/${activeRestaurantId}/table/${activeTableId}/menu`)}>
           Join Session
         </button>
       </div>
@@ -67,7 +53,5 @@ export default function QRJoin() {
       <div className="mt-auto pt-8 z-10">
         <p className="text-gray-500 text-[10px] uppercase font-bold tracking-widest">Powered by DineFlow</p>
       </div>
-    </div>
-  );
+    </div>);
 }
-

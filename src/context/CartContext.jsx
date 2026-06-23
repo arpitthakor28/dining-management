@@ -1,61 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import type { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { io } from 'socket.io-client';
 
-export interface CartItem {
-  id: string; 
-  name: string;
-  price: number;
-  quantity: number;
-  notes: string;
-  guestName: string;
-}
-
-export interface OrderBatch {
-  id: string;
-  batchNumber: number;
-  status: 'pending' | 'preparing' | 'ready' | 'served';
-  items: {
-    itemId: number;
-    menuItemId: string;
-    name: string;
-    price: number;
-    qty: number;
-    notes: string;
-    status: 'pending' | 'preparing' | 'ready' | 'served';
-  }[];
-  timestamp: Date;
-  tableId: string;
-  comments?: string | null;
-}
-
-interface CartContextType {
-  items: CartItem[];
-  batches: OrderBatch[];
-  isBillRequested: boolean;
-  isOrderLocked: boolean;
-  isConnected: boolean;
-  tableId: string | null;
-  tableNumber: string | null;
-  sessionId: string | null;
-  sessionClosed: boolean;
-  validateTable: (tableId: string, token: string) => Promise<boolean>;
-  addToCart: (item: Omit<CartItem, 'guestName'>) => void;
-  removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, newQuantity: number) => void;
-  updateNotes: (id: string, notes: string) => void;
-  submitCart: () => Promise<void>;
-  updateItemStatus: (itemId: number, status: 'pending' | 'preparing' | 'ready' | 'served') => Promise<void>;
-  sendComment: (comment: string) => Promise<void>;
-  requestBill: () => Promise<void>;
-  clearTableSession: () => void;
-  cartTotal: number;
-  cartCount: number;
-  fetchLiveOrders: () => Promise<void>;
-}
-
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const CartContext = createContext(undefined);
 
 // Initialize Socket.io client pointing to Port 8080
 const socket = io('http://localhost:8080', {
@@ -68,26 +15,26 @@ const getAuthHeaders = () => ({
   'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
 });
 
-export function CartProvider({ children }: { children: ReactNode }) {
+export function CartProvider({ children }) {
   const location = useLocation();
 
   // Local Cart State (Unsubmitted items)
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState([]);
   
   // Scoped Table States
-  const [tableId, setTableId] = useState<string | null>(null);
-  const [tableNumber, setTableNumber] = useState<string | null>(null);
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [tableId, setTableId] = useState(null);
+  const [tableNumber, setTableNumber] = useState(null);
+  const [sessionId, setSessionId] = useState(null);
   const [isBillRequested, setIsBillRequested] = useState(false);
   const [isOrderLocked, setIsOrderLocked] = useState(false);
   const [sessionClosed, setSessionClosed] = useState(false);
   
   // Cloud States (Live data from backend)
-  const [batches, setBatches] = useState<OrderBatch[]>([]);
+  const [batches, setBatches] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
 
   // Validate guest access using tableId and token
-  const validateTable = async (tId: string, token: string): Promise<boolean> => {
+  const validateTable = async (tId, token) => {
     try {
       const response = await fetch(`http://localhost:8080/api/tables/validate?tableId=${tId}&token=${token}`);
       if (!response.ok) {
@@ -201,7 +148,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
 
       // Group raw flat order rows into 'Batches' for the UI
-      const grouped = rawOrders.reduce((acc: any, row: any) => {
+      const grouped = rawOrders.reduce((acc, row) => {
         const orderId = row.orderId;
         if (!acc[orderId]) {
           acc[orderId] = {
@@ -224,10 +171,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
           status: row.itemStatus
         });
         return acc;
-      }, {} as Record<string, any>);
+      }, {});
 
       // Sort batches: oldest first for kitchen, newest first for guest
-      const sortedBatches = Object.values(grouped) as OrderBatch[];
+      const sortedBatches = Object.values(grouped);
       if (isStaffPath) {
         sortedBatches.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
       } else {
@@ -246,7 +193,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const response = await fetch('http://localhost:8080/api/tables');
       if (response.ok) {
         const tablesList = await response.json();
-        const currentTable = tablesList.find((t: any) => t.id === tableId);
+        const currentTable = tablesList.find((t) => t.id === tableId);
         if (currentTable) {
           setIsBillRequested(currentTable.status === 'bill_requested');
           setIsOrderLocked(currentTable.status === 'bill_requested');
@@ -260,7 +207,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const addToCart = (item: Omit<CartItem, 'guestName'>) => {
+  const addToCart = (item) => {
     if (isOrderLocked) return;
     setItems((prev) => {
       const existing = prev.find(i => i.id === item.id);
@@ -269,18 +216,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const removeFromCart = (id: string) => {
+  const removeFromCart = (id) => {
     if (isOrderLocked) return;
     setItems(prev => prev.filter(i => i.id !== id));
   };
 
-  const updateQuantity = (id: string, qty: number) => {
+  const updateQuantity = (id, qty) => {
     if (isOrderLocked) return;
     if (qty < 1) return removeFromCart(id);
     setItems(prev => prev.map(i => i.id === id ? { ...i, quantity: qty } : i));
   };
 
-  const updateNotes = (id: string, notes: string) => {
+  const updateNotes = (id, notes) => {
     if (isOrderLocked) return;
     setItems(prev => prev.map(i => i.id === id ? { ...i, notes } : i));
   };
@@ -321,7 +268,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   // Update status of a specific order item (called by Kitchen Dashboard)
-  const updateItemStatus = async (itemId: number, status: 'pending' | 'preparing' | 'ready' | 'served') => {
+  const updateItemStatus = async (itemId, status) => {
     try {
       await fetch(`http://localhost:8080/api/order-items/${itemId}/status`, {
         method: 'PUT',
@@ -334,7 +281,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   // Send a comment/feedback note to the Manager
-  const sendComment = async (comment: string) => {
+  const sendComment = async (comment) => {
     if (!sessionId) return;
     try {
       await fetch(`http://localhost:8080/api/sessions/${sessionId}/comment`, {

@@ -1,10 +1,8 @@
 import React from 'react';
-import { Users, Settings, Plus, QrCode } from 'lucide-react';
+import { Users, Plus, QrCode } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 export default function TableManagement() {
-  return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    return (<div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-[1440px] mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -80,6 +78,5 @@ export default function TableManagement() {
 
         </div>
       </div>
-    </div>
-  );
+    </div>);
 }

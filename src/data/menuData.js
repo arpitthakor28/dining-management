@@ -1,16 +1,3 @@
-export interface MenuItem {
-  name: string;
-  price: number;
-}
-
-export interface MenuCategory {
-  id: string;
-  name: string;
-  emoji: string;
-  color: string;
-  items: MenuItem[];
-}
-
 export const menuData = {
   categories: [
     {

@@ -1,53 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Utensils, 
-  ChefHat, 
-  Wallet, 
-  Radio, 
-  Database, 
-  Activity, 
-  Server, 
-  CheckCircle,
-  HelpCircle,
-  QrCode
-} from 'lucide-react';
+import { Utensils, ChefHat, Wallet, Radio, Database, Activity, Server, CheckCircle, HelpCircle, QrCode } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-
 export default function Home() {
-  const { isConnected } = useCart();
-  const [latency, setLatency] = useState<number | null>(null);
-
-  // Measure latency to backend for reliable diagnostic reporting
-  useEffect(() => {
-    const measureLatency = async () => {
-      const start = performance.now();
-      try {
-        const response = await fetch('http://localhost:8080/api/menu');
-        if (response.ok) {
-          setLatency(Math.round(performance.now() - start));
-        }
-      } catch (err) {
-        setLatency(null);
-      }
+    const { isConnected } = useCart();
+    const [latency, setLatency] = useState(null);
+    // Measure latency to backend for reliable diagnostic reporting
+    useEffect(() => {
+        const measureLatency = async () => {
+            const start = performance.now();
+            try {
+                const response = await fetch('http://localhost:8080/api/menu');
+                if (response.ok) {
+                    setLatency(Math.round(performance.now() - start));
+                }
+            }
+            catch (err) {
+                setLatency(null);
+            }
+        };
+        measureLatency();
+        const interval = setInterval(measureLatency, 5000);
+        return () => clearInterval(interval);
+    }, []);
+    const handleMouseMove = (e) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
     };
-
-    measureLatency();
-    const interval = setInterval(measureLatency, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-  };
-
-  return (
-    <div className="home-portal-wrapper">
+    return (<div className="home-portal-wrapper">
       <style>{`
         .home-portal-wrapper {
           min-height: 100vh;
@@ -333,7 +317,7 @@ export default function Home() {
         {/* Header */}
         <div className="portal-header">
           <div className="portal-logo-glow">
-            <Radio size={32} className="animate-pulse" />
+            <Radio size={32} className="animate-pulse"/>
           </div>
           <h1 className="portal-title">DineFlow Ordering System</h1>
           <p className="portal-subtitle">
@@ -358,19 +342,19 @@ export default function Home() {
           
           <div className="diagnostic-stats">
             <div className="stat-item">
-              <Activity size={16} className="stat-icon" />
+              <Activity size={16} className="stat-icon"/>
               <span className="stat-label">Latency:</span>
               <span className="font-mono text-green-400">{latency !== null ? `${latency}ms` : '--'}</span>
             </div>
             
             <div className="stat-item">
-              <Database size={16} className="stat-icon" />
+              <Database size={16} className="stat-icon"/>
               <span className="stat-label">Database:</span>
               <span className="font-mono text-green-400">SQLite (dineflow.db)</span>
             </div>
 
             <div className="stat-item">
-              <Server size={16} className="stat-icon" />
+              <Server size={16} className="stat-icon"/>
               <span className="stat-label">Engine:</span>
               <span className="font-mono text-emerald-400">Express + Socket.io</span>
             </div>
@@ -381,13 +365,9 @@ export default function Home() {
         <div className="roles-grid">
           
           {/* Guest Menu Card */}
-          <Link 
-            to="/menu" 
-            className="reflective-card"
-            onMouseMove={handleMouseMove}
-          >
+          <Link to="/menu" className="reflective-card" onMouseMove={handleMouseMove}>
             <div className="card-icon-container">
-              <Utensils size={24} />
+              <Utensils size={24}/>
             </div>
             <div className="card-info">
               <h2 className="card-title">Guest Digital Menu</h2>
@@ -402,13 +382,9 @@ export default function Home() {
           </Link>
 
           {/* Kitchen Card */}
-          <Link 
-            to="/kitchen" 
-            className="reflective-card"
-            onMouseMove={handleMouseMove}
-          >
+          <Link to="/kitchen" className="reflective-card" onMouseMove={handleMouseMove}>
             <div className="card-icon-container">
-              <ChefHat size={24} />
+              <ChefHat size={24}/>
             </div>
             <div className="card-info">
               <h2 className="card-title">Kitchen KOT Queue</h2>
@@ -423,13 +399,9 @@ export default function Home() {
           </Link>
 
           {/* Counter Card */}
-          <Link 
-            to="/counter" 
-            className="reflective-card"
-            onMouseMove={handleMouseMove}
-          >
+          <Link to="/counter" className="reflective-card" onMouseMove={handleMouseMove}>
             <div className="card-icon-container">
-              <Wallet size={24} />
+              <Wallet size={24}/>
             </div>
             <div className="card-info">
               <h2 className="card-title">Counter Billing</h2>
@@ -444,13 +416,9 @@ export default function Home() {
           </Link>
 
           {/* QR & Table Config Card */}
-          <Link 
-            to="/admin/qr" 
-            className="reflective-card"
-            onMouseMove={handleMouseMove}
-          >
+          <Link to="/admin/qr" className="reflective-card" onMouseMove={handleMouseMove}>
             <div className="card-icon-container">
-              <QrCode size={24} />
+              <QrCode size={24}/>
             </div>
             <div className="card-info">
               <h2 className="card-title">Table Simulator & QR</h2>
@@ -469,16 +437,15 @@ export default function Home() {
         {/* Footer Support Info */}
         <div className="flex justify-between items-center text-xs text-gray-500 pt-6 border-t border-white/5">
           <span className="flex items-center gap-1">
-            <CheckCircle size={12} className="text-green-500" />
+            <CheckCircle size={12} className="text-green-500"/>
             Reliable Live-Sync Network Layer active
           </span>
           <Link to="/help" className="hover:text-green-400 flex items-center gap-1 text-gray-500">
-            <HelpCircle size={12} />
+            <HelpCircle size={12}/>
             DineFlow Support
           </Link>
         </div>
 
       </div>
-    </div>
-  );
+    </div>);
 }

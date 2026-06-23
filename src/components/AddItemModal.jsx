@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { Minus, Plus, X } from 'lucide-react';
-import type { MenuItem } from '../data/menuData';
 
-interface Props {
-  item: MenuItem;
-  onClose: () => void;
-  onAdd: (quantity: number, notes: string) => void;
-}
-
-export default function AddItemModal({ item, onClose, onAdd }: Props) {
+export default function AddItemModal({ item, onClose, onAdd }) {
   const [quantity, setQuantity] = useState(1);
   const [notes, setNotes] = useState('');
 

@@ -1,12 +1,7 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
-interface StaffGuardProps {
-  children: React.ReactNode;
-  requiredRole?: 'manager' | 'kitchen';
-}
-
-export default function StaffGuard({ children, requiredRole }: StaffGuardProps) {
+export default function StaffGuard({ children, requiredRole }) {
   const location = useLocation();
   const token = localStorage.getItem('token');
   const isAuthenticated = localStorage.getItem('staff_auth') === 'true';

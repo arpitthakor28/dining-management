@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 import { menuData } from '../data/menuData';
-import type { MenuItem } from '../data/menuData';
 
-interface Props {
-  onSelect: (item: MenuItem) => void;
-}
-
-export default function QuickReorder({ onSelect }: Props) {
+export default function QuickReorder({ onSelect }) {
   const [showRotiOptions, setShowRotiOptions] = useState(false);
   const [showPapadOptions, setShowPapadOptions] = useState(false);
   
@@ -17,7 +12,7 @@ export default function QuickReorder({ onSelect }: Props) {
     .flatMap(c => c.items)
     .filter(i => i.name.toLowerCase().includes('papad'));
 
-  const getMenuItem = (nameSearch: string) => {
+  const getMenuItem = (nameSearch) => {
     const beverages = menuData.categories.find(c => c.id === 'beverages')?.items || [];
     return beverages.find(i => i.name.toLowerCase().includes(nameSearch.toLowerCase()));
   };

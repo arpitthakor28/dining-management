@@ -1,12 +1,7 @@
 import React from 'react';
 import { AlertTriangle, User } from 'lucide-react';
 
-interface ApprovalModalProps {
-  onApprove: () => void;
-  onDecline: () => void;
-}
-
-export default function ApprovalModal({ onApprove, onDecline }: ApprovalModalProps) {
+export default function ApprovalModal({ onApprove, onDecline }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in-95 duration-200">
