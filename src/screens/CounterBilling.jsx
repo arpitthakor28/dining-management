@@ -3,7 +3,11 @@ import { CreditCard, Printer, Users, Bell, DollarSign, CheckCircle2, Download, L
 import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { useCart } from '../context/CartContext';
-const socket = io('http://localhost:8080', {
+const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8080'
+  : 'https://dining-management.onrender.com';
+
+const socket = io(BACKEND_URL, {
     autoConnect: false
 });
 const CATEGORIES = [

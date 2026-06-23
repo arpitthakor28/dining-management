@@ -13,8 +13,15 @@ window.fetch = function (input, init) {
   const pathRestaurantId = pathMatch ? pathMatch[1] : null;
   const restaurantId = pathRestaurantId || loggedInRestaurantId;
 
+  // Rewrite backend URL if not running on localhost
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    if (typeof input === 'string') {
+      input = input.replace('http://localhost:8080', 'https://dining-management.onrender.com');
+    }
+  }
+
   const url = typeof input === 'string' ? input : (input instanceof Request ? input.url : '');
-  if (url.includes('/api') || url.includes('localhost:8080/api')) {
+  if (url.includes('/api') || url.includes('localhost:8080/api') || url.includes('dining-management.onrender.com/api')) {
     init = init || {};
     const headers = new Headers(init.headers);
     
@@ -37,7 +44,7 @@ window.fetch = function (input, init) {
       }
     }
   }
-  return originalFetch.apply(this, arguments);
+  return originalFetch.apply(this, [input, init]);
 };
 
 createRoot(document.getElementById('root')).render(

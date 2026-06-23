@@ -4,8 +4,12 @@ import { io } from 'socket.io-client';
 
 const CartContext = createContext(undefined);
 
-// Initialize Socket.io client pointing to Port 8080
-const socket = io('http://localhost:8080', {
+const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8080'
+  : 'https://dining-management.onrender.com';
+
+// Initialize Socket.io client
+const socket = io(BACKEND_URL, {
   autoConnect: false
 });
 
