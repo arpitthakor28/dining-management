@@ -316,10 +316,10 @@ export default function Menu() {
 
                 {/* Category Sections */}
                 <div className="space-y-8">
-                  {groupedMenu.length > 0 ? (groupedMenu.map((category) => (<div id={`category-${category.id}`} key={category.id} className="shadow-sm overflow-hidden" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)' }}>
+                  {groupedMenu.length > 0 ? (groupedMenu.map((category) => (<div id={`category-${category.id}`} key={category.id} className="space-y-4">
                         
                         {/* Category Title Header */}
-                        <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border)', backgroundColor: 'var(--surface2)' }}>
+                        <div className="px-2 py-2 flex items-center justify-between">
                           <div>
                             <h3 className="font-extrabold text-base flex items-center gap-2" style={{ color: 'var(--text)' }}>
                               <span className="text-xl">{category.emoji}</span> {category.name}
@@ -329,14 +329,14 @@ export default function Menu() {
                         </div>
 
                         {/* Dish List Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-0" style={{ backgroundColor: 'var(--border)' }}>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           {category.items.map((item) => {
                     const cleanId = item.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
                     const cartItem = cartItems.find(i => i.id === cleanId);
                     const isAdded = !!cartItem;
-                    return (<div key={item.name} className="p-5 flex gap-4 transition-colors" style={{ backgroundColor: 'var(--surface)', borderBottom: '1px solid var(--border)', borderRight: '1px solid var(--border)' }}>
+                    return (<div key={item.name} className="card flex gap-4 transition-all duration-200" style={{ padding: '20px' }}>
                                 {/* circular emoji graphic avatar */}
-                                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 shadow-inner" style={{ backgroundColor: 'rgba(63, 185, 80, 0.1)', border: '1px solid rgba(63, 185, 80, 0.25)' }}>
+                                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 shadow-inner" style={{ backgroundColor: 'rgba(63, 185, 80, 0.08)', border: '1px solid rgba(63, 185, 80, 0.2)' }}>
                                   {category.emoji}
                                 </div>
 
@@ -352,7 +352,7 @@ export default function Menu() {
                                   <div className="flex justify-between items-center mt-4">
                                     {/* Dietary indicators */}
                                     <div className="flex gap-1.5">
-                                      <span className="text-[9px] font-bold px-2 py-0.5 rounded uppercase" style={{ backgroundColor: 'var(--surface2)', color: 'var(--muted)' }}>Fresh</span>
+                                      <span className="text-[9px] font-bold px-2 py-0.5 rounded uppercase" style={{ backgroundColor: 'var(--surface2)', color: 'var(--muted)', border: '1px solid var(--border)' }}>Fresh</span>
                                       <span className="text-[9px] font-bold border px-2 py-0.5 rounded uppercase" style={{ backgroundColor: 'rgba(63, 185, 80, 0.12)', color: 'var(--accent)', borderColor: 'rgba(63, 185, 80, 0.3)' }}>Vegetarian</span>
                                     </div>
 
@@ -372,7 +372,7 @@ export default function Menu() {
                               </div>);
                 })}
                         </div>
-                      </div>))) : (<div className="text-center py-12 shadow-sm" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)' }}>
+                      </div>))) : (<div className="text-center py-12 card">
                       <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>No dishes found matching your search.</p>
                     </div>)}
                 </div>

@@ -182,18 +182,110 @@ export default function Home() {
                 }
                 .banner-visual {
                     width: 40%;
-                    background: linear-gradient(135deg, rgba(63, 185, 80, 0.12), rgba(88, 166, 255, 0.06));
+                    background: linear-gradient(135deg, rgba(63, 185, 80, 0.08), rgba(88, 166, 255, 0.04));
                     border-right: 1px solid var(--border);
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     position: relative;
+                    padding: 24px;
+                    overflow: hidden;
                 }
-                .banner-visual::before {
-                    content: '🍽️';
-                    font-size: 64px;
+                .mock-tablet {
+                    width: 100%;
+                    max-width: 220px;
+                    aspect-ratio: 4/3;
+                    background-color: #050705;
+                    border: 8px solid #202421;
+                    border-radius: 16px;
+                    box-shadow: 0 12px 24px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+                    padding: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    box-sizing: border-box;
+                }
+                .mock-tablet-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border-bottom: 1px solid #202421;
+                    padding-bottom: 4px;
+                }
+                .mock-logo {
+                    font-size: 8px;
+                    font-weight: 800;
+                    color: var(--accent);
+                }
+                .mock-badge {
+                    font-size: 6px;
+                    background-color: rgba(63,185,80,0.12);
+                    color: var(--accent);
+                    padding: 1px 4px;
+                    border-radius: 2px;
+                    font-weight: 700;
+                }
+                .mock-content {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+                }
+                .mock-row {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    background-color: #0b0f0c;
+                    border: 1px solid #202421;
+                    border-radius: 4px;
+                    padding: 4px;
+                }
+                .mock-avatar {
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 3px;
+                    background-color: rgba(63,185,80,0.1);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 10px;
+                }
+                .mock-text-container {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+                }
+                .mock-title-line {
+                    width: 60px;
+                    height: 4px;
+                    background-color: var(--text);
+                    border-radius: 2px;
                     opacity: 0.8;
-                    animation: float 4s ease-in-out infinite;
+                }
+                .mock-desc-line {
+                    width: 40px;
+                    height: 3px;
+                    background-color: var(--muted);
+                    border-radius: 1.5px;
+                }
+                .mock-price-badge {
+                    width: 18px;
+                    height: 8px;
+                    background-color: var(--accent);
+                    border-radius: 2px;
+                }
+                .mock-footer {
+                    display: flex;
+                    justify-content: flex-end;
+                    border-top: 1px solid #202421;
+                    padding-top: 4px;
+                }
+                .mock-btn {
+                    width: 32px;
+                    height: 8px;
+                    background-color: var(--accent2);
+                    border-radius: 2px;
                 }
                 .banner-info {
                     width: 60%;
@@ -392,7 +484,35 @@ export default function Home() {
                     <div className="console-cards-container">
                         {/* Guest Menu Wide Banner Card */}
                         <Link to="/menu" className="banner-card">
-                            <div className="banner-visual"></div>
+                             <div className="banner-visual">
+                                <div className="mock-tablet">
+                                    <div className="mock-tablet-header">
+                                        <span className="mock-logo">DineFlow</span>
+                                        <span className="mock-badge">Table 12</span>
+                                    </div>
+                                    <div className="mock-content">
+                                        <div className="mock-row">
+                                            <span className="mock-avatar">🍕</span>
+                                            <div className="mock-text-container">
+                                                <div className="mock-title-line"></div>
+                                                <div className="mock-desc-line"></div>
+                                            </div>
+                                            <div className="mock-price-badge"></div>
+                                        </div>
+                                        <div className="mock-row">
+                                            <span className="mock-avatar">🍜</span>
+                                            <div className="mock-text-container">
+                                                <div className="mock-title-line"></div>
+                                                <div className="mock-desc-line"></div>
+                                            </div>
+                                            <div className="mock-price-badge"></div>
+                                        </div>
+                                    </div>
+                                    <div className="mock-footer">
+                                        <div className="mock-btn"></div>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="banner-info">
                                 <div className="badge-foh">
                                     <Utensils size={12} />
