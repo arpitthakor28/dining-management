@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Search, AlertTriangle, RefreshCw, BellRing, ShoppingBag, ShoppingCart, ClipboardList, Receipt, X, CheckCircle2, Utensils, ArrowRight, ChevronDown } from 'lucide-react';
-import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams, useParams } from 'react-router-dom';
 import { menuData } from '../data/menuData';
 import { useCart } from '../context/CartContext';
 export default function Menu() {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
-    const getTableId = () => window.location.pathname.match(/\/table\/([^\/]+)/)?.[1] || 'T-12';
+    const { restaurantId = 'r_001', tableId: routeTableId } = useParams();
+    const getTableId = () => routeTableId || window.location.pathname.match(/\/table\/([^\/]+)/)?.[1] || 'T-12';
     const tableId = getTableId();
     const tableNumber = tableId.replace('T-', '');
     const { items: cartItems, batches, addToCart, updateQuantity, updateNotes, removeFromCart, submitCart, sendComment, requestBill, cartCount, cartTotal, isOrderLocked, isBillRequested, validateTable, sessionId, sessionClosed, clearTableSession } = useCart();
@@ -35,12 +36,13 @@ export default function Menu() {
     };
     const activeTab = getActiveTab();
     const handleTabChange = (tabName) => {
+        const search = window.location.search;
         if (tabName === 'menu')
-            navigate(`/table/${tableId}/menu${window.location.search}`);
+            navigate(`/restaurant/${restaurantId}/table/${tableId}/menu${search}`);
         else if (tabName === 'orders')
-            navigate(`/table/${tableId}/status${window.location.search}`);
+            navigate(`/restaurant/${restaurantId}/table/${tableId}/status${search}`);
         else if (tabName === 'bill')
-            navigate(`/table/${tableId}/bill${window.location.search}`);
+            navigate(`/restaurant/${restaurantId}/table/${tableId}/bill${search}`);
     };
     useEffect(() => {
         const token = searchParams.get('token');

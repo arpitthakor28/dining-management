@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import Home from './screens/Home';
 import QRJoin from './screens/QRJoin';
 import Menu from './screens/Menu';
@@ -12,6 +12,18 @@ import Login from './screens/Login';
 import QRGenerator from './screens/QRGenerator';
 import StaffGuard from './components/StaffGuard';
 import { CartProvider } from './context/CartContext';
+
+function QueryNavigate({ to }) {
+  const location = useLocation();
+  const params = useParams();
+  
+  let target = to;
+  Object.entries(params).forEach(([key, value]) => {
+    target = target.replace(`:${key}`, value);
+  });
+  
+  return <Navigate to={`${target}${location.search}`} replace />;
+}
 
 function App() {
   return (
@@ -32,20 +44,20 @@ function App() {
             <Route path="/restaurant/:restaurantId/table/:tableId/help" element={<Menu />} />
 
             {/* Legacy Guest Redirects (mapped to default restaurant r_001) */}
-            <Route path="/table/:tableId/join" element={<Navigate to="/restaurant/r_001/table/:tableId/join" replace />} />
-            <Route path="/table/:tableId/menu" element={<Navigate to="/restaurant/r_001/table/:tableId/menu" replace />} />
-            <Route path="/table/:tableId/cart" element={<Navigate to="/restaurant/r_001/table/:tableId/menu" replace />} />
-            <Route path="/table/:tableId/status" element={<Navigate to="/restaurant/r_001/table/:tableId/menu" replace />} />
-            <Route path="/table/:tableId/orders" element={<Navigate to="/restaurant/r_001/table/:tableId/menu" replace />} />
-            <Route path="/table/:tableId/bill" element={<Navigate to="/restaurant/r_001/table/:tableId/menu" replace />} />
-            <Route path="/table/:tableId/help" element={<Navigate to="/restaurant/r_001/table/:tableId/menu" replace />} />
+            <Route path="/table/:tableId/join" element={<QueryNavigate to="/restaurant/r_001/table/:tableId/join" />} />
+            <Route path="/table/:tableId/menu" element={<QueryNavigate to="/restaurant/r_001/table/:tableId/menu" />} />
+            <Route path="/table/:tableId/cart" element={<QueryNavigate to="/restaurant/r_001/table/:tableId/menu" />} />
+            <Route path="/table/:tableId/status" element={<QueryNavigate to="/restaurant/r_001/table/:tableId/status" />} />
+            <Route path="/table/:tableId/orders" element={<QueryNavigate to="/restaurant/r_001/table/:tableId/status" />} />
+            <Route path="/table/:tableId/bill" element={<QueryNavigate to="/restaurant/r_001/table/:tableId/bill" />} />
+            <Route path="/table/:tableId/help" element={<QueryNavigate to="/restaurant/r_001/table/:tableId/menu" />} />
 
-            <Route path="/menu" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
-            <Route path="/cart" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
-            <Route path="/status" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
-            <Route path="/orders" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
-            <Route path="/bill" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
-            <Route path="/help" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
+            <Route path="/menu" element={<QueryNavigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" />} />
+            <Route path="/cart" element={<QueryNavigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" />} />
+            <Route path="/status" element={<QueryNavigate to="/restaurant/r_001/table/T-1/status?token=token_t1" />} />
+            <Route path="/orders" element={<QueryNavigate to="/restaurant/r_001/table/T-1/status?token=token_t1" />} />
+            <Route path="/bill" element={<QueryNavigate to="/restaurant/r_001/table/T-1/bill?token=token_t1" />} />
+            <Route path="/help" element={<QueryNavigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" />} />
 
             {/* Protected Staff Routes (Auth & Role-scoped via StaffGuard) */}
             <Route 
