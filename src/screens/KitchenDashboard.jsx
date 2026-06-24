@@ -8,6 +8,7 @@ export default function KitchenDashboard() {
     const { batches, updateItemStatus } = useCart();
     const [now, setNow] = useState(new Date());
     const [filterTab, setFilterTab] = useState('all'); // 'all' | 'pending' | 'ready' | 'past'
+    const [prepDurations, setPrepDurations] = useState([]);
 
     // Update current time to compute KOT ages
     useEffect(() => {
@@ -61,12 +62,25 @@ export default function KitchenDashboard() {
 
         for (const item of itemsToUpdate) {
             await updateItemStatus(item.itemId, targetStatus);
+            if (targetStatus === 'ready') {
+                const durationMs = Date.now() - new Date(batch.timestamp).getTime();
+                const durationMins = durationMs / 60000;
+                setPrepDurations(prev => [...prev, durationMins]);
+            }
         }
     };
 
     // Calculate metrics
-    const allItemsPrepared = batches.flatMap(b => b.items).filter(i => i.status === 'served').length;
-    const efficiency = 94; // Realistic benchmark
+    const allItemsPrepared = batches.flatMap(b => b.items).filter(i => i.status === 'ready' || i.status === 'served').length;
+    
+    const avgPrepTime = prepDurations.length > 0
+        ? (prepDurations.reduce((sum, d) => sum + d, 0) / prepDurations.length).toFixed(1)
+        : "0.0";
+
+    const efficientItems = prepDurations.filter(d => d <= 15).length;
+    const efficiency = prepDurations.length > 0
+        ? Math.round((efficientItems / prepDurations.length) * 100)
+        : 0;
 
     return (
         <div className="kitchen-layout">
@@ -386,7 +400,7 @@ export default function KitchenDashboard() {
                 }
                 .performance-stats {
                     display: grid;
-                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
                     gap: 16px;
                     margin-bottom: 16px;
                 }
@@ -577,15 +591,11 @@ export default function KitchenDashboard() {
                         <div className="performance-stats">
                             <div className="performance-stat-card">
                                 <h4>Avg Prep Time</h4>
-                                <p>12.4m</p>
+                                <p>{avgPrepTime}m</p>
                             </div>
                             <div className="performance-stat-card">
                                 <h4>Items Prepared</h4>
-                                <p>{allItemsPrepared || 142}</p>
-                            </div>
-                            <div className="performance-stat-card">
-                                <h4>Staff Active</h4>
-                                <p>6</p>
+                                <p>{allItemsPrepared}</p>
                             </div>
                             <div className="performance-stat-card">
                                 <h4>Efficiency</h4>
