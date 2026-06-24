@@ -150,7 +150,7 @@ export default function CounterBilling() {
             socket.off('bill_updated', handleUpdate);
             socket.off('menu_updated', fetchMenu);
         };
-    }, [selectedTableId]);
+    }, []);
 
     const handleResolveHelp = async (requestId) => {
         try {
