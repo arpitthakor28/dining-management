@@ -45,7 +45,7 @@ export default function QRJoin() {
           Join the shared table session to browse the menu, build your cart, and place orders together.
         </p>
         
-        <button className="btn-premium-green w-full font-black py-4 rounded-xl transition-all uppercase text-xs tracking-wider z-10" onClick={() => navigate(`/restaurant/${activeRestaurantId}/table/${activeTableId}/menu`)}>
+        <button className="btn-premium-green w-full font-black py-4 rounded-xl transition-all uppercase text-xs tracking-wider z-10" onClick={() => navigate(`/restaurant/${activeRestaurantId}/table/${activeTableId}/menu${window.location.search}`)}>
           Join Session
         </button>
       </div>
