@@ -477,7 +477,9 @@ export default function KitchenDashboard() {
                         <span className="topbar-logo">DineFlow</span>
                         <Link to="/menu" className="topbar-link">Guest Menu</Link>
                         <Link to="/kitchen" className="topbar-link active">Kitchen Dashboard</Link>
-                        <Link to="/counter" className="topbar-link">Cashier Console</Link>
+                        {localStorage.getItem('staff_role') === 'manager' && (
+                            <Link to="/counter" className="topbar-link">Cashier Console</Link>
+                        )}
                     </div>
                     <div className="topbar-actions">
                         <div className="topbar-status">

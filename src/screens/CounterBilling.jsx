@@ -902,6 +902,98 @@ export default function CounterBilling() {
                     opacity: 0.3;
                     cursor: not-allowed;
                 }
+
+                @media print {
+                    body {
+                        background: #ffffff !important;
+                        color: #000000 !important;
+                        font-family: 'Inter', sans-serif !important;
+                    }
+                    /* Hide everything except the invoice panel */
+                    .sidebar,
+                    .main-topbar,
+                    .tables-grid-section,
+                    .invoice-header .invoice-actions,
+                    .checkout-cta-box,
+                    .alert-badge {
+                        display: none !important;
+                    }
+                    .billing-layout {
+                        display: block !important;
+                        background: transparent !important;
+                        padding: 0 !important;
+                        margin: 0 !important;
+                    }
+                    .main-panel {
+                        display: block !important;
+                        padding: 0 !important;
+                        margin: 0 !important;
+                        overflow: visible !important;
+                        height: auto !important;
+                    }
+                    .invoice-panel {
+                        display: block !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        margin: 0 !important;
+                        padding: 20px !important;
+                        border: none !important;
+                        background: #ffffff !important;
+                        color: #000000 !important;
+                        box-shadow: none !important;
+                        height: auto !important;
+                        overflow: visible !important;
+                        position: static !important;
+                    }
+                    .invoice-title {
+                        color: #000000 !important;
+                        font-size: 24px !important;
+                        font-weight: 700 !important;
+                        text-align: center !important;
+                    }
+                    .invoice-meta {
+                        color: #555555 !important;
+                        font-size: 12px !important;
+                        text-align: center !important;
+                        border-bottom: 2px dashed #000000 !important;
+                        padding-bottom: 12px !important;
+                        margin-bottom: 16px !important;
+                    }
+                    .invoice-table-wrapper {
+                        overflow: visible !important;
+                        height: auto !important;
+                    }
+                    .invoice-table {
+                        width: 100% !important;
+                        color: #000000 !important;
+                        border-collapse: collapse !important;
+                    }
+                    .invoice-table th {
+                        color: #000000 !important;
+                        border-bottom: 2px solid #000000 !important;
+                        font-size: 12px !important;
+                        text-transform: uppercase !important;
+                        padding: 8px 0 !important;
+                    }
+                    .invoice-table td {
+                        color: #000000 !important;
+                        border-bottom: 1px dashed #dddddd !important;
+                        padding: 8px 0 !important;
+                        font-size: 12px !important;
+                    }
+                    .summary-row {
+                        color: #000000 !important;
+                        font-size: 14px !important;
+                        border-top: 1px solid #000000 !important;
+                        padding: 8px 0 !important;
+                    }
+                    .summary-row.grand-total {
+                        font-size: 18px !important;
+                        font-weight: 700 !important;
+                        border-top: 2px dashed #000000 !important;
+                        border-bottom: 2px dashed #000000 !important;
+                    }
+                }
             `}</style>
 
             {/* Left Persistent Sidebar */}
