@@ -201,8 +201,14 @@ export function CartProvider({ children }) {
         if (currentTable) {
           setIsBillRequested(currentTable.status === 'bill_requested');
           setIsOrderLocked(currentTable.status === 'bill_requested');
-          if (currentTable.status === 'empty') {
+          if (currentTable.status === 'empty' || (sessionId && currentTable.current_session_id !== sessionId)) {
             setSessionId(null);
+            setSessionClosed(true);
+            setIsOrderLocked(true);
+            setIsBillRequested(false);
+            setItems([]);
+            setBatches([]);
+            localStorage.removeItem(`table_token_${tableId}`);
           }
         }
       }
@@ -323,6 +329,9 @@ export function CartProvider({ children }) {
 
   // Clear current table session (used locally to reset guest UX)
   const clearTableSession = () => {
+    if (tableId) {
+      localStorage.removeItem(`table_token_${tableId}`);
+    }
     setItems([]);
     setTableId(null);
     setTableNumber(null);
