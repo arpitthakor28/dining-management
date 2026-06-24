@@ -1004,10 +1004,6 @@ export default function CounterBilling() {
                         <p className="brand-subtitle">Management System</p>
                     </div>
                     <nav className="sidebar-menu">
-                        <Link to="/menu" className="sidebar-item">
-                            <Radio size={18} />
-                            <span>Guest Menu</span>
-                        </Link>
                         <Link to="/kitchen" className="sidebar-item">
                             <ChefHat size={18} />
                             <span>Kitchen Dashboard</span>
