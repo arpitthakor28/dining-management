@@ -1139,9 +1139,15 @@ export default function CounterBilling() {
                                             </div>
                                             
                                             <div className="invoice-actions">
-                                                <button className="btn-invoice-action" onClick={() => window.print()}>
+                                                <button className="btn-invoice-action" onClick={() => {
+                                                    if (tableSessionId) {
+                                                        window.open(`${BACKEND_URL}/api/bills/${tableSessionId}/pdf`, '_blank');
+                                                    } else {
+                                                        alert("No active session found for this table");
+                                                    }
+                                                }}>
                                                     <Printer size={14} />
-                                                    <span>Print Pro-forma</span>
+                                                    <span>Print Bill</span>
                                                 </button>
                                                 <button className="btn-invoice-action" onClick={() => alert('Splitting invoice bill...')}>
                                                     <Users size={14} />

@@ -757,6 +757,92 @@ app.post('/api/bills/cancel', async (req, res) => {
   }
 });
 
+// Generate PDF bill receipt on the fly for the selected session
+app.get('/api/bills/:sessionId/pdf', async (req, res) => {
+  const { sessionId } = req.params;
+  try {
+    const cols = getCollections();
+    const session = await cols.sessions.findOne({ id: sessionId });
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+
+    const table = await cols.tables.findOne({ id: session.table_id });
+
+    // Get all ordered items
+    const sessionOrders = await cols.orders.find({ session_id: sessionId }).toArray();
+    const menuItems = await cols.menuItems.find().toArray();
+    const menuMap = new Map(menuItems.map(m => [m.id, m]));
+
+    const items = [];
+    for (const o of sessionOrders) {
+      for (const item of o.items) {
+        const mItem = menuMap.get(item.menuItemId) || { name: 'Unknown', price: 0 };
+        items.push({
+          qty: item.qty,
+          name: mItem.name,
+          price: mItem.price
+        });
+      }
+    }
+
+    if (!items.length) {
+      return res.status(400).json({ error: 'No items ordered in this session' });
+    }
+
+    const subtotal = items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const total = subtotal * 1.05;
+
+    const doc = new PDFDocument({ margin: 40 });
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `inline; filename="bill_${table.table_number}.pdf"`);
+    doc.pipe(res);
+
+    // Draw Receipt UI in PDF
+    doc.fontSize(22).text('THE SPICE ROUTE', { align: 'center' });
+    doc.fontSize(10).text('123 Gourmet Street, Foodie City', { align: 'center' });
+    doc.fontSize(10).text('GSTIN: 27AAAAA1111A1Z1', { align: 'center' });
+    doc.moveDown();
+    
+    doc.fontSize(12).text(`Bill Invoice: #DF-${sessionId.substring(0, 6).toUpperCase()}`);
+    doc.text(`Table: Table ${table.table_number}`);
+    doc.text(`Date: ${new Date().toLocaleString()}`);
+    doc.moveDown();
+    
+    doc.fontSize(11).text('----------------------------------------------------', { align: 'center' });
+    doc.moveDown(0.5);
+
+    items.forEach(item => {
+      const itemTotal = (item.qty * item.price).toFixed(2);
+      doc.text(`${item.qty} x ${item.name}`, { continued: true });
+      doc.text(`₹${itemTotal}`, { align: 'right' });
+    });
+
+    doc.moveDown(0.5);
+    doc.text('----------------------------------------------------', { align: 'center' });
+    doc.moveDown(0.5);
+
+    const cgst = subtotal * 0.025;
+    const sgst = subtotal * 0.025;
+
+    doc.text(`Subtotal:`, { continued: true }); doc.text(`₹${subtotal.toFixed(2)}`, { align: 'right' });
+    doc.text(`CGST (2.5%):`, { continued: true }); doc.text(`₹${cgst.toFixed(2)}`, { align: 'right' });
+    doc.text(`SGST (2.5%):`, { continued: true }); doc.text(`₹${sgst.toFixed(2)}`, { align: 'right' });
+    doc.moveDown(0.5);
+    doc.fontSize(14).text(`Grand Total:`, { continued: true, bold: true }); 
+    doc.text(`₹${total.toFixed(2)}`, { align: 'right', bold: true });
+    
+    doc.moveDown(1.5);
+    doc.fontSize(11).text('Thank you for dining with us!', { align: 'center' });
+    doc.text('Please visit again!', { align: 'center' });
+    doc.end();
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Confirm Bill (Manager site) - paid, generate PDF receipt, close session, reset table
 app.post('/api/bills/confirm', async (req, res) => {
   const { sessionId } = req.body;

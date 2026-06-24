@@ -506,10 +506,6 @@ export default function KitchenDashboard() {
                                 <span>All Sections</span>
                                 <ChevronDown size={14} />
                             </button>
-                            <button className="btn-green-action" onClick={() => window.print()}>
-                                <Printer size={14} />
-                                <span>Print Summary</span>
-                            </button>
                         </div>
                     </div>
 
