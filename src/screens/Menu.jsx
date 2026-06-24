@@ -258,14 +258,8 @@ export default function Menu() {
             <span>Bill requested — ordering is locked. Ask staff to add items.</span>
           </div>)}
 
-        {/* Layout Grid (Removed desktop categories sidebar) */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-
-          {/* MAIN DYNAMIC CONTENT AREA */}
-          <div className={`col-span-1 ${activeTab === 'menu'
-            ? 'lg:col-span-3' 
-            : 'lg:col-span-4 max-w-[900px] mx-auto w-full' 
-        }`}>
+        {/* Centered Main Content Area */}
+        <div className="max-w-[800px] mx-auto w-full px-4 sm:px-6">
             
             {/* Tab A: MENU CATALOG VIEW */}
             {activeTab === 'menu' && (<div className="animate-in fade-in duration-200 space-y-6">
@@ -532,64 +526,8 @@ export default function Menu() {
                 : 'btn-primary'}`} style={{ cursor: isBillRequested || subtotal === 0 ? 'not-allowed' : 'pointer' }} onClick={() => setShowConfirm(true)} disabled={isBillRequested || subtotal === 0}>
                   {isBillRequested ? 'Bill Requested' : 'Request Final Bill'}
                 </button>
-              </div>)}
-
-          </div>
-
-          {/* ===================================== */}
-          {/* COLUMN 3: PERSISTENT ORDER CART (Desktop) */}
-          {/* ===================================== */}
-          {activeTab === 'menu' && (<div className="hidden lg:block lg:col-span-1 sticky top-24">
-              <div className="guest-cart-panel p-5 space-y-4">
-                <div className="flex items-center justify-between pb-3 mb-2" style={{ borderBottom: '1px solid var(--border)' }}>
-                  <h3 className="font-extrabold text-sm flex items-center gap-2" style={{ color: 'var(--text)' }}>
-                    <ShoppingBag size={18} style={{ color: 'var(--accent)' }}/> Your Order
-                  </h3>
-                  <span className="badge-green text-[10px] font-bold px-2 py-0.5 rounded-full">{cartCount}</span>
-                </div>
-
-                {cartItems.length === 0 ? (<div className="text-center py-10 text-xs" style={{ color: 'var(--muted)' }}>
-                    <ShoppingBag size={32} className="mx-auto mb-2 opacity-20"/>
-                    <p className="font-bold">Your cart is empty</p>
-                    <p className="text-[10px] mt-1 font-semibold">Select items from the catalog.</p>
-                  </div>) : (<div className="space-y-4 max-h-[40vh] overflow-y-auto pr-1 scrollbar-glass">
-                    {cartItems.map((item) => (<div key={item.id} className="p-3 rounded-xl" style={{ border: '1px solid var(--border)', backgroundColor: 'var(--surface2)' }}>
-                        <div className="flex justify-between items-start gap-1">
-                          <div className="min-w-0">
-                            <h4 className="font-extrabold text-xs truncate" style={{ color: 'var(--text)' }}>{item.name}</h4>
-                            <p className="text-[10px] font-black mt-0.5" style={{ color: 'var(--accent)' }}>${item.price}</p>
-                          </div>
-                          
-                          <div className="guest-stepper h-[24px]">
-                            <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="guest-stepper-btn px-1.5">-</button>
-                            <span className="guest-stepper-val text-[10px] px-1">{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="guest-stepper-btn px-1.5">+</button>
-                          </div>
-                        </div>
-
-                        <input type="text" placeholder="Special instructions..." value={item.notes} onChange={(e) => updateNotes(item.id, e.target.value)} className="guest-input-search w-full text-[10px] rounded-lg p-2 mt-2 font-semibold"/>
-                      </div>))}
-                  </div>)}
-
-                {cartItems.length > 0 && (<div className="pt-4 space-y-4" style={{ borderTop: '1px solid var(--border)' }}>
-                    <div>
-                      <label className="block text-[9px] font-black uppercase tracking-wider mb-2" style={{ color: 'var(--muted)' }}>Order-level comment</label>
-                      <textarea placeholder="Instructions for the kitchen..." value={generalComment} onChange={(e) => setGeneralComment(e.target.value)} rows={2} className="guest-input-search w-full rounded-lg p-2 text-[10px] font-semibold resize-none"/>
-                    </div>
-
-                    <div className="flex justify-between items-center text-xs pt-3" style={{ borderTop: '1px solid var(--border)', color: 'var(--text)' }}>
-                      <span className="font-semibold" style={{ color: 'var(--muted)' }}>Subtotal</span>
-                      <span className="text-base font-black">${cartTotal}</span>
-                    </div>
-                    
-                    <button onClick={handlePlaceOrder} className="w-full btn-primary font-bold py-3 text-xs rounded-xl transition-all active:scale-95">
-                      Place Order
-                    </button>
-                  </div>)}
-              </div>
             </div>)}
-
-          </div>
+        </div>
 
       </main>
 
