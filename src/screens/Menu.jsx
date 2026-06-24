@@ -258,45 +258,13 @@ export default function Menu() {
             <span>Bill requested — ordering is locked. Ask staff to add items.</span>
           </div>)}
 
-        {/* 3-Column Layout Wrapper */}
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-6 items-start">
-          
-          {/* ===================================== */}
-          {/* COLUMN 1: CATEGORIES SIDEBAR (Desktop) */}
-          {/* ===================================== */}
-          {activeTab === 'menu' && (<div className="hidden md:block md:col-span-1 space-y-6 sticky top-24">
-              <div className="card p-4">
-                <span className="block text-[10px] font-black uppercase tracking-wider mb-4 px-2" style={{ color: 'var(--muted)' }}>Categories</span>
-                <nav className="space-y-1">
-                  {menuData.categories.map(cat => (
-                    <button 
-                      key={cat.id} 
-                      onClick={() => setActiveCategory(cat.id)} 
-                      className={`guest-sidebar-item font-bold text-sm ${activeCategory === cat.id ? 'active' : ''}`}
-                    >
-                      <span>{cat.name}</span>
-                    </button>
-                  ))}
-                </nav>
-              </div>
+        {/* Layout Grid (Removed desktop categories sidebar) */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
 
-              {/* Chef's Special Promotion Card */}
-              <div className="text-center" style={{ background: 'linear-gradient(135deg, rgba(63, 185, 80, 0.12), rgba(88, 166, 255, 0.06))', border: '1px solid rgba(63, 185, 80, 0.25)', borderRadius: 'var(--radius-lg)', padding: '20px' }}>
-                <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full uppercase mb-2" style={{ backgroundColor: 'rgba(63, 185, 80, 0.2)', color: 'var(--accent)' }}>Chef's Special</span>
-                <h4 className="font-extrabold text-sm" style={{ color: 'var(--text)' }}>Truffle Pappardelle</h4>
-                <p className="text-[11px] mt-1" style={{ color: 'var(--muted)' }}>Sautéed wild mushrooms, black truffle paste, parmesan cream.</p>
-                <div className="font-extrabold text-xs mt-3 flex items-center justify-center gap-1 cursor-pointer" style={{ color: 'var(--accent)' }}>
-                  Order Now <ArrowRight size={12}/>
-                </div>
-              </div>
-            </div>)}
-
-          {/* ===================================== */}
-          {/* COLUMN 2: MAIN DYNAMIC CONTENT AREA   */}
-          {/* ===================================== */}
+          {/* MAIN DYNAMIC CONTENT AREA */}
           <div className={`col-span-1 ${activeTab === 'menu'
-            ? 'md:col-span-3 lg:col-span-3' // middle column
-            : 'md:col-span-4 lg:col-span-5 max-w-[900px] mx-auto w-full' // full width for track/bill on desktop
+            ? 'lg:col-span-3' 
+            : 'lg:col-span-4 max-w-[900px] mx-auto w-full' 
         }`}>
             
             {/* Tab A: MENU CATALOG VIEW */}
@@ -326,8 +294,8 @@ export default function Menu() {
                    </div>
                  </div>
 
-                 {/* Mobile Category Slider */}
-                 <div className="guest-category-slider md:hidden">
+                 {/* Category Slider */}
+                 <div className="guest-category-slider">
                    {menuData.categories.map(cat => (
                      <button
                        key={cat.id}
@@ -628,16 +596,26 @@ export default function Menu() {
       {/* ===================================== */}
       {/* 3. PERSISTENT MOBILE FLOATING ACTIONS */}
       {/* ===================================== */}
-      <div className="fixed bottom-[96px] md:bottom-6 right-6 md:right-8 flex flex-col-reverse gap-4 pointer-events-none z-40">
+      <div className="guest-floating-container">
         {/* Cart Action FAB (Persistent on all screens) */}
-        {activeTab === 'menu' && (<button onClick={() => setIsCartOpen(true)} className="pointer-events-auto w-16 h-16 btn-premium-green rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-all border-4 cart-fab-glow relative" style={{ borderColor: '#0d1117' }} title="View Cart">
-            <ShoppingCart size={28}/>
-            {cartCount > 0 && <span className="badge-pulsing" style={{ borderColor: '#0d1117' }}>{cartCount}</span>}
-          </button>)}
+        {activeTab === 'menu' && (
+          <button 
+            onClick={() => setIsCartOpen(true)} 
+            className="guest-fab guest-fab-cart cart-fab-glow" 
+            title="View Cart"
+          >
+            <ShoppingCart size={32}/>
+            {cartCount > 0 && <span className="badge-pulsing">{cartCount}</span>}
+          </button>
+        )}
 
         {/* Call Staff Action (Stacked above Cart FAB dynamically via flex-col-reverse) */}
-        <button onClick={handleCallStaff} className="pointer-events-auto w-16 h-16 btn-premium-amber rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-all border-4 animate-pulse" style={{ borderColor: '#0d1117' }} title="Call Staff">
-          <BellRing size={28}/>
+        <button 
+          onClick={handleCallStaff} 
+          className="guest-fab guest-fab-staff animate-pulse" 
+          title="Call Staff"
+        >
+          <BellRing size={32}/>
         </button>
       </div>
 
@@ -677,13 +655,13 @@ export default function Menu() {
                     </div>
                   </div>
 
-                  <input type="text" placeholder="Special requests (e.g. no onions, make it spicy)..." value={item.notes} onChange={(e) => updateNotes(item.id, e.target.value)} className="guest-input-search w-full text-xs rounded-lg p-2.5 mt-3 font-semibold"/>
+                  <input type="text" placeholder="Add suggestions/requests (e.g. no onions, make it spicy)..." value={item.notes} onChange={(e) => updateNotes(item.id, e.target.value)} className="guest-input-search w-full text-xs rounded-lg p-2.5 mt-3 font-semibold"/>
                 </div>))}
             </div>
 
             <div className="rounded-xl p-4 mb-6" style={{ backgroundColor: 'var(--surface2)', border: '1px solid var(--border)' }}>
-              <label className="block text-[10px] font-black uppercase tracking-wider mb-2" style={{ color: 'var(--muted)' }}>Order-level comment (optional)</label>
-              <textarea placeholder="e.g. Bring extra plates, serve desserts at the end..." value={generalComment} onChange={(e) => setGeneralComment(e.target.value)} rows={2} className="guest-input-search w-full rounded-lg p-2.5 text-xs font-semibold resize-none"/>
+              <label className="block text-[10px] font-black uppercase tracking-wider mb-2">Any food suggestions or order comments?</label>
+              <textarea placeholder="e.g. Serve soup first, bring extra plates, make the curry mild..." value={generalComment} onChange={(e) => setGeneralComment(e.target.value)} rows={2} className="guest-input-search w-full rounded-lg p-2.5 text-xs font-semibold resize-none"/>
             </div>
 
             <div className="pt-4 space-y-4" style={{ borderTop: '1px solid var(--border)' }}>
