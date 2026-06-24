@@ -686,6 +686,7 @@ export default function CounterBilling() {
                     display: flex;
                     flex-direction: column;
                     gap: 8px;
+                    position: relative;
                 }
                 .table-card:hover {
                     transform: translateY(-1px);
@@ -699,6 +700,25 @@ export default function CounterBilling() {
                 .table-card.bill-requested {
                     border-color: var(--danger) !important;
                     background-color: rgba(248, 81, 73, 0.06) !important;
+                }
+                .table-card.has-alert {
+                    border-color: #ff6b35 !important;
+                    background-color: rgba(255, 107, 53, 0.06) !important;
+                }
+                .table-alert-dot {
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    width: 14px;
+                    height: 14px;
+                    background-color: var(--danger);
+                    border-radius: 50%;
+                    box-shadow: 0 0 0 3px rgba(248, 81, 73, 0.25);
+                    animation: alertPulse 1.5s ease-in-out infinite;
+                }
+                @keyframes alertPulse {
+                    0%, 100% { box-shadow: 0 0 0 3px rgba(248, 81, 73, 0.25); }
+                    50% { box-shadow: 0 0 0 8px rgba(248, 81, 73, 0.08); }
                 }
                 .table-card-row {
                     display: flex;
@@ -726,6 +746,101 @@ export default function CounterBilling() {
                 }
                 .table-card-desc.active {
                     color: var(--accent2);
+                }
+                .table-card-desc.staff-alert {
+                    color: #ff6b35;
+                    font-weight: 600;
+                }
+                /* Alerts Panel */
+                .alerts-panel {
+                    border-top: 1px solid var(--border);
+                    padding-top: 16px;
+                    margin-top: 8px;
+                }
+                .alerts-panel-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 12px;
+                }
+                .alerts-panel-title {
+                    font-size: 13px;
+                    font-weight: 700;
+                    color: var(--danger);
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .alert-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: rgba(248, 81, 73, 0.08);
+                    border: 1px solid rgba(248, 81, 73, 0.2);
+                    border-radius: 8px;
+                    padding: 10px 14px;
+                    margin-bottom: 8px;
+                }
+                .alert-item-info {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+                }
+                .alert-item-table {
+                    font-size: 13px;
+                    font-weight: 700;
+                    color: var(--text);
+                }
+                .alert-item-type {
+                    font-size: 11px;
+                    color: var(--danger);
+                    font-weight: 600;
+                }
+                .alert-item-time {
+                    font-size: 10px;
+                    color: var(--muted);
+                }
+                .btn-resolve-alert {
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 50%;
+                    background-color: var(--accent);
+                    border: none;
+                    color: #0b0f0c;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.2s ease;
+                    flex-shrink: 0;
+                }
+                .btn-resolve-alert:hover {
+                    transform: scale(1.1);
+                    box-shadow: 0 0 12px rgba(63, 185, 80, 0.4);
+                }
+                .btn-send-alert {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    width: 100%;
+                    padding: 12px 24px;
+                    background-color: rgba(248, 81, 73, 0.12);
+                    border: 1px solid rgba(248, 81, 73, 0.3);
+                    color: var(--danger);
+                    font-size: 13px;
+                    font-weight: 700;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    text-transform: uppercase;
+                    letter-spacing: 0.04em;
+                }
+                .btn-send-alert:hover {
+                    background-color: rgba(248, 81, 73, 0.2);
+                    border-color: var(--danger);
                 }
                 .invoice-panel {
                     background-color: var(--surface);
@@ -1085,6 +1200,9 @@ export default function CounterBilling() {
                                         // Mock guest counts to look organic like screenshot
                                         const mockGuests = (parseInt(table.table_number) % 3) + 2;
                                         
+                                        const tableAlerts = helpRequests.filter(hr => hr.table_id === table.id && hr.status !== 'resolved');
+                                        const hasStaffCall = tableAlerts.some(hr => hr.type === 'staff_call');
+
                                         return (
                                             <div 
                                                 key={table.id} 
@@ -1092,8 +1210,9 @@ export default function CounterBilling() {
                                                     setSelectedTableId(table.id);
                                                     setPdfDownloadUrl(null);
                                                 }}
-                                                className={`table-card ${isSelected ? 'active-selected' : ''} ${isReq ? 'bill-requested' : ''}`}
+                                                className={`table-card ${isSelected ? 'active-selected' : ''} ${isReq ? 'bill-requested' : ''} ${hasStaffCall ? 'has-alert' : ''}`}
                                             >
+                                                {hasStaffCall && <div className="table-alert-dot" title="Staff called!" />}
                                                 <div className="table-card-row">
                                                     <span className="table-card-name">Table {table.table_number}</span>
                                                     <span className="table-card-time">{age}</span>
@@ -1101,6 +1220,8 @@ export default function CounterBilling() {
                                                 <div className="table-card-row">
                                                     {table.status === 'empty' ? (
                                                         <span className="table-card-desc">Empty / Ready for seating</span>
+                                                    ) : hasStaffCall ? (
+                                                        <span className="table-card-desc staff-alert">⚠ Staff Called</span>
                                                     ) : isReq ? (
                                                         <span className="table-card-desc alert">Bill Requested</span>
                                                     ) : (
@@ -1113,6 +1234,43 @@ export default function CounterBilling() {
                                         );
                                     })}
                                 </div>
+
+                                {/* Active Alerts Panel */}
+                                {totalAlertsCount > 0 && (
+                                    <div className="alerts-panel">
+                                        <div className="alerts-panel-header">
+                                            <span className="alerts-panel-title">
+                                                <Bell size={14} />
+                                                Active Alerts ({totalAlertsCount})
+                                            </span>
+                                        </div>
+                                        {helpRequests.map(hr => {
+                                            const ageMs = now.getTime() - new Date(hr.created_at).getTime();
+                                            const ageMins = Math.floor(ageMs / 60000);
+                                            return (
+                                                <div key={hr.id} className="alert-item">
+                                                    <div className="alert-item-info">
+                                                        <span className="alert-item-table">Table {hr.table_number}</span>
+                                                        <span className="alert-item-type">
+                                                            {hr.type === 'staff_call' ? '🔔 Staff Called' : '💳 Bill Requested'}
+                                                        </span>
+                                                        <span className="alert-item-time">{ageMins > 0 ? `${ageMins}m ago` : 'Just Now'}</span>
+                                                    </div>
+                                                    <button 
+                                                        className="btn-resolve-alert"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleResolveHelp(hr.id);
+                                                        }}
+                                                        title="Resolve alert"
+                                                    >
+                                                        <Check size={18} />
+                                                    </button>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
                             </div>
 
                             {/* Right panel: Invoice detailed sheet */}
@@ -1151,6 +1309,30 @@ export default function CounterBilling() {
                                                 </button>
                                             </div>
                                         </div>
+
+                                        {/* Send Alert Button */}
+                                        {selectedTable.status !== 'empty' && (
+                                            <button
+                                                className="btn-send-alert"
+                                                onClick={async () => {
+                                                    try {
+                                                        const res = await fetch(`${BACKEND_URL}/api/help`, {
+                                                            method: 'POST',
+                                                            headers: authHeaders(),
+                                                            body: JSON.stringify({ tableId: selectedTable.id, type: 'staff_call' })
+                                                        });
+                                                        if (res.ok) {
+                                                            fetchData();
+                                                        }
+                                                    } catch (err) {
+                                                        console.error('Error sending alert:', err);
+                                                    }
+                                                }}
+                                            >
+                                                <AlertTriangle size={16} />
+                                                Send Alert to Table {selectedTable.table_number}
+                                            </button>
+                                        )}
 
                                         <div className="invoice-table-wrapper scrollbar-glass">
                                             <table className="invoice-table">

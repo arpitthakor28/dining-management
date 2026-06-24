@@ -50,7 +50,6 @@ export default function KitchenDashboard() {
 
     // Card-level batch updates
     const handleBatchAction = async (batch, targetStatus) => {
-        // Find items that can be transitioned to the target status
         let itemsToUpdate = [];
         if (targetStatus === 'preparing') {
             itemsToUpdate = batch.items.filter(i => i.status === 'pending');
@@ -60,13 +59,19 @@ export default function KitchenDashboard() {
             itemsToUpdate = batch.items.filter(i => i.status === 'ready');
         }
 
-        for (const item of itemsToUpdate) {
-            await updateItemStatus(item.itemId, targetStatus);
+        try {
+            await Promise.all(itemsToUpdate.map(item => 
+                updateItemStatus(item.itemId, targetStatus)
+            ));
             if (targetStatus === 'ready') {
-                const durationMs = Date.now() - new Date(batch.timestamp).getTime();
-                const durationMins = durationMs / 60000;
-                setPrepDurations(prev => [...prev, durationMins]);
+                itemsToUpdate.forEach(() => {
+                    const durationMs = Date.now() - new Date(batch.timestamp).getTime();
+                    const durationMins = durationMs / 60000;
+                    setPrepDurations(prev => [...prev, durationMins]);
+                });
             }
+        } catch (err) {
+            console.error('Failed to update batch:', err);
         }
     };
 
@@ -475,7 +480,6 @@ export default function KitchenDashboard() {
                 <header className="main-topbar">
                     <div className="topbar-nav">
                         <span className="topbar-logo">DineFlow</span>
-                        <Link to="/menu" className="topbar-link">Guest Menu</Link>
                         <Link to="/kitchen" className="topbar-link active">Kitchen Dashboard</Link>
                         {localStorage.getItem('staff_role') === 'manager' && (
                             <Link to="/counter" className="topbar-link">Cashier Console</Link>
@@ -551,7 +555,7 @@ export default function KitchenDashboard() {
                                                     </div>
                                                     {item.notes && (
                                                         <div className="notes-box">
-                                                            "No garlic in the risotto please."
+                                                            {item.notes}
                                                         </div>
                                                     )}
                                                 </div>
