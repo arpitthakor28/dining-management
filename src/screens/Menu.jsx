@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, AlertTriangle, RefreshCw, BellRing, ShoppingBag, ShoppingCart, ClipboardList, Receipt, X, CheckCircle2, Utensils, ArrowRight } from 'lucide-react';
+import { Search, AlertTriangle, RefreshCw, BellRing, ShoppingBag, ShoppingCart, ClipboardList, Receipt, X, CheckCircle2, Utensils, ArrowRight, ChevronDown } from 'lucide-react';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { menuData } from '../data/menuData';
 import { useCart } from '../context/CartContext';
@@ -18,6 +18,7 @@ export default function Menu() {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [generalComment, setGeneralComment] = useState('');
     const [showConfirm, setShowConfirm] = useState(false);
+    const [vegOnly, setVegOnly] = useState(false);
     const confirmBill = () => {
         setShowConfirm(false);
         requestBill();
@@ -74,17 +75,30 @@ export default function Menu() {
         };
         fetchMenu();
     }, []);
-    // Filter menu items by search query, mapping from database if available
+    // Filter menu items by active category or search query, and vegOnly if active
     const getGroupedMenu = () => {
+        let categoriesToProcess = menuData.categories;
+
+        // If no search query, filter list to display only the active category
+        if (!searchQuery.trim()) {
+            categoriesToProcess = menuData.categories.filter(cat => cat.id === activeCategory);
+        }
+
         if (dbMenuItems.length === 0) {
-            return menuData.categories.map(category => {
+            return categoriesToProcess.map(category => {
+                let items = category.items;
+                // Search filter
+                if (searchQuery.trim()) {
+                    items = items.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+                }
                 return {
                     ...category,
-                    items: category.items.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                    items
                 };
             }).filter(group => group.items.length > 0);
         }
-        return menuData.categories.map(category => {
+
+        return categoriesToProcess.map(category => {
             const itemsForCategory = dbMenuItems.filter(dbItem => {
                 const dbCat = dbItem.category?.toLowerCase() || '';
                 const localCatId = category.id.toLowerCase();
@@ -100,39 +114,20 @@ export default function Menu() {
                 name: dbItem.name,
                 price: dbItem.price
             }));
+            
+            let filteredItems = mappedItems;
+            if (searchQuery.trim()) {
+                filteredItems = filteredItems.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            }
+
             return {
                 ...category,
-                items: mappedItems.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                items: filteredItems
             };
         }).filter(group => group.items.length > 0);
     };
     const groupedMenu = getGroupedMenu();
-    const scrollToCategory = (id) => {
-        setActiveCategory(id);
-        const el = document.getElementById(`category-${id}`);
-        if (el) {
-            const y = el.getBoundingClientRect().top + window.scrollY - 120;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-    };
-    useEffect(() => {
-        if (activeTab !== 'menu')
-            return;
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const catId = entry.target.id.replace('category-', '');
-                    setActiveCategory(catId);
-                }
-            });
-        }, { rootMargin: '-120px 0px -60% 0px' });
-        menuData.categories.forEach((cat) => {
-            const el = document.getElementById(`category-${cat.id}`);
-            if (el)
-                observer.observe(el);
-        });
-        return () => observer.disconnect();
-    }, [activeTab, dbMenuItems]);
+
     const handleCallStaff = async () => {
         try {
             const response = await fetch('http://localhost:8080/api/help', {
@@ -273,10 +268,15 @@ export default function Menu() {
               <div className="card p-4">
                 <span className="block text-[10px] font-black uppercase tracking-wider mb-4 px-2" style={{ color: 'var(--muted)' }}>Categories</span>
                 <nav className="space-y-1">
-                  {menuData.categories.map(cat => (<button key={cat.id} onClick={() => scrollToCategory(cat.id)} className="guest-sidebar-item font-bold text-sm">
-                      <span className="text-lg">{cat.emoji}</span>
+                  {menuData.categories.map(cat => (
+                    <button 
+                      key={cat.id} 
+                      onClick={() => setActiveCategory(cat.id)} 
+                      className={`guest-sidebar-item font-bold text-sm ${activeCategory === cat.id ? 'active' : ''}`}
+                    >
                       <span>{cat.name}</span>
-                    </button>))}
+                    </button>
+                  ))}
                 </nav>
               </div>
 
@@ -301,81 +301,123 @@ export default function Menu() {
             
             {/* Tab A: MENU CATALOG VIEW */}
             {activeTab === 'menu' && (<div className="animate-in fade-in duration-200 space-y-6">
-                         {/* Mobile Category Scrollbar (Hidden on Desktop) */}
-                {!searchQuery && (<div className="flex md:hidden overflow-x-auto gap-2 pb-2 mb-4 scrollbar-hide -mx-4 px-4 sticky top-[68px] z-30 backdrop-blur-sm py-2" style={{ backgroundColor: 'rgba(13, 17, 23, 0.9)', borderBottom: '1px solid var(--border)' }}>
-                    {menuData.categories.map(cat => (<button key={cat.id} onClick={() => scrollToCategory(cat.id)} className="whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm transition-all active:scale-95" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' }}>
-                        <span>{cat.emoji}</span> {cat.name}
-                      </button>))}
-                  </div>)}
+                 {/* Search & Filter Header */}
+                 <div className="flex flex-col sm:flex-row gap-3">
+                   <div className="relative flex-1">
+                     <Search className="absolute left-4 top-3.5 text-gray-400" size={20}/>
+                     <input 
+                       type="text" 
+                       placeholder="Search delicious dishes..." 
+                       className="guest-input-search w-full rounded-xl py-3.5 pl-12 pr-4 text-sm font-semibold shadow-sm" 
+                       value={searchQuery} 
+                       onChange={(e) => setSearchQuery(e.target.value)}
+                     />
+                   </div>
+                   <div className="flex items-center">
+                     <button
+                       onClick={() => setVegOnly(!vegOnly)}
+                       className={`guest-filter-pill ${vegOnly ? 'active' : ''}`}
+                     >
+                       <span className="veg-indicator" style={{ borderRadius: '2px', border: '1px solid #3fb950', width: '10px', height: '10px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '1px' }}>
+                         <span className="veg-circle" style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#3fb950' }} />
+                       </span>
+                       <span>Veg Only</span>
+                     </button>
+                   </div>
+                 </div>
 
-                {/* Search Bar */}
-                <div className="relative">
-                  <Search className="absolute left-4 top-3.5 text-gray-400" size={20}/>
-                  <input type="text" placeholder="Search delicious dishes..." className="guest-input-search w-full rounded-xl py-3.5 pl-12 pr-4 text-sm font-semibold shadow-sm" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
-                </div>
+                 {/* Mobile Category Slider */}
+                 <div className="guest-category-slider md:hidden">
+                   {menuData.categories.map(cat => (
+                     <button
+                       key={cat.id}
+                       onClick={() => setActiveCategory(cat.id)}
+                       className={`guest-category-pill ${activeCategory === cat.id ? 'active' : ''}`}
+                     >
+                       {cat.name}
+                     </button>
+                   ))}
+                 </div>
 
-                {/* Category Sections */}
-                <div className="space-y-8">
-                  {groupedMenu.length > 0 ? (groupedMenu.map((category) => (<div id={`category-${category.id}`} key={category.id} className="space-y-4">
-                        
-                        {/* Category Title Header */}
-                        <div className="px-2 py-2 flex items-center justify-between">
-                          <div>
-                            <h3 className="font-extrabold text-base flex items-center gap-2" style={{ color: 'var(--text)' }}>
-                              <span className="text-xl">{category.emoji}</span> {category.name}
-                            </h3>
-                            <p className="text-[11px] font-semibold mt-0.5" style={{ color: 'var(--muted)' }}>Carefully prepared premium selections</p>
-                          </div>
-                        </div>
+                 {/* Category Sections */}
+                 <div className="space-y-6">
+                   {groupedMenu.length > 0 ? (
+                     groupedMenu.map((category) => (
+                       <div id={`category-${category.id}`} key={category.id} className="space-y-3">
+                         <div className="pt-2 pb-1 text-left">
+                           <h3 className="font-extrabold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>
+                             {category.name}
+                           </h3>
+                         </div>
 
-                        {/* Dish List Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          {category.items.map((item) => {
-                    const cleanId = item.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
-                    const cartItem = cartItems.find(i => i.id === cleanId);
-                    const isAdded = !!cartItem;
-                    return (<div key={item.name} className="card flex gap-4 transition-all duration-200" style={{ padding: '20px' }}>
-                                {/* circular emoji graphic avatar */}
-                                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 shadow-inner" style={{ backgroundColor: 'rgba(63, 185, 80, 0.08)', border: '1px solid rgba(63, 185, 80, 0.2)' }}>
-                                  {category.emoji}
-                                </div>
+                         <div className="guest-menu-list">
+                           {category.items.map((item) => {
+                             const cleanId = item.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+                             const cartItem = cartItems.find(i => i.id === cleanId);
+                             const isAdded = !!cartItem;
+                             return (
+                               <div key={item.name} className="guest-menu-row">
+                                 <div className="guest-menu-info">
+                                   <div className="guest-item-title">
+                                     <span className="veg-indicator">
+                                       <span className="veg-circle" />
+                                     </span>
+                                     <span>{item.name}</span>
+                                   </div>
+                                   <p className="guest-item-desc">
+                                     Authentic traditional recipe prepared with fresh organic ingredients.
+                                   </p>
+                                   <div className="guest-item-meta">
+                                     <span className="font-bold text-xs" style={{ color: 'var(--accent)' }}>
+                                       ${item.price}
+                                     </span>
+                                   </div>
+                                 </div>
 
-                                <div className="flex-1 min-w-0 flex flex-col justify-between">
-                                  <div>
-                                    <div className="flex justify-between items-start gap-2">
-                                      <h4 className="font-extrabold text-sm leading-snug truncate" style={{ color: 'var(--text)' }}>{item.name}</h4>
-                                      <span className="guest-price-badge flex-shrink-0">${item.price}</span>
-                                    </div>
-                                    <p className="text-[11px] mt-1 leading-relaxed line-clamp-2" style={{ color: 'var(--muted)' }}>Authentic traditional spice recipe prepared with fresh organic ingredients.</p>
-                                  </div>
-
-                                  <div className="flex justify-between items-center mt-4">
-                                    {/* Dietary indicators */}
-                                    <div className="flex gap-1.5">
-                                      <span className="text-[9px] font-bold px-2 py-0.5 rounded uppercase" style={{ backgroundColor: 'var(--surface2)', color: 'var(--muted)', border: '1px solid var(--border)' }}>Fresh</span>
-                                      <span className="text-[9px] font-bold border px-2 py-0.5 rounded uppercase" style={{ backgroundColor: 'rgba(63, 185, 80, 0.12)', color: 'var(--accent)', borderColor: 'rgba(63, 185, 80, 0.3)' }}>Vegetarian</span>
-                                    </div>
-
-                                    {/* Stepper / Add button */}
-                                    <div className="w-[88px] flex-shrink-0">
-                                      {!isAdded ? (<button onClick={() => addToCart({ id: cleanId, name: item.name, price: item.price, quantity: 1, notes: '' })} disabled={isOrderLocked} className="w-full py-1.5 rounded-lg text-xs font-bold guest-btn-add">
-                                          ADD
-                                        </button>) : (<div className="guest-stepper w-full">
-                                          <button onClick={() => updateQuantity(cleanId, cartItem.quantity - 1)} disabled={isOrderLocked} className="guest-stepper-btn font-black text-base">-</button>
-                                          <span className="guest-stepper-val font-black">{cartItem.quantity}</span>
-                                          <button onClick={() => updateQuantity(cleanId, cartItem.quantity + 1)} disabled={isOrderLocked} className="guest-stepper-btn font-black text-base">+</button>
-                                        </div>)}
-                                    </div>
-                                  </div>
-
-                                </div>
-                              </div>);
-                })}
-                        </div>
-                      </div>))) : (<div className="text-center py-12 card">
-                      <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>No dishes found matching your search.</p>
-                    </div>)}
-                </div>
+                                 {/* Stepper / Add button */}
+                                 <div className="w-[88px] flex-shrink-0">
+                                   {!isAdded ? (
+                                     <button 
+                                       onClick={() => addToCart({ id: cleanId, name: item.name, price: item.price, quantity: 1, notes: '' })} 
+                                       disabled={isOrderLocked} 
+                                       className="w-full py-1.5 rounded-lg text-xs font-bold guest-btn-add"
+                                     >
+                                       ADD
+                                     </button>
+                                   ) : (
+                                     <div className="guest-stepper w-full">
+                                       <button 
+                                         onClick={() => updateQuantity(cleanId, cartItem.quantity - 1)} 
+                                         disabled={isOrderLocked} 
+                                         className="guest-stepper-btn font-black text-base"
+                                       >
+                                         -
+                                       </button>
+                                       <span className="guest-stepper-val font-black">{cartItem.quantity}</span>
+                                       <button 
+                                         onClick={() => updateQuantity(cleanId, cartItem.quantity + 1)} 
+                                         disabled={isOrderLocked} 
+                                         className="guest-stepper-btn font-black text-base"
+                                       >
+                                         +
+                                       </button>
+                                     </div>
+                                   )}
+                                 </div>
+                               </div>
+                             );
+                           })}
+                         </div>
+                       </div>
+                     ))
+                   ) : (
+                     <div className="text-center py-12 card">
+                       <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>
+                         No dishes found matching your search.
+                       </p>
+                     </div>
+                   )}
+                 </div>
 
               </div>)}
 

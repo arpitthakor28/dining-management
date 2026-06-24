@@ -168,6 +168,15 @@
       "status": "empty",
       "current_session_id": null,
       "restaurant_id": "r_f1cd9c30"
+    },
+    {
+      "id": "T-7",
+      "table_number": "7",
+      "qr_code_token": "e1682ec0-0a1",
+      "status": "empty",
+      "current_session_id": null,
+      "restaurant_id": "r_001",
+      "_id": "HR68PVD"
     }
   ],
   "sessions": [

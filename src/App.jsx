@@ -40,12 +40,12 @@ function App() {
             <Route path="/table/:tableId/bill" element={<Navigate to="/restaurant/r_001/table/:tableId/menu" replace />} />
             <Route path="/table/:tableId/help" element={<Navigate to="/restaurant/r_001/table/:tableId/menu" replace />} />
 
-            <Route path="/menu" element={<Navigate to="/restaurant/r_001/table/T-12/menu" replace />} />
-            <Route path="/cart" element={<Navigate to="/restaurant/r_001/table/T-12/menu" replace />} />
-            <Route path="/status" element={<Navigate to="/restaurant/r_001/table/T-12/menu" replace />} />
-            <Route path="/orders" element={<Navigate to="/restaurant/r_001/table/T-12/menu" replace />} />
-            <Route path="/bill" element={<Navigate to="/restaurant/r_001/table/T-12/menu" replace />} />
-            <Route path="/help" element={<Navigate to="/restaurant/r_001/table/T-12/menu" replace />} />
+            <Route path="/menu" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
+            <Route path="/cart" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
+            <Route path="/status" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
+            <Route path="/orders" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
+            <Route path="/bill" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
+            <Route path="/help" element={<Navigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" replace />} />
 
             {/* Protected Staff Routes (Auth & Role-scoped via StaffGuard) */}
             <Route 
