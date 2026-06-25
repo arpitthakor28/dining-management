@@ -342,7 +342,7 @@ export default function Menu() {
                                  <div className="w-[88px] flex-shrink-0">
                                    {!isAdded ? (
                                      <button 
-                                       onClick={() => addToCart({ id: cleanId, name: item.name, price: item.price, quantity: 1, notes: '' })} 
+                                       onClick={() => { addToCart({ id: cleanId, name: item.name, price: item.price, quantity: 1, notes: '' }); setIsCartOpen(true); }} 
                                        disabled={isOrderLocked} 
                                        className="w-full py-1.5 rounded-lg text-xs font-bold guest-btn-add"
                                      >
@@ -357,7 +357,11 @@ export default function Menu() {
                                        >
                                          -
                                        </button>
-                                       <span className="guest-stepper-val font-black">{cartItem.quantity}</span>
+                                       <span 
+                                          className="guest-stepper-val font-black cursor-pointer"
+                                          onClick={() => setIsCartOpen(true)}
+                                          title="View cart"
+                                        >{cartItem.quantity}</span>
                                        <button 
                                          onClick={() => updateQuantity(cleanId, cartItem.quantity + 1)} 
                                          disabled={isOrderLocked} 

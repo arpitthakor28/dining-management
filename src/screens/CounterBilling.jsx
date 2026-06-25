@@ -751,6 +751,26 @@ export default function CounterBilling() {
                     color: #ff6b35;
                     font-weight: 600;
                 }
+                .bill-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 3px;
+                    font-size: 9px;
+                    font-weight: 800;
+                    color: var(--danger);
+                    background-color: rgba(248, 81, 73, 0.15);
+                    border: 1px solid rgba(248, 81, 73, 0.4);
+                    padding: 2px 6px;
+                    border-radius: 20px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    animation: billBadgePulse 2s ease-in-out infinite;
+                    flex-shrink: 0;
+                }
+                @keyframes billBadgePulse {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.65; }
+                }
                 /* Alerts Panel */
                 .alerts-panel {
                     border-top: 1px solid var(--border);
@@ -1214,7 +1234,11 @@ export default function CounterBilling() {
                                             >
                                                 {hasStaffCall && <div className="table-alert-dot" title="Staff called!" />}
                                                 <div className="table-card-row">
-                                                    <span className="table-card-name">Table {table.table_number}</span>
+                                                    <span className="table-card-name" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                                        Table {table.table_number}
+                                                        {isReq && <span className="bill-badge">💳 Bill</span>}
+                                                        {hasStaffCall && <span style={{ fontSize: '9px', fontWeight: 800, color: '#ff6b35', background: 'rgba(255,107,53,0.15)', border: '1px solid rgba(255,107,53,0.4)', padding: '2px 6px', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.05em', flexShrink: 0 }}>🔔 Call</span>}
+                                                    </span>
                                                     <span className="table-card-time">{age}</span>
                                                 </div>
                                                 <div className="table-card-row">
@@ -1309,30 +1333,6 @@ export default function CounterBilling() {
                                                 </button>
                                             </div>
                                         </div>
-
-                                        {/* Send Alert Button */}
-                                        {selectedTable.status !== 'empty' && (
-                                            <button
-                                                className="btn-send-alert"
-                                                onClick={async () => {
-                                                    try {
-                                                        const res = await fetch(`${BACKEND_URL}/api/help`, {
-                                                            method: 'POST',
-                                                            headers: authHeaders(),
-                                                            body: JSON.stringify({ tableId: selectedTable.id, type: 'staff_call' })
-                                                        });
-                                                        if (res.ok) {
-                                                            fetchData();
-                                                        }
-                                                    } catch (err) {
-                                                        console.error('Error sending alert:', err);
-                                                    }
-                                                }}
-                                            >
-                                                <AlertTriangle size={16} />
-                                                Send Alert to Table {selectedTable.table_number}
-                                            </button>
-                                        )}
 
                                         <div className="invoice-table-wrapper scrollbar-glass">
                                             <table className="invoice-table">
