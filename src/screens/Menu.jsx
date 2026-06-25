@@ -16,6 +16,7 @@ export default function Menu() {
     const [activeCategory, setActiveCategory] = useState(menuData.categories[0]?.id || '');
     const [isValidating, setIsValidating] = useState(true);
     const [isValid, setIsValid] = useState(false);
+    const [validationError, setValidationError] = useState(null);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [generalComment, setGeneralComment] = useState('');
     const [showConfirm, setShowConfirm] = useState(false);
@@ -49,13 +50,20 @@ export default function Menu() {
         const savedToken = localStorage.getItem(`table_token_${tableId}`);
         const tokenToUse = token || savedToken;
         if (tokenToUse) {
-            validateTable(tableId, tokenToUse).then((valid) => {
-                setIsValid(valid);
+            validateTable(tableId, tokenToUse).then((res) => {
+                if (res && res.valid) {
+                    setIsValid(true);
+                    setValidationError(null);
+                } else {
+                    setIsValid(false);
+                    setValidationError(res ? res.error : 'invalid');
+                }
                 setIsValidating(false);
             });
         }
         else {
             setIsValid(false);
+            setValidationError('invalid');
             setIsValidating(false);
         }
     }, [tableId, searchParams]);
@@ -174,6 +182,35 @@ export default function Menu() {
         return (<div className="min-h-screen bg-[#0d1117] text-[#e6edf3] flex flex-col items-center justify-center p-6 text-center">
         <RefreshCw className="animate-spin text-[#3fb950] mb-4" size={32}/>
         <p className="font-bold text-sm text-[var(--muted)]">Verifying table session...</p>
+      </div>);
+    }
+    // If table is occupied by another device
+    if (!isValid && validationError === 'occupied') {
+        return (<div className="min-h-screen bg-[#0d1117] text-[#e6edf3] flex flex-col items-center justify-center p-6 text-center">
+        <div className="ambient-glow-bubble-1"></div>
+        <div className="ambient-glow-bubble-2"></div>
+        
+        <div className="glass-card max-w-md flex flex-col items-center p-8 border border-white/10 z-10" onMouseMove={handleMouseMove}>
+          <div className="rounded-full flex items-center justify-center mb-6 text-orange-500" style={{
+                width: '80px',
+                height: '80px',
+                background: 'rgba(249, 115, 22, 0.1)',
+                border: '1px solid rgba(249, 115, 22, 0.25)',
+                boxShadow: '0 0 20px rgba(249, 115, 22, 0.15)'
+            }}>
+            <AlertTriangle size={40}/>
+          </div>
+          <h2 className="text-2xl font-black mb-2 text-glow" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #fed7aa 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            Table Already in Use
+          </h2>
+          <p className="text-[10px] text-orange-400 font-bold uppercase tracking-wider mb-4">Access Restricted</p>
+          <p className="text-sm mb-6 leading-relaxed text-[var(--muted)] font-semibold">
+            This table (Table {tableNumber}) is already connected to another device. To ensure order accuracy and session security, DineFlow allows only one device to be connected to a table at a time.
+          </p>
+          <div className="text-xs font-bold bg-[var(--surface2)] border border-[var(--border)] p-3 rounded-xl w-full text-[var(--muted)]">
+            If this is a mistake, please ask restaurant staff to reset this table session from the dashboard.
+          </div>
+        </div>
       </div>);
     }
     // If table access is invalid

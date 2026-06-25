@@ -13,6 +13,16 @@ const socket = io(BACKEND_URL, {
   autoConnect: false
 });
 
+// Helper to get or create deviceId
+const getOrCreateDeviceId = () => {
+  let id = localStorage.getItem('dineflow_device_id');
+  if (!id) {
+    id = 'DEV-' + Math.random().toString(36).substring(2, 9).toUpperCase();
+    localStorage.setItem('dineflow_device_id', id);
+  }
+  return id;
+};
+
 // Auth headers helper for staff API calls
 const getAuthHeaders = () => ({
   'Content-Type': 'application/json',
@@ -40,10 +50,18 @@ export function CartProvider({ children }) {
   // Validate guest access using tableId and token
   const validateTable = async (tId, token) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/tables/validate?tableId=${tId}&token=${token}`);
-      if (!response.ok) {
-        return false;
+      const devId = getOrCreateDeviceId();
+      const response = await fetch(`http://localhost:8080/api/tables/validate?tableId=${tId}&token=${token}&deviceId=${devId}`);
+      
+      if (response.status === 403) {
+        const data = await response.json();
+        return { valid: false, error: 'occupied', message: data.message };
       }
+
+      if (!response.ok) {
+        return { valid: false, error: 'invalid' };
+      }
+
       const data = await response.json();
       if (data.valid) {
         setTableId(data.tableId);
@@ -54,12 +72,12 @@ export function CartProvider({ children }) {
         setSessionClosed(false);
         // Save token to localStorage for persistence
         localStorage.setItem(`table_token_${tId}`, token);
-        return true;
+        return { valid: true };
       }
-      return false;
+      return { valid: false, error: 'invalid' };
     } catch (err) {
       console.error("Error validating table token:", err);
-      return false;
+      return { valid: false, error: 'invalid' };
     }
   };
 

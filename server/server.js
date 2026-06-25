@@ -215,7 +215,7 @@ app.post('/api/auth/login', async (req, res) => {
 
 // Validate Table QR Code / Token & Handle automatic session start
 app.get('/api/tables/validate', async (req, res) => {
-  const { tableId, token } = req.query;
+  const { tableId, token, deviceId } = req.query;
   if (!tableId || !token) {
     return res.status(400).json({ error: 'Missing tableId or token' });
   }
@@ -246,14 +246,31 @@ app.get('/api/tables/validate', async (req, res) => {
         created_at: new Date()
       });
 
-      // Update table status
+      // Update table status and record connected device ID
       await cols.tables.updateOne(
         { id: tableId },
-        { $set: { status: 'active', current_session_id: sessionId } }
+        { $set: { status: 'active', current_session_id: sessionId, connected_device_id: deviceId || null } }
       );
 
-      console.log(`Started new session ${sessionId} for table ${tableId}`);
+      console.log(`Started new session ${sessionId} for table ${tableId} on device ${deviceId || 'unknown'}`);
       emitToRestaurant('tables_updated');
+    } else {
+      // Session is already active. Check if another device is connected
+      if (deviceId && table.connected_device_id && table.connected_device_id !== deviceId) {
+        return res.status(403).json({
+          valid: false,
+          error: 'table_occupied',
+          message: 'This table is already in use by another device.'
+        });
+      }
+
+      // If session is active but no device was bound yet, bind this device
+      if (deviceId && !table.connected_device_id) {
+        await cols.tables.updateOne(
+          { id: tableId },
+          { $set: { connected_device_id: deviceId } }
+        );
+      }
     }
 
     res.json({
@@ -314,7 +331,8 @@ app.post('/api/tables', async (req, res) => {
       table_number: tableNumber,
       qr_code_token: token,
       status: 'empty',
-      current_session_id: null
+      current_session_id: null,
+      connected_device_id: null
     });
 
     emitToRestaurant('tables_updated');
@@ -333,6 +351,45 @@ app.delete('/api/tables/:tableId', async (req, res) => {
     emitToRestaurant('tables_updated');
     res.json({ success: true });
   } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Force reset/clear a table session
+app.post('/api/tables/:tableId/reset', async (req, res) => {
+  const { tableId } = req.params;
+  try {
+    const cols = getCollections();
+    const table = await cols.tables.findOne({ id: tableId });
+    if (!table) {
+      return res.status(404).json({ error: 'Table not found' });
+    }
+
+    const sessionId = table.current_session_id;
+
+    // Reset Table
+    await cols.tables.updateOne(
+      { id: tableId },
+      { $set: { status: 'empty', current_session_id: null, connected_device_id: null } }
+    );
+
+    // Close Session if exists
+    if (sessionId) {
+      await cols.sessions.updateOne({ id: sessionId }, { $set: { status: 'closed' } });
+      await cols.helpRequests.updateMany(
+        { session_id: sessionId },
+        { $set: { status: 'resolved' } }
+      );
+      emitToRestaurant('session_closed', { sessionId, tableId });
+    }
+
+    console.log(`Force reset Table ${tableId}. Session ${sessionId || 'none'} closed.`);
+    emitToRestaurant('tables_updated');
+    emitToRestaurant('help_request_updated');
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -948,7 +1005,7 @@ app.post('/api/bills/confirm', async (req, res) => {
     // Reset Table
     await cols.tables.updateOne(
       { id: session.table_id },
-      { $set: { status: 'empty', current_session_id: null } }
+      { $set: { status: 'empty', current_session_id: null, connected_device_id: null } }
     );
 
     // Resolve any open help requests for this session
