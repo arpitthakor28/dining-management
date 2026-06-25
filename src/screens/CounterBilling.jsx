@@ -1504,7 +1504,7 @@ export default function CounterBilling() {
                                     <form onSubmit={handleAddTable} className="space-y-4">
                                         <div>
                                             <label className="block text-xs font-bold uppercase text-gray-500 tracking-wider mb-2">Table Number / Label</label>
-                                            <input type="text" placeholder="e.g. 7 or 18" value={newTableNum} onChange={(e) => setNewTableNum(e.target.value)} className="input-dark w-full rounded-lg py-2.5 px-4 font-bold text-sm" style={{ width: '100%', padding: '12px' }} required/>
+                                            <input type="text" placeholder="Table Number" value={newTableNum} onChange={(e) => setNewTableNum(e.target.value)} className="input-dark w-full rounded-lg py-2.5 px-4 font-bold text-sm" style={{ width: '100%', padding: '12px' }} required/>
                                         </div>
                                         
                                         <button type="submit" className="w-full btn-pay-cash py-2.5 rounded-lg transition-all flex items-center justify-center gap-1.5" style={{ width: '100%' }}>
