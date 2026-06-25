@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, AlertTriangle, RefreshCw, BellRing, ShoppingBag, ShoppingCart, ClipboardList, Receipt, X, CheckCircle2, Utensils, ArrowRight, ChevronDown } from 'lucide-react';
+import { Search, AlertTriangle, RefreshCw, BellRing, ShoppingBag, ShoppingCart, X, CheckCircle2 } from 'lucide-react';
 import { useNavigate, useLocation, useSearchParams, useParams } from 'react-router-dom';
 import { menuData } from '../data/menuData';
 import { useCart } from '../context/CartContext';
@@ -342,7 +342,7 @@ export default function Menu() {
                                  <div className="w-[88px] flex-shrink-0">
                                    {!isAdded ? (
                                      <button 
-                                       onClick={() => { addToCart({ id: cleanId, name: item.name, price: item.price, quantity: 1, notes: '' }); setIsCartOpen(true); }} 
+                                       onClick={() => addToCart({ id: cleanId, name: item.name, price: item.price, quantity: 1, notes: '' })} 
                                        disabled={isOrderLocked} 
                                        className="w-full py-1.5 rounded-lg text-xs font-bold guest-btn-add"
                                      >
@@ -541,25 +541,24 @@ export default function Menu() {
       {/* 3. PERSISTENT MOBILE FLOATING ACTIONS */}
       {/* ===================================== */}
       <div className="guest-floating-container">
-        {/* Cart Action FAB (Persistent on all screens) */}
+        {/* Cart FAB */}
         {activeTab === 'menu' && (
           <button 
             onClick={() => setIsCartOpen(true)} 
-            className="guest-fab guest-fab-cart cart-fab-glow" 
+            className="guest-fab guest-fab-cart" 
             title="View Cart"
           >
-            <ShoppingCart size={32}/>
+            <ShoppingCart size={20}/>
             {cartCount > 0 && <span className="badge-pulsing">{cartCount}</span>}
           </button>
         )}
-
-        {/* Call Staff Action (Stacked above Cart FAB dynamically via flex-col-reverse) */}
+        {/* Call Staff FAB */}
         <button 
           onClick={handleCallStaff} 
-          className="guest-fab guest-fab-staff animate-pulse" 
+          className="guest-fab guest-fab-staff" 
           title="Call Staff"
         >
-          <BellRing size={32}/>
+          <BellRing size={20}/>
         </button>
       </div>
 
@@ -643,27 +642,6 @@ export default function Menu() {
             </div>
           </div>
         </div>)}
-
-      {/* ===================================== */}
-      {/* 7. BOTTOM NAVIGATION BAR (Mobile Only) */}
-      {/* ===================================== */}
-      <nav className="fixed md:hidden bottom-0 left-0 w-full px-6 py-3 flex justify-between items-center z-40 shadow-md" style={{ backgroundColor: 'var(--surface)', borderTop: '1px solid var(--border)' }}>
-        
-        <button onClick={() => handleTabChange('menu')} className="flex flex-col items-center gap-1 bg-transparent p-1.5 transition-all" style={{ color: activeTab === 'menu' ? 'var(--accent)' : 'var(--muted)', fontWeight: activeTab === 'menu' ? '700' : '500' }}>
-          <Utensils size={20} className={activeTab === 'menu' ? 'stroke-[2.5px]' : 'stroke-[1.8px]'}/>
-          <span className="text-[10px] tracking-wider uppercase">Menu</span>
-        </button>
-
-        <button onClick={() => handleTabChange('orders')} className="flex flex-col items-center gap-1 bg-transparent p-1.5 transition-all" style={{ color: activeTab === 'orders' ? 'var(--accent)' : 'var(--muted)', fontWeight: activeTab === 'orders' ? '700' : '500' }}>
-          <ClipboardList size={20} className={activeTab === 'orders' ? 'stroke-[2.5px]' : 'stroke-[1.8px]'}/>
-          <span className="text-[10px] tracking-wider uppercase">My Order</span>
-        </button>
-
-        <button onClick={() => handleTabChange('bill')} className="flex flex-col items-center gap-1 bg-transparent p-1.5 transition-all" style={{ color: activeTab === 'bill' ? 'var(--accent)' : 'var(--muted)', fontWeight: activeTab === 'bill' ? '700' : '500' }}>
-          <Receipt size={20} className={activeTab === 'bill' ? 'stroke-[2.5px]' : 'stroke-[1.8px]'}/>
-          <span className="text-[10px] tracking-wider uppercase">Bill</span>
-        </button>
-      </nav>
 
     </div>);
 }
