@@ -1209,16 +1209,14 @@ export default function CounterBilling() {
                                 
                                 <div className="table-cards-list scrollbar-glass">
                                     {tables.map(table => {
-                                        const tOrders = orders.filter(o => o.sessionId === table.current_session_id);
-                                        const tSubtotal = tOrders.reduce((sum, o) => sum + (o.itemPrice * o.qty || 0), 0);
+                                        const tOrders = orders.filter(o => o.session_id === table.current_session_id || o.sessionId === table.current_session_id);
+                                        const tSubtotal = tOrders.reduce((sum, o) => sum + ((o.itemPrice || o.price || 0) * (o.qty || o.quantity || 1)), 0);
                                         const tGrandTotal = tSubtotal * 1.05;
                                         
                                         const isSelected = table.id === selectedTableId;
                                         const isReq = table.status === 'bill_requested';
                                         const age = getTableSessionAge(table);
-                                        
-                                        // Mock guest counts to look organic like screenshot
-                                        const mockGuests = (parseInt(table.table_number) % 3) + 2;
+                                        const isSessionActive = !!table.current_session_id && table.status !== 'empty';
                                         
                                         const tableAlerts = helpRequests.filter(hr => hr.table_id === table.id && hr.status !== 'resolved');
                                         const hasStaffCall = tableAlerts.some(hr => hr.type === 'staff_call');
@@ -1242,7 +1240,7 @@ export default function CounterBilling() {
                                                     <span className="table-card-time">{age}</span>
                                                 </div>
                                                 <div className="table-card-row">
-                                                    {table.status === 'empty' ? (
+                                                    {!isSessionActive ? (
                                                         <span className="table-card-desc">Empty / Ready for seating</span>
                                                     ) : hasStaffCall ? (
                                                         <span className="table-card-desc staff-alert">⚠ Staff Called</span>
@@ -1250,7 +1248,7 @@ export default function CounterBilling() {
                                                         <span className="table-card-desc alert">Bill Requested</span>
                                                     ) : (
                                                         <span className="table-card-desc active">
-                                                            {mockGuests} Guests • ${tGrandTotal > 0 ? tGrandTotal.toFixed(2) : '244.50'}
+                                                            {tOrders.length} Orders • ${tGrandTotal.toFixed(2)}
                                                         </span>
                                                     )}
                                                 </div>
