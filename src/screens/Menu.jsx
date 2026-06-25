@@ -603,9 +603,9 @@ export default function Menu() {
       {/* 5. SLIDE-UP CART MODAL (Mobile Overlay) */}
       {/* ===================================== */}
       {isCartOpen && (
-        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="absolute inset-0" onClick={() => setIsCartOpen(false)}></div>
-          <div className="relative w-full max-w-[440px] rounded-2xl flex flex-col z-10 animate-in zoom-in-95 duration-200" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', boxShadow: '0 24px 64px rgba(0,0,0,0.6)', maxHeight: '90vh' }}>
+        <div className="guest-modal-overlay">
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} onClick={() => setIsCartOpen(false)}></div>
+          <div className="guest-modal-content">
             
             {/* Header */}
             <div className="flex justify-between items-center p-5 pb-4" style={{ borderBottom: '1px solid var(--border)' }}>

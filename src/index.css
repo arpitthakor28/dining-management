@@ -1155,6 +1155,49 @@ select:focus-visible {
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45) !important;
 }
 
+/* Guest Modal Overlay */
+.guest-modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+  z-index: 1000 !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Guest Modal Content (Centered) */
+.guest-modal-content {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 440px !important;
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: 85vh !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6) !important;
+  z-index: 1001 !important;
+  animation: guestModalFadeIn 0.2s ease !important;
+}
+
+@keyframes guestModalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 
 
 

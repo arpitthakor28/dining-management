@@ -120,6 +120,14 @@ export function CartProvider({ children }) {
     socket.on('help_request_updated', handleUpdate);
     socket.on('comment_updated', handleUpdate);
     socket.on('tables_updated', handleUpdate);
+    
+    socket.on('order_cancelled', (data) => {
+      if (data.sessionId === sessionId) {
+        const kotNum = data.orderId.substring(0, 6);
+        alert(`⚠️ Notification: Order Round (KOT #${kotNum}) was cancelled by the kitchen.`);
+        fetchLiveOrders();
+      }
+    });
 
     socket.on('session_closed', (data) => {
       if (data.sessionId === sessionId) {
@@ -143,6 +151,7 @@ export function CartProvider({ children }) {
       socket.off('help_request_updated', handleUpdate);
       socket.off('comment_updated', handleUpdate);
       socket.off('tables_updated', handleUpdate);
+      socket.off('order_cancelled');
       socket.off('session_closed');
     };
   }, [sessionId, tableId]);
@@ -171,6 +180,9 @@ export function CartProvider({ children }) {
 
       // Group raw flat order rows into 'Batches' for the UI
       const grouped = rawOrders.reduce((acc, row) => {
+        if (row.orderStatus === 'cancelled' || row.itemStatus === 'cancelled') {
+          return acc;
+        }
         const orderId = row.orderId;
         if (!acc[orderId]) {
           acc[orderId] = {
@@ -343,6 +355,25 @@ export function CartProvider({ children }) {
     }
   };
 
+  // Cancel an entire order batch (called by Kitchen Dashboard)
+  const cancelOrderBatch = async (orderId) => {
+    // Optimistically update local batches state instantly
+    setBatches(prevBatches => prevBatches.filter(b => b.id !== orderId));
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/orders/${orderId}/cancel`, {
+        method: 'POST',
+        headers: getAuthHeaders()
+      });
+      if (!response.ok) {
+        fetchLiveOrders();
+      }
+    } catch (error) {
+      console.error("Error canceling order batch:", error);
+      fetchLiveOrders();
+    }
+  };
+
   // Send a comment/feedback note to the Manager
   const sendComment = async (comment) => {
     if (!sessionId) return;
@@ -416,6 +447,7 @@ export function CartProvider({ children }) {
       updateNotes, 
       submitCart, 
       updateItemStatus, 
+      cancelOrderBatch,
       sendComment, 
       requestBill, 
       clearTableSession, 

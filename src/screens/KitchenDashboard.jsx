@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 
 export default function KitchenDashboard() {
     const navigate = useNavigate();
-    const { batches, updateItemStatus } = useCart();
+    const { batches, updateItemStatus, cancelOrderBatch } = useCart();
     const [now, setNow] = useState(new Date());
     const [filterTab, setFilterTab] = useState('all'); // 'all' | 'pending' | 'ready' | 'past'
     const [prepDurations, setPrepDurations] = useState([]);
@@ -73,6 +73,13 @@ export default function KitchenDashboard() {
         } catch (err) {
             console.error('Failed to update batch:', err);
         }
+    };
+
+    const handleCancelBatch = async (orderId) => {
+        if (!window.confirm("Are you sure you want to cancel this order batch? This will notify the guest.")) {
+            return;
+        }
+        await cancelOrderBatch(orderId);
     };
 
     // Calculate metrics
@@ -565,7 +572,7 @@ export default function KitchenDashboard() {
                                         )}
 
                                         <div className="card-actions">
-                                            <button className="btn-card-gray" onClick={() => alert('Order batch deferred')}>Void</button>
+                                            <button className="btn-card-gray" style={{ color: 'var(--danger)', borderColor: 'rgba(248,81,73,0.3)' }} onClick={() => handleCancelBatch(batch.id)}>Cancel</button>
                                             
                                             {hasPending && (
                                                 <button className="btn-card-green" onClick={() => handleBatchAction(batch, 'preparing')}>Start</button>

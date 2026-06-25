@@ -641,6 +641,46 @@ app.put('/api/order-items/:itemId/status', async (req, res) => {
   }
 });
 
+// Cancel an entire order batch (Kitchen KDS)
+app.post('/api/orders/:orderId/cancel', async (req, res) => {
+  const { orderId } = req.params;
+  try {
+    const cols = getCollections();
+    const order = await cols.orders.findOne({ id: orderId });
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    // Set order status and all item statuses to 'cancelled'
+    await cols.orders.updateOne(
+      { id: orderId },
+      { $set: { status: 'cancelled', "items.$[].status": 'cancelled' } }
+    );
+
+    console.log(`Cancelled order batch ${orderId} for table ${order.table_id}`);
+
+    // Broadcast cancellation event to all clients in the restaurant
+    emitToRestaurant('order_cancelled', {
+      orderId,
+      tableId: order.table_id,
+      sessionId: order.session_id,
+      message: `Order batch ${orderId} has been cancelled by the kitchen.`
+    });
+
+    emitToRestaurant('order_status_updated', {
+      orderId,
+      status: 'cancelled',
+      sessionId: order.session_id,
+      tableId: order.table_id
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Fetch bill for a specific session
 app.get('/api/sessions/:sessionId/bill', async (req, res) => {
   const { sessionId } = req.params;
