@@ -17,11 +17,11 @@ function checkAndInitializeRestaurantData(restaurantId, name) {
     const restaurantTables = (data.tables || []).filter(t => t.restaurant_id === restaurantId);
     if (restaurantTables.length === 0) {
       const defaultTables = [
-        { id: 'T-1', table_number: '1', qr_code_token: 'token_t1', status: 'empty', current_session_id: null, connected_device_id: null },
-        { id: 'T-2', table_number: '2', qr_code_token: 'token_t2', status: 'empty', current_session_id: null, connected_device_id: null },
-        { id: 'T-3', table_number: '3', qr_code_token: 'token_t3', status: 'empty', current_session_id: null, connected_device_id: null },
-        { id: 'T-4', table_number: '4', qr_code_token: 'token_t4', status: 'empty', current_session_id: null, connected_device_id: null },
-        { id: 'T-5', table_number: '5', qr_code_token: 'token_t5', status: 'empty', current_session_id: null, connected_device_id: null }
+        { id: 'T-1', table_number: '1', qr_code_token: '5a2b8e9c1f7d', status: 'empty', current_session_id: null, connected_device_id: null },
+        { id: 'T-2', table_number: '2', qr_code_token: '9c3f1d8e7b6a', status: 'empty', current_session_id: null, connected_device_id: null },
+        { id: 'T-3', table_number: '3', qr_code_token: '1e8d7c6b5a4f', status: 'empty', current_session_id: null, connected_device_id: null },
+        { id: 'T-4', table_number: '4', qr_code_token: 'b6a5f4e3d2c1', status: 'empty', current_session_id: null, connected_device_id: null },
+        { id: 'T-5', table_number: '5', qr_code_token: 'f3e2d1c0b9a8', status: 'empty', current_session_id: null, connected_device_id: null }
       ];
       defaultTables.forEach(t => {
         t.restaurant_id = restaurantId;
@@ -125,11 +125,11 @@ export function readDb() {
   if (!fs.existsSync(dbPath)) {
     const initialData = {
       tables: [
-        { id: 'T-1', table_number: '1', qr_code_token: 'token_t1', status: 'empty', current_session_id: null },
-        { id: 'T-2', table_number: '2', qr_code_token: 'token_t2', status: 'empty', current_session_id: null },
-        { id: 'T-3', table_number: '3', qr_code_token: 'token_t3', status: 'empty', current_session_id: null },
-        { id: 'T-4', table_number: '4', qr_code_token: 'token_t4', status: 'empty', current_session_id: null },
-        { id: 'T-5', table_number: '5', qr_code_token: 'token_t5', status: 'empty', current_session_id: null }
+        { id: 'T-1', table_number: '1', qr_code_token: '5a2b8e9c1f7d', status: 'empty', current_session_id: null },
+        { id: 'T-2', table_number: '2', qr_code_token: '9c3f1d8e7b6a', status: 'empty', current_session_id: null },
+        { id: 'T-3', table_number: '3', qr_code_token: '1e8d7c6b5a4f', status: 'empty', current_session_id: null },
+        { id: 'T-4', table_number: '4', qr_code_token: 'b6a5f4e3d2c1', status: 'empty', current_session_id: null },
+        { id: 'T-5', table_number: '5', qr_code_token: 'f3e2d1c0b9a8', status: 'empty', current_session_id: null }
       ],
       sessions: [],
       menu_items: [
