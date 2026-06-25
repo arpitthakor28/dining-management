@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Users } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 export default function QRJoin() {
     const navigate = useNavigate();
     const { restaurantId, tableId } = useParams();
     const activeRestaurantId = restaurantId || 'r_001';
-    const activeTableId = tableId || 'T-12';
-    const tableNumber = activeTableId.replace('T-', '');
+    const activeTableId = tableId || 'token_t1';
+    const [tableNumber, setTableNumber] = useState('');
+
+    useEffect(() => {
+        const fetchTableDetails = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/tables/validate?tableId=${activeTableId}&token=${activeTableId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.valid) {
+                        setTableNumber(data.tableNumber);
+                    }
+                }
+            } catch (err) {
+                console.error("Error fetching table details in QRJoin:", err);
+            }
+        };
+        fetchTableDetails();
+    }, [activeTableId]);
+
     const handleMouseMove = (e) => {
         const card = e.currentTarget;
         const rect = card.getBoundingClientRect();

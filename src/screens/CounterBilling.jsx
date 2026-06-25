@@ -292,7 +292,7 @@ export default function CounterBilling() {
 
     const getGuestLink = (tableId, token) => {
         const restaurantId = localStorage.getItem('restaurant_id') || 'r_001';
-        return `${window.location.origin}/restaurant/${restaurantId}/table/${tableId}/join?token=${token}`;
+        return `${window.location.origin}/restaurant/${restaurantId}/table/${token}/join`;
     };
 
     const copyToClipboard = (text) => {

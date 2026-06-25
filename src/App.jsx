@@ -52,12 +52,12 @@ function App() {
             <Route path="/table/:tableId/bill" element={<QueryNavigate to="/restaurant/r_001/table/:tableId/bill" />} />
             <Route path="/table/:tableId/help" element={<QueryNavigate to="/restaurant/r_001/table/:tableId/menu" />} />
 
-            <Route path="/menu" element={<QueryNavigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" />} />
-            <Route path="/cart" element={<QueryNavigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" />} />
-            <Route path="/status" element={<QueryNavigate to="/restaurant/r_001/table/T-1/status?token=token_t1" />} />
-            <Route path="/orders" element={<QueryNavigate to="/restaurant/r_001/table/T-1/status?token=token_t1" />} />
-            <Route path="/bill" element={<QueryNavigate to="/restaurant/r_001/table/T-1/bill?token=token_t1" />} />
-            <Route path="/help" element={<QueryNavigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" />} />
+            <Route path="/menu" element={<QueryNavigate to="/restaurant/r_001/table/token_t1/menu" />} />
+            <Route path="/cart" element={<QueryNavigate to="/restaurant/r_001/table/token_t1/menu" />} />
+            <Route path="/status" element={<QueryNavigate to="/restaurant/r_001/table/token_t1/status" />} />
+            <Route path="/orders" element={<QueryNavigate to="/restaurant/r_001/table/token_t1/status" />} />
+            <Route path="/bill" element={<QueryNavigate to="/restaurant/r_001/table/token_t1/bill" />} />
+            <Route path="/help" element={<QueryNavigate to="/restaurant/r_001/table/token_t1/menu" />} />
 
             {/* Staff Home at /home */}
             <Route 

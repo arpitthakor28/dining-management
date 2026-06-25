@@ -71,7 +71,7 @@ export function CartProvider({ children }) {
         setIsOrderLocked(data.status === 'bill_requested');
         setSessionClosed(false);
         // Save token to localStorage for persistence
-        localStorage.setItem(`table_token_${tId}`, token);
+        localStorage.setItem(`table_token_${data.tableId}`, token);
         return { valid: true };
       }
       return { valid: false, error: 'invalid' };

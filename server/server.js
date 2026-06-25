@@ -216,19 +216,25 @@ app.post('/api/auth/login', async (req, res) => {
 // Validate Table QR Code / Token & Handle automatic session start
 app.get('/api/tables/validate', async (req, res) => {
   const { tableId, token, deviceId } = req.query;
-  if (!tableId || !token) {
+  if (!tableId && !token) {
     return res.status(400).json({ error: 'Missing tableId or token' });
   }
 
   try {
     const cols = getCollections();
-    const table = await cols.tables.findOne({ id: tableId });
-    if (!table) {
-      return res.status(404).json({ error: 'Table not found' });
+    const tokenToUse = token || tableId;
+    let table = await cols.tables.findOne({ qr_code_token: tokenToUse });
+
+    // Fallback lookup by tableId for backward compatibility
+    if (!table && tableId) {
+      table = await cols.tables.findOne({ id: tableId });
+      if (table && token && table.qr_code_token !== token) {
+        return res.status(401).json({ error: 'Invalid token' });
+      }
     }
 
-    if (table.qr_code_token !== token) {
-      return res.status(401).json({ error: 'Invalid token' });
+    if (!table) {
+      return res.status(404).json({ error: 'Table not found' });
     }
 
     let sessionId = table.current_session_id;
@@ -240,7 +246,7 @@ app.get('/api/tables/validate', async (req, res) => {
       // Insert new session
       await cols.sessions.insertOne({
         id: sessionId,
-        table_id: tableId,
+        table_id: table.id,
         status: 'open',
         comments: null,
         created_at: new Date()
@@ -248,11 +254,11 @@ app.get('/api/tables/validate', async (req, res) => {
 
       // Update table status and record connected device ID
       await cols.tables.updateOne(
-        { id: tableId },
+        { id: table.id },
         { $set: { status: 'active', current_session_id: sessionId, connected_device_id: deviceId || null } }
       );
 
-      console.log(`Started new session ${sessionId} for table ${tableId} on device ${deviceId || 'unknown'}`);
+      console.log(`Started new session ${sessionId} for table ${table.id} on device ${deviceId || 'unknown'}`);
       emitToRestaurant('tables_updated');
     } else {
       // Session is already active. Check if another device is connected
@@ -267,7 +273,7 @@ app.get('/api/tables/validate', async (req, res) => {
       // If session is active but no device was bound yet, bind this device
       if (deviceId && !table.connected_device_id) {
         await cols.tables.updateOne(
-          { id: tableId },
+          { id: table.id },
           { $set: { connected_device_id: deviceId } }
         );
       }
@@ -275,7 +281,7 @@ app.get('/api/tables/validate', async (req, res) => {
 
     res.json({
       valid: true,
-      tableId,
+      tableId: table.id,
       tableNumber: table.table_number,
       sessionId,
       status: table.status

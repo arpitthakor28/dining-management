@@ -8,10 +8,9 @@ export default function Menu() {
     const location = useLocation();
     const [searchParams] = useSearchParams();
     const { restaurantId = 'r_001', tableId: routeTableId } = useParams();
-    const getTableId = () => routeTableId || window.location.pathname.match(/\/table\/([^\/]+)/)?.[1] || 'T-12';
+    const getTableId = () => routeTableId || window.location.pathname.match(/\/table\/([^\/]+)/)?.[1] || '';
     const tableId = getTableId();
-    const tableNumber = tableId.replace('T-', '');
-    const { items: cartItems, batches, addToCart, updateQuantity, updateNotes, removeFromCart, submitCart, sendComment, requestBill, cartCount, cartTotal, isOrderLocked, isBillRequested, validateTable, sessionId, sessionClosed, clearTableSession } = useCart();
+    const { items: cartItems, batches, addToCart, updateQuantity, updateNotes, removeFromCart, submitCart, sendComment, requestBill, cartCount, cartTotal, isOrderLocked, isBillRequested, validateTable, sessionId, sessionClosed, clearTableSession, tableId: contextTableId, tableNumber } = useCart();
     const [searchQuery, setSearchQuery] = useState('');
     const [activeCategory, setActiveCategory] = useState(menuData.categories[0]?.id || '');
     const [isValidating, setIsValidating] = useState(true);
@@ -48,7 +47,7 @@ export default function Menu() {
     useEffect(() => {
         const token = searchParams.get('token');
         const savedToken = localStorage.getItem(`table_token_${tableId}`);
-        const tokenToUse = token || savedToken;
+        const tokenToUse = token || savedToken || tableId;
         if (tokenToUse) {
             validateTable(tableId, tokenToUse).then((res) => {
                 if (res && res.valid) {
@@ -143,7 +142,7 @@ export default function Menu() {
             const response = await fetch('http://localhost:8080/api/help', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ tableId, type: 'staff_call' })
+                body: JSON.stringify({ tableId: contextTableId, type: 'staff_call' })
             });
             if (response.ok) {
                 alert(`Staff called for Table ${tableNumber}! A waiter will be with you shortly.`);
