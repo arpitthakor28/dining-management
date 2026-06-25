@@ -484,7 +484,7 @@ export default function Home() {
                                     <div className="card-icon-container" style={{ color: 'var(--accent)' }}>
                                         <ChefHat size={24} />
                                     </div>
-                                    <span className="console-badge kitchen">12 Active Orders</span>
+                                    <span className="console-badge kitchen">KDS Monitor</span>
                                 </div>
                                 <div>
                                     <h2 className="text-base font-bold mb-2" style={{ color: 'var(--text)' }}>Kitchen Dashboard</h2>

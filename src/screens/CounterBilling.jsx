@@ -1715,80 +1715,114 @@ export default function CounterBilling() {
                     )}
 
                     {/* View 4: Kitchen Monitor */}
-                    {activeTab === 'kitchen' && (
-                        <div className="space-y-6 animate-in fade-in duration-200">
-                            <h2 className="font-bold text-gray-300 flex justify-between items-center">
-                                <span>Active KOT Tickets ({batches.filter(b => b.items.some(i => i.status !== 'served')).length})</span>
-                                <span className="text-xs font-bold bg-primary/20 text-green-400 border border-green-500/35 px-3 py-1.5 rounded-full uppercase tracking-wider">Oldest Tickets First</span>
-                            </h2>
-                            
-                            {batches.filter(b => b.items.some(i => i.status !== 'served')).length === 0 ? (
-                                <div className="text-center py-20 bg-white/5 border border-white/10 rounded-2xl shadow-lg text-gray-400">
-                                    <ChefHat size={64} className="mx-auto mb-4 opacity-20 text-green-400 animate-bounce"/>
-                                    <p className="font-bold text-lg text-white">No active orders in the kitchen</p>
-                                    <p className="text-sm text-gray-555 font-semibold">New guest orders will appear here automatically.</p>
-                                </div>
-                            ) : (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                                    {batches.filter(b => b.items.some(i => i.status !== 'served')).map((batch) => {
-                                        const diffMs = now.getTime() - new Date(batch.timestamp).getTime();
-                                        const minutesAgo = Math.floor(diffMs / 60000);
-                                        const isUrgent = minutesAgo >= 10;
-                                        return (
-                                            <div key={batch.id} className="live-floor-panel" style={{ border: isUrgent ? '1px solid var(--danger)' : '1px solid var(--border)' }}>
-                                                <div className="flex justify-between items-center border-b border-white/10 pb-2 mb-3">
-                                                    <div>
-                                                        <h3 className="font-bold text-white text-base">
-                                                            Table {batch.tableId ? batch.tableId.replace('T-', '') : 'Unknown'}
-                                                        </h3>
-                                                        <p className="text-[10px] font-mono text-gray-400 uppercase">KOT #{batch.id.substring(0, 6)}</p>
-                                                    </div>
-                                                    
-                                                    <span className={`text-xs font-bold flex items-center gap-1 px-2 py-0.5 rounded ${isUrgent ? 'bg-red-500/20 text-red-300 animate-pulse' : 'bg-white/10 text-gray-300'}`}>
-                                                        <Clock size={12}/> {minutesAgo}m ago
-                                                    </span>
-                                                </div>
+                    {activeTab === 'kitchen' && (() => {
+                        const preparingBatches = batches.filter(b => b.items.some(i => i.status === 'pending' || i.status === 'preparing'));
+                        const doneBatches = batches
+                            .filter(b => b.items.every(i => i.status === 'served' || i.status === 'ready'))
+                            .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+                            .slice(0, 2);
 
-                                                <div className="space-y-3 flex-1">
-                                                    {batch.items.map((item, idx) => (
-                                                        <div key={idx} className={`py-1 ${item.status === 'served' ? 'opacity-30' : ''}`}>
-                                                            <div className="flex justify-between items-start">
-                                                                <span className="font-semibold text-gray-200 text-xs">
-                                                                    {item.qty}x {item.name}
-                                                                </span>
-                                                                <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase" style={{ background: 'var(--surface2)', border: '1px solid var(--border)' }}>
-                                                                    {item.status}
-                                                                </span>
+                        return (
+                            <div className="space-y-8 animate-in fade-in duration-200">
+                                {/* Preparing section */}
+                                <div className="space-y-4">
+                                    <h2 className="font-bold text-gray-300 flex justify-between items-center text-lg">
+                                        <span>Preparing / In-Progress Tickets ({preparingBatches.length})</span>
+                                        <span className="text-xs font-bold bg-primary/20 text-green-400 border border-green-500/35 px-3 py-1.5 rounded-full uppercase tracking-wider">Live KDS feed</span>
+                                    </h2>
+                                    
+                                    {preparingBatches.length === 0 ? (
+                                        <div className="text-center py-12 bg-white/5 border border-white/10 rounded-2xl text-gray-400">
+                                            <ChefHat size={48} className="mx-auto mb-2 opacity-20 text-green-400"/>
+                                            <p className="font-semibold text-sm text-white">No items are currently preparing in the kitchen</p>
+                                        </div>
+                                    ) : (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                            {preparingBatches.map((batch) => {
+                                                const diffMs = now.getTime() - new Date(batch.timestamp).getTime();
+                                                const minutesAgo = Math.max(0, Math.floor(diffMs / 60000));
+                                                return (
+                                                    <div key={batch.id} className="live-floor-panel" style={{ border: '1px solid var(--border)' }}>
+                                                        <div className="flex justify-between items-center border-b border-white/10 pb-2 mb-3">
+                                                            <div>
+                                                                <h3 className="font-bold text-white text-base">
+                                                                    Table {batch.tableId ? batch.tableId.replace('T-', '') : 'Unknown'}
+                                                                </h3>
+                                                                <p className="text-[10px] font-mono text-gray-400 uppercase">KOT #{batch.id.substring(0, 6)}</p>
                                                             </div>
-                                                            {item.status !== 'served' && (
-                                                                <div className="flex gap-2 mt-2">
-                                                                    {item.status === 'pending' && (
-                                                                        <button onClick={() => updateItemStatus(item.itemId, 'preparing')} className="btn-invoice-action flex-1 py-1 text-xs justify-center">
-                                                                            Prepare
-                                                                        </button>
-                                                                    )}
-                                                                    {item.status === 'preparing' && (
-                                                                        <button onClick={() => updateItemStatus(item.itemId, 'ready')} className="btn-pay-cash flex-1 py-1 text-xs justify-center" style={{ padding: '4px' }}>
-                                                                            Ready
-                                                                        </button>
-                                                                    )}
-                                                                    {item.status === 'ready' && (
-                                                                        <button onClick={() => updateItemStatus(item.itemId, 'served')} className="btn-pay-cash flex-1 py-1 text-xs justify-center" style={{ padding: '4px' }}>
-                                                                            Serve
-                                                                        </button>
-                                                                    )}
-                                                                </div>
-                                                            )}
+                                                            <span className="text-xs font-bold flex items-center gap-1 px-2 py-0.5 rounded bg-white/10 text-gray-300">
+                                                                <Clock size={12}/> {minutesAgo}m ago
+                                                            </span>
                                                         </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
+
+                                                        <div className="space-y-3 flex-1">
+                                                            {batch.items.map((item, idx) => (
+                                                                <div key={idx} className="py-1">
+                                                                    <div className="flex justify-between items-start">
+                                                                        <span className="font-semibold text-gray-200 text-xs">
+                                                                            {item.qty}x {item.name}
+                                                                        </span>
+                                                                        <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase" style={{ background: 'var(--surface2)', border: '1px solid var(--border)' }}>
+                                                                            {item.status}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
                                 </div>
-                            )}
-                        </div>
-                    )}
+
+                                {/* Recently Done section */}
+                                <div className="space-y-4 pt-6 border-t border-white/10">
+                                    <h2 className="font-bold text-gray-300 text-lg">Recently Completed Orders (Last 2)</h2>
+                                    {doneBatches.length === 0 ? (
+                                        <div className="text-center py-8 bg-white/5 border border-white/10 rounded-2xl text-gray-400">
+                                            <p className="text-sm font-semibold text-gray-500">No completed orders in this session yet</p>
+                                        </div>
+                                    ) : (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {doneBatches.map((batch) => {
+                                                return (
+                                                    <div key={batch.id} className="live-floor-panel bg-green-500/5" style={{ border: '1px solid rgba(34, 197, 94, 0.2)' }}>
+                                                        <div className="flex justify-between items-center border-b border-white/10 pb-2 mb-3">
+                                                            <div>
+                                                                <h3 className="font-bold text-white text-base">
+                                                                    Table {batch.tableId ? batch.tableId.replace('T-', '') : 'Unknown'}
+                                                                </h3>
+                                                                <p className="text-[10px] font-mono text-gray-400 uppercase">KOT #{batch.id.substring(0, 6)}</p>
+                                                            </div>
+                                                            <span className="text-[10px] font-bold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase tracking-wider">
+                                                                Done
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="space-y-3 flex-1">
+                                                            {batch.items.map((item, idx) => (
+                                                                <div key={idx} className="py-1">
+                                                                    <div className="flex justify-between items-start">
+                                                                        <span className="font-semibold text-gray-400 text-xs line-through">
+                                                                            {item.qty}x {item.name}
+                                                                        </span>
+                                                                        <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase bg-green-500/10 text-green-400">
+                                                                            {item.status}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })()}
 
                 </div>
             </main>

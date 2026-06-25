@@ -297,14 +297,49 @@ export function CartProvider({ children }) {
 
   // Update status of a specific order item (called by Kitchen Dashboard)
   const updateItemStatus = async (itemId, status) => {
+    // Optimistically update local batches state instantly
+    setBatches(prevBatches => {
+      return prevBatches.map(batch => {
+        const hasItem = batch.items.some(i => i.itemId === itemId);
+        if (!hasItem) return batch;
+
+        const updatedItems = batch.items.map(i => {
+          if (i.itemId === itemId) {
+            return { ...i, status };
+          }
+          return i;
+        });
+
+        let overallStatus = 'pending';
+        if (updatedItems.every(i => i.status === 'served')) {
+          overallStatus = 'served';
+        } else if (updatedItems.every(i => i.status === 'ready' || i.status === 'served')) {
+          overallStatus = 'ready';
+        } else if (updatedItems.some(i => i.status === 'preparing' || i.status === 'ready')) {
+          overallStatus = 'preparing';
+        }
+
+        return {
+          ...batch,
+          status: overallStatus,
+          items: updatedItems
+        };
+      });
+    });
+
     try {
-      await fetch(`http://localhost:8080/api/order-items/${itemId}/status`, {
+      const response = await fetch(`http://localhost:8080/api/order-items/${itemId}/status`, {
         method: 'PUT',
         headers: getAuthHeaders(),
         body: JSON.stringify({ status })
       });
+      if (!response.ok) {
+        // If server update failed, revert by fetching live data
+        fetchLiveOrders();
+      }
     } catch (error) {
       console.error("Error updating item status:", error);
+      fetchLiveOrders();
     }
   };
 
