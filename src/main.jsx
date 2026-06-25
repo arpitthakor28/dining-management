@@ -33,7 +33,11 @@ window.fetch = function (input, init) {
     }
     
     if (typeof input === 'string') {
-      init.headers = headers;
+      const headersObj = {};
+      headers.forEach((value, key) => {
+        headersObj[key] = value;
+      });
+      init.headers = headersObj;
     } else if (input instanceof Request) {
       try {
         headers.forEach((value, key) => {
