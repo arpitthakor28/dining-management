@@ -66,7 +66,7 @@ export default function Login() {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          font-family: 'Outfit', sans-serif;
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
           position: relative;
           overflow: hidden;
         }
@@ -128,34 +128,175 @@ export default function Login() {
           z-index: 1;
         }
 
-        .input-glow {
-          background: rgba(255, 255, 255, 0.03) !important;
-          border: 1px solid rgba(255, 255, 255, 0.08) !important;
-          color: #f1f5f2 !important;
-          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        .lock-icon-container {
+          width: 56px;
+          height: 56px;
+          background: rgba(34, 197, 94, 0.1);
+          border: 1px solid rgba(34, 197, 94, 0.2);
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 24px auto;
+          color: #22c55e;
         }
 
-        .input-glow:focus {
-          border-color: #22c55e !important;
-          box-shadow: 0 0 10px rgba(34, 197, 94, 0.15) !important;
+        .card-title {
+          font-size: 24px;
+          font-weight: 800;
+          margin-bottom: 6px;
+          text-align: center;
+          color: #f1f5f2;
+        }
+
+        .card-subtitle {
+          color: #8b949e;
+          font-size: 14px;
+          margin-bottom: 24px;
+          font-weight: 600;
+          text-align: center;
+        }
+
+        .mode-selector-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+          margin-bottom: 24px;
         }
 
         .role-btn {
           border: 1px solid rgba(255, 255, 255, 0.08);
           background: rgba(255, 255, 255, 0.02);
           transition: all 0.3s ease;
+          padding: 12px 16px;
+          border-radius: 12px;
+          font-weight: 700;
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          cursor: pointer;
+          color: #8b949e;
         }
 
         .role-btn.active {
           background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
           border-color: rgba(34, 197, 94, 0.4);
-          color: white;
+          color: white !important;
           box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
         }
 
         .role-btn:not(.active):hover {
           background: rgba(255, 255, 255, 0.06);
           border-color: rgba(255, 255, 255, 0.15);
+          color: #f1f5f2;
+        }
+
+        .error-container {
+          margin-bottom: 16px;
+          background: rgba(239, 68, 68, 0.1);
+          border: 1px solid rgba(239, 68, 68, 0.25);
+          color: #fca5a5;
+          font-size: 12px;
+          font-weight: 600;
+          padding: 14px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .login-form {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          text-align: left;
+        }
+
+        .input-label {
+          display: block;
+          text-align: left;
+          font-size: 10px;
+          font-weight: 800;
+          text-transform: uppercase;
+          color: #8b949e;
+          letter-spacing: 0.05em;
+        }
+
+        .input-glow {
+          width: 100%;
+          background: rgba(255, 255, 255, 0.03) !important;
+          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+          color: #f1f5f2 !important;
+          border-radius: 12px;
+          padding: 14px 16px;
+          outline: none;
+          font-size: 14px;
+          font-weight: 500;
+          transition: all 0.25s ease;
+          box-sizing: border-box;
+        }
+
+        .input-glow:focus {
+          border-color: #22c55e !important;
+          box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15) !important;
+        }
+
+        .font-mono {
+          font-family: monospace !important;
+        }
+
+        .submit-btn {
+          width: 100%;
+          background: linear-gradient(135deg, #22c55e 0%, #15803d 100%) !important;
+          color: #ffffff !important;
+          border: 1px solid rgba(34, 197, 94, 0.4) !important;
+          box-shadow: 0 4px 14px 0 rgba(34, 197, 94, 0.3), 
+                      0 0 1px 1px rgba(255, 255, 255, 0.2) inset !important;
+          font-weight: 800;
+          padding: 14px;
+          border-radius: 12px;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          text-transform: uppercase;
+          font-size: 12px;
+          letter-spacing: 0.05em;
+          margin-top: 10px;
+          cursor: pointer;
+          display: block;
+        }
+
+        .submit-btn:hover {
+          transform: translateY(-2px);
+          background: linear-gradient(135deg, #4ade80 0%, #16a34a 100%) !important;
+          box-shadow: 0 6px 20px 0 rgba(34, 197, 94, 0.45), 
+                      0 0 1px 1px rgba(255, 255, 255, 0.3) inset !important;
+        }
+
+        .submit-btn:active {
+          transform: translateY(1px) scale(0.97);
+          box-shadow: 0 2px 8px 0 rgba(34, 197, 94, 0.2) !important;
+        }
+
+        .footer-text {
+          text-align: center;
+          font-size: 10px;
+          color: #5c646d;
+          margin-top: 32px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        @media (max-width: 480px) {
+          .reflective-login-card {
+            padding: 24px;
+            border-radius: 20px;
+          }
         }
       `}</style>
 
@@ -163,52 +304,52 @@ export default function Login() {
 
       <div className="reflective-login-card" onMouseMove={handleMouseMove}>
         <div className="card-content">
-          <div className="w-14 h-14 bg-green-500/10 border border-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 text-green-400">
+          <div className="lock-icon-container">
             <Lock size={26}/>
           </div>
           
-          <h2 className="text-2xl font-black mb-1">DineFlow Portal</h2>
-          <p className="text-gray-400 text-sm mb-6 font-semibold">
+          <h2 className="card-title">DineFlow Portal</h2>
+          <p className="card-subtitle">
             {mode === 'login' ? 'Enter credentials to authorize console access.' : 'Register a new restaurant tenant session.'}
           </p>
 
-          <div className="grid grid-cols-2 gap-2.5 mb-6">
-            <button type="button" onClick={() => { setMode('login'); setError(''); }} className={`role-btn py-2.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider ${mode === 'login' ? 'active' : 'text-gray-300'}`}>
+          <div className="mode-selector-grid">
+            <button type="button" onClick={() => { setMode('login'); setError(''); }} className={`role-btn ${mode === 'login' ? 'active' : ''}`}>
               Sign In
             </button>
-            <button type="button" onClick={() => { setMode('signup'); setError(''); }} className={`role-btn py-2.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider ${mode === 'signup' ? 'active' : 'text-gray-300'}`}>
+            <button type="button" onClick={() => { setMode('signup'); setError(''); }} className={`role-btn ${mode === 'signup' ? 'active' : ''}`}>
               Register
             </button>
           </div>
 
-          {error && (<div className="mb-4 bg-red-500/10 border border-red-500/25 text-red-300 text-xs font-semibold p-3.5 rounded-xl flex items-center gap-2">
-              <ShieldAlert size={16} className="text-red-400 flex-shrink-0"/>
+          {error && (<div className="error-container">
+              <ShieldAlert size={16} style={{ color: '#ef4444', flexShrink: 0 }}/>
               <span>{error}</span>
             </div>)}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {mode === 'signup' && (<div>
-                <label className="block text-left text-[10px] font-black uppercase text-gray-400 tracking-wider mb-2">Restaurant Name</label>
-                <input type="text" placeholder="e.g. Ocean Grill" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} className="input-glow w-full rounded-xl py-3 px-4 outline-none font-sans text-sm font-semibold" required/>
+          <form onSubmit={handleSubmit} className="login-form">
+            {mode === 'signup' && (<div className="form-group">
+                <label className="input-label">Restaurant Name</label>
+                <input type="text" placeholder="e.g. Ocean Grill" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} className="input-glow" required/>
               </div>)}
 
-            <div>
-              <label className="block text-left text-[10px] font-black uppercase text-gray-400 tracking-wider mb-2">Email Address</label>
-              <input type="email" placeholder="e.g. manager@test.com" value={email} onChange={(e) => setEmail(e.target.value)} className="input-glow w-full rounded-xl py-3 px-4 outline-none font-sans text-sm font-semibold" required/>
+            <div className="form-group">
+              <label className="input-label">Email Address</label>
+              <input type="email" placeholder="e.g. manager@test.com" value={email} onChange={(e) => setEmail(e.target.value)} className="input-glow" required/>
             </div>
 
-            <div>
-              <label className="block text-left text-[10px] font-black uppercase text-gray-400 tracking-wider mb-2">Password</label>
-              <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="input-glow w-full rounded-xl py-3 px-4 outline-none font-mono text-sm" required/>
+            <div className="form-group">
+              <label className="input-label">Password</label>
+              <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="input-glow font-mono" required/>
             </div>
 
-            <button type="submit" className="w-full btn-premium-green font-black py-3.5 rounded-xl transition-all mt-6 uppercase text-xs tracking-wider">
+            <button type="submit" className="submit-btn">
               {mode === 'login' ? 'Access Dashboard' : 'Create Restaurant'}
             </button>
           </form>
         </div>
       </div>
       
-      <p className="text-[10px] text-gray-500 mt-8 font-semibold uppercase tracking-wider">Powered by DineFlow</p>
+      <p className="footer-text">Powered by DineFlow</p>
     </div>);
 }
