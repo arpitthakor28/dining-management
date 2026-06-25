@@ -197,8 +197,7 @@ export default function CounterBilling() {
             });
             const data = await response.json();
             if (response.ok) {
-                setPdfDownloadUrl(`${BACKEND_URL}${data.pdfUrl}`);
-                window.open(`${BACKEND_URL}${data.pdfUrl}`, '_blank');
+                alert("Payment confirmed. Session closed.");
                 fetchData();
             }
             else {
