@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CreditCard, Printer, Users, RotateCcw, Bell, DollarSign, CheckCircle2, Download, LogOut, XCircle, Plus, Trash2, Copy, ExternalLink, ChefHat, Clock, Play, Check, Edit2, Save, ArrowLeft, Radio, Wallet, AlertTriangle } from 'lucide-react';
+import { CreditCard, Printer, Users, Bell, DollarSign, CheckCircle2, Download, LogOut, XCircle, Plus, Trash2, Copy, ExternalLink, ChefHat, Clock, Play, Check, Edit2, Save, ArrowLeft, Radio, Wallet, AlertTriangle } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { useCart } from '../context/CartContext';
@@ -1348,12 +1348,7 @@ export default function CounterBilling() {
                                             </div>
                                             
                                             <div className="invoice-actions">
-                                                {selectedTable.current_session_id && (
-                                                    <button className="btn-invoice-action" style={{ color: 'var(--danger)', borderColor: 'rgba(248,81,73,0.3)' }} onClick={() => handleForceResetTable(selectedTable.id)}>
-                                                        <RotateCcw size={14} />
-                                                        <span>Reset Session</span>
-                                                    </button>
-                                                )}
+
                                                 <button className="btn-invoice-action" onClick={() => {
                                                     if (tableSessionId) {
                                                         window.open(`${BACKEND_URL}/api/bills/${tableSessionId}/pdf`, '_blank');

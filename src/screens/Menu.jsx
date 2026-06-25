@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, AlertTriangle, RefreshCw, BellRing, ShoppingBag, ShoppingCart, X, CheckCircle2 } from 'lucide-react';
+import { Search, AlertTriangle, RefreshCw, BellRing, ShoppingBag, ShoppingCart, X, CheckCircle2, ClipboardList, Receipt } from 'lucide-react';
 import { useNavigate, useLocation, useSearchParams, useParams } from 'react-router-dom';
 import { menuData } from '../data/menuData';
 import { useCart } from '../context/CartContext';
@@ -248,7 +248,7 @@ export default function Menu() {
           </p>
           <button onClick={() => {
                 clearTableSession();
-                window.location.href = '/';
+                window.location.href = '/login';
             }} className="w-full btn-primary rounded-xl text-sm shadow-md transition-all">
             Exit Dining System
           </button>
