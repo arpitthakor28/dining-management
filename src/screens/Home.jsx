@@ -430,10 +430,6 @@ export default function Home() {
                         <p className="brand-subtitle">Management System</p>
                     </div>
                     <nav className="sidebar-menu">
-                        <Link to="/menu" className="sidebar-item">
-                            <Utensils size={18} />
-                            <span>Guest Menu</span>
-                        </Link>
                         <Link to="/kitchen" className="sidebar-item">
                             <ChefHat size={18} />
                             <span>Kitchen Dashboard</span>
@@ -463,7 +459,6 @@ export default function Home() {
             <main className="main-panel">
                 <header className="main-topbar">
                     <nav className="topbar-nav">
-                        <Link to="/menu" className="topbar-link">Guest Menu</Link>
                         <Link to="/kitchen" className="topbar-link">Kitchen Dashboard</Link>
                         <Link to="/counter" className="topbar-link">Cashier Console</Link>
                     </nav>
@@ -482,54 +477,8 @@ export default function Home() {
                     </div>
 
                     <div className="console-cards-container">
-                        {/* Guest Menu Wide Banner Card */}
-                        <Link to="/menu" className="banner-card">
-                             <div className="banner-visual">
-                                <div className="mock-tablet">
-                                    <div className="mock-tablet-header">
-                                        <span className="mock-logo">DineFlow</span>
-                                        <span className="mock-badge">Table 12</span>
-                                    </div>
-                                    <div className="mock-content">
-                                        <div className="mock-row">
-                                            <span className="mock-avatar">🍕</span>
-                                            <div className="mock-text-container">
-                                                <div className="mock-title-line"></div>
-                                                <div className="mock-desc-line"></div>
-                                            </div>
-                                            <div className="mock-price-badge"></div>
-                                        </div>
-                                        <div className="mock-row">
-                                            <span className="mock-avatar">🍜</span>
-                                            <div className="mock-text-container">
-                                                <div className="mock-title-line"></div>
-                                                <div className="mock-desc-line"></div>
-                                            </div>
-                                            <div className="mock-price-badge"></div>
-                                        </div>
-                                    </div>
-                                    <div className="mock-footer">
-                                        <div className="mock-btn"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="banner-info">
-                                <div className="badge-foh">
-                                    <Utensils size={12} />
-                                    <span>Front of House</span>
-                                </div>
-                                <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>Guest Menu</h2>
-                                <p className="text-sm mb-4" style={{ color: 'var(--muted)', lineHeight: '1.5' }}>
-                                    Interactive digital ordering experience for patrons. High-resolution imagery, allergen filters, and table-side checkout integration.
-                                </p>
-                                <span className="card-link">
-                                    Launch Menu <ArrowRight size={14} />
-                                </span>
-                            </div>
-                        </Link>
-
                         {/* Kitchen Dashboard & Cashier Console Grid */}
-                        <div className="console-grid">
+                        <div className="console-grid" style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
                             <Link to="/kitchen" className="console-card">
                                 <div className="card-header-row">
                                     <div className="card-icon-container" style={{ color: 'var(--accent)' }}>

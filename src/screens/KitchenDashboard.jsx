@@ -531,18 +531,14 @@ export default function KitchenDashboard() {
                                 const hasReady = batch.items.some(i => i.status === 'ready');
 
                                 return (
-                                    <div key={batch.id} className={`kot-card ${isUrgent ? 'urgent' : ''}`}>
+                                    <div key={batch.id} className="kot-card">
                                         <div className="card-header">
                                             <div>
                                                 <h3 className="card-table-title">Table {batch.tableId ? batch.tableId.replace('T-', '') : 'Unknown'}</h3>
                                                 <span className="text-[10px] font-mono" style={{ color: 'var(--muted)' }}>KOT #{batch.id.substring(0, 6)}</span>
                                             </div>
                                             <div className="flex flex-col items-end gap-1">
-                                                {isUrgent ? (
-                                                    <span className="card-badge-urgent">! URGENT ({minutesAgo}M)</span>
-                                                ) : (
-                                                    <span className="card-time">{minutesAgo > 0 ? `${minutesAgo}m ago` : 'Just Now'}</span>
-                                                )}
+                                                <span className="card-time">{minutesAgo > 0 ? `${minutesAgo}m ago` : 'Just Now'}</span>
                                             </div>
                                         </div>
 

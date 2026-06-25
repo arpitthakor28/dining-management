@@ -9,8 +9,8 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const rawRedirect = searchParams.get('redirect') || '/counter';
-    const redirect = rawRedirect.includes('/login') ? '/counter' : decodeURIComponent(rawRedirect);
+    const rawRedirect = searchParams.get('redirect') || '/home';
+    const redirect = rawRedirect.includes('/login') ? '/home' : decodeURIComponent(rawRedirect);
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -39,7 +39,7 @@ export default function Login() {
             localStorage.setItem('restaurant_id', data.restaurantId);
             localStorage.setItem('staff_role', data.role);
             localStorage.setItem('staff_auth', 'true');
-            const targetRedirect = data.role === 'kitchen' ? '/kitchen' : redirect;
+            const targetRedirect = data.role === 'kitchen' ? '/kitchen' : (redirect || '/home');
             navigate(targetRedirect);
         }
         catch (err) {

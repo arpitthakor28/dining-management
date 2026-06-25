@@ -59,9 +59,9 @@ function App() {
             <Route path="/bill" element={<QueryNavigate to="/restaurant/r_001/table/T-1/bill?token=token_t1" />} />
             <Route path="/help" element={<QueryNavigate to="/restaurant/r_001/table/T-1/menu?token=token_t1" />} />
 
-            {/* Protected Staff Routes (Auth & Role-scoped via StaffGuard) */}
+            {/* Staff Home at /home */}
             <Route 
-              path="/" 
+              path="/home" 
               element={
                 <StaffGuard>
                   <Home />
@@ -93,7 +93,9 @@ function App() {
               } 
             />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* Default: redirect to login */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </div>
       </CartProvider>

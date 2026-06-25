@@ -627,14 +627,23 @@ export default function CounterBilling() {
                 }
                 .billing-console-grid {
                     display: grid;
-                    grid-template-cols: 320px 1fr;
+                    grid-template-columns: 320px 1fr;
                     gap: 24px;
                     align-items: stretch;
                     height: 100%;
                 }
-                @media (max-width: 1024px) {
+                @media (max-width: 768px) {
                     .billing-console-grid {
-                        grid-template-cols: minmax(0, 1fr);
+                        grid-template-columns: minmax(0, 1fr);
+                        height: auto;
+                    }
+                    .live-floor-panel {
+                        max-height: 320px;
+                    }
+                }
+                @media (max-width: 1024px) and (min-width: 769px) {
+                    .billing-console-grid {
+                        grid-template-columns: 280px 1fr;
                     }
                 }
                 .live-floor-panel {

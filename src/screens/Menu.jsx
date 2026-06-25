@@ -565,61 +565,72 @@ export default function Menu() {
       {/* ===================================== */}
       {/* 5. SLIDE-UP CART MODAL (Mobile Overlay) */}
       {/* ===================================== */}
-      {isCartOpen && (<div className="fixed inset-0 bg-black/60 z-50 flex items-end justify-center animate-in fade-in duration-200">
-          
+      {isCartOpen && (
+        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div className="absolute inset-0" onClick={() => setIsCartOpen(false)}></div>
-          
-          <div className="border-t rounded-t-3xl w-full max-w-[480px] p-6 max-h-[85vh] overflow-y-auto z-10 flex flex-col relative animate-in slide-in-from-bottom-24 duration-300" style={{ backgroundColor: 'var(--surface)', borderTop: '1px solid var(--border)', boxShadow: '0 -8px 32px rgba(0,0,0,0.5)' }}>
+          <div className="relative w-full max-w-[440px] rounded-2xl flex flex-col z-10 animate-in zoom-in-95 duration-200" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', boxShadow: '0 24px 64px rgba(0,0,0,0.6)', maxHeight: '90vh' }}>
             
-            <div className="flex justify-between items-center mb-6 pb-3" style={{ borderBottom: '1px solid var(--border)' }}>
+            {/* Header */}
+            <div className="flex justify-between items-center p-5 pb-4" style={{ borderBottom: '1px solid var(--border)' }}>
               <div>
                 <h3 className="font-extrabold text-base flex items-center gap-2" style={{ color: 'var(--text)' }}>
                   <ShoppingBag size={18} style={{ color: 'var(--accent)' }}/> Review Selected Items
                 </h3>
-                <p className="text-[10px] font-semibold" style={{ color: 'var(--muted)' }}>Table {tableNumber} • Local unsubmitted cart</p>
+                <p className="text-[10px] font-semibold mt-0.5" style={{ color: 'var(--muted)' }}>Table {tableNumber} • {cartItems.length} item{cartItems.length !== 1 ? 's' : ''} in cart</p>
               </div>
-              <button onClick={() => setIsCartOpen(false)} className="p-2 rounded-full" style={{ backgroundColor: 'var(--surface2)', color: 'var(--muted)' }}>
-                <X size={20}/>
+              <button onClick={() => setIsCartOpen(false)} className="p-1.5 rounded-full" style={{ backgroundColor: 'var(--surface2)', color: 'var(--muted)' }}>
+                <X size={18}/>
               </button>
             </div>
 
-            <div className="flex-1 space-y-4 overflow-y-auto scrollbar-glass mb-6">
-              {cartItems.map((item) => (<div key={item.id} className="p-4 rounded-xl" style={{ border: '1px solid var(--border)', backgroundColor: 'var(--surface2)' }}>
-                  <div className="flex justify-between items-start gap-2">
-                    <div>
-                      <h4 className="font-extrabold text-xs" style={{ color: 'var(--text)' }}>{item.name}</h4>
-                      <p className="text-xs font-black mt-0.5" style={{ color: 'var(--accent)' }}>${item.price}</p>
+            {/* Scrollable Items */}
+            <div className="flex-1 overflow-y-auto p-5 space-y-3 scrollbar-glass">
+              {cartItems.length === 0 ? (
+                <div className="text-center py-10">
+                  <p className="text-sm font-semibold" style={{ color: 'var(--muted)' }}>Your cart is empty</p>
+                  <p className="text-xs mt-1" style={{ color: 'var(--muted)' }}>Add items from the menu</p>
+                </div>
+              ) : cartItems.map((item) => (
+                <div key={item.id} className="p-4 rounded-xl" style={{ border: '1px solid var(--border)', backgroundColor: 'var(--surface2)' }}>
+                  <div className="flex justify-between items-center gap-2">
+                    <div className="flex-1">
+                      <h4 className="font-extrabold text-sm" style={{ color: 'var(--text)' }}>{item.name}</h4>
+                      <p className="text-xs font-black mt-0.5" style={{ color: 'var(--accent)' }}>₹{item.price} × {item.quantity} = ₹{(item.price * item.quantity).toFixed(0)}</p>
                     </div>
-                    
-                    <div className="guest-stepper h-[30px] px-1">
+                    <div className="guest-stepper h-[32px] px-1">
                       <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="guest-stepper-btn">-</button>
-                      <span className="guest-stepper-val w-4 text-center">{item.quantity}</span>
+                      <span className="guest-stepper-val w-5 text-center font-black">{item.quantity}</span>
                       <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="guest-stepper-btn">+</button>
                     </div>
                   </div>
+                  <input type="text" placeholder="Special requests (e.g. no onions, extra spicy)..." value={item.notes} onChange={(e) => updateNotes(item.id, e.target.value)} className="guest-input-search w-full text-xs rounded-lg p-2.5 mt-3 font-semibold"/>
+                </div>
+              ))}
 
-                  <input type="text" placeholder="Add suggestions/requests (e.g. no onions, make it spicy)..." value={item.notes} onChange={(e) => updateNotes(item.id, e.target.value)} className="guest-input-search w-full text-xs rounded-lg p-2.5 mt-3 font-semibold"/>
-                </div>))}
+              {/* General Comment */}
+              {cartItems.length > 0 && (
+                <div className="rounded-xl p-4" style={{ backgroundColor: 'var(--surface2)', border: '1px solid var(--border)' }}>
+                  <label className="block text-[10px] font-black uppercase tracking-wider mb-2" style={{ color: 'var(--muted)' }}>Order Comments</label>
+                  <textarea placeholder="e.g. Serve soup first, bring extra plates..." value={generalComment} onChange={(e) => setGeneralComment(e.target.value)} rows={2} className="guest-input-search w-full rounded-lg p-2.5 text-xs font-semibold resize-none"/>
+                </div>
+              )}
             </div>
 
-            <div className="rounded-xl p-4 mb-6" style={{ backgroundColor: 'var(--surface2)', border: '1px solid var(--border)' }}>
-              <label className="block text-[10px] font-black uppercase tracking-wider mb-2">Any food suggestions or order comments?</label>
-              <textarea placeholder="e.g. Serve soup first, bring extra plates, make the curry mild..." value={generalComment} onChange={(e) => setGeneralComment(e.target.value)} rows={2} className="guest-input-search w-full rounded-lg p-2.5 text-xs font-semibold resize-none"/>
-            </div>
-
-            <div className="pt-4 space-y-4" style={{ borderTop: '1px solid var(--border)' }}>
-              <div className="flex justify-between items-center">
-                <span className="font-semibold text-sm" style={{ color: 'var(--muted)' }}>Subtotal</span>
-                <span className="text-xl font-black" style={{ color: 'var(--accent)' }}>${cartTotal}</span>
+            {/* Footer */}
+            {cartItems.length > 0 && (
+              <div className="p-5 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="font-semibold text-sm" style={{ color: 'var(--muted)' }}>Total</span>
+                  <span className="text-2xl font-black" style={{ color: 'var(--accent)' }}>₹{cartTotal}</span>
+                </div>
+                <button onClick={handlePlaceOrder} className="w-full btn-primary font-bold py-3.5 text-sm rounded-xl transition-all active:scale-95">
+                  Place Order (Send to Kitchen)
+                </button>
               </div>
-              
-              <button onClick={handlePlaceOrder} className="w-full btn-primary font-bold py-4 text-sm rounded-xl transition-all active:scale-95">
-                Place Order (Send to Kitchen)
-              </button>
-            </div>
-
+            )}
           </div>
-        </div>)}
+        </div>
+      )}
 
       {/* ===================================== */}
       {/* 6. CONFIRM BILL MODAL POPUP           */}
